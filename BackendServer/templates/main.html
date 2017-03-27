@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/main.css") }}"/>
+{% end %}
+
+{% block Body %}
+<h2>Welcome</h2>
+<h2>This in the main Body block, extended for base.html</h2>
+<div class="panel panel-info card">
+    <div class="panel-heading">
+        This is a bootstrap panel
+    </div>
+    <div class="panel-body">
+        This is the content
+    </div>
+    <div class="panel-footer">
+        This is the footer
+    </div>
+</div>
+{% end %}
