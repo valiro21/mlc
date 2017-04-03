@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/main.css") }}"/>
+{% end %}
+
+{% block Body %}
+    {% if current_user is not None %}
+    {% include fragments/navbar.html %}
+    {% include fragments/sidebar.html %}
+    {% end %}
+{% end %}
