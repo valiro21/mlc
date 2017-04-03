@@ -14,7 +14,14 @@
   </head>
 
   <body>
-    {% block Body %}
+    {% if current_user is not None %}
+        {% include fragments/navbar.html %}
+        {% include fragments/sidebar.html %}
     {% end %}
+
+    <div class="col">
+       {% block Body %}
+       {% end %}
+    </div>
   </body>
 </html>
