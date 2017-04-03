@@ -1,17 +1,33 @@
 {% extends "base.html" %}
 
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/settings.css") }}"/>
+{% end %}
+
 {% block Body %}
-<form method="POST" action="/login" >
-    <div class="checkbox">
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Public</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Private(only for users)</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Disabled</a></li>s
-            </ul>
-        </div>
-    </div>
-</form>
+<div class="container">
+    <form method="POST" action="/login" >
+      <div class="row">
+          <h2>Archive settings</h2>
+          <hr />
+      </div>
+
+        <div class="row row-centered">
+          <div class="col-md-2 setting-entry">
+            <p>Archive settings</p>
+          </div>
+          <div class="col-md-3 setting-entry">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success active">Public</button>
+                <button type="button" class="btn btn-warning">Private</button>
+                <button type="button" class="btn btn-danger">Disabled</button>
+            </div>
+          </div>
+
+
+      </div>
+
+
+    </form>
+</div>
 {% end %}
