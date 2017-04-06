@@ -12,6 +12,6 @@ define('static_path', group='application', default=os.path.join(os.path.dirname(
 def make_app ():
     return tornado.web.Application([
         ("/", MainHandler),
-	(r"/problem/[1-9][0-9]*/?", ProblemHandler)
+	(r"/problem/.+", ProblemHandler)
         ],
         **options.group_dict('application'))
