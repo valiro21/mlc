@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/problem.css") }}"/>
+{% end %}
+
+{% block Body %}
+{% include fragments/problem_navbar.html %}
+
+<h2>Welcome</h2>
+<h2>This is the page for problem {{ problem_id }}!</h2>
+
+<div class="row display-flex">
+    <div class="col-xs-12 col-sm-6 well">
+        <h1>Problem statement</h1>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+    </div>
+    <div class="col-xs-12 col-sm-6 well">
+        <h1>Editor</h1>
+        <div class="form-group">
+            <textarea class="form-control" rows="20" id="code" placeholder="Paste your code here!"></textarea>
+            <input type="submit" class="btn btn-info" value="Submit Code">
+        </div>
+    </div>
+</div>
+{% end %}
