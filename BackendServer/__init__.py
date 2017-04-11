@@ -8,6 +8,7 @@ import tornado.web
 from tornado.options import define, options
 
 from BackendServer.handlers.MainHandler import MainHandler
+from BackendServer.handlers.ProblemHandler import ProblemHandler
 
 define('template_path',
        group='application',
@@ -20,5 +21,7 @@ define('static_path',
 def make_app():
     """Create a Tornado app for BackendWebServer"""
     return tornado.web.Application([
-        ("/", MainHandler)],
-                                   **options.group_dict('application'))
+        ("/", MainHandler),
+        (r"/problem/.+", ProblemHandler)
+        ],
+                                    **options.group_dict('application'))

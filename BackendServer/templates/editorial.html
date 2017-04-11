@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/statement.css") }}"/>
+{% end %}
+
+{% block Body %}
+{% include fragments/problem_navbar.html %}
+
+<h2>Welcome</h2>
+<h2>This is the editorial page for problem {{ problem_id }}!</h2>
+
+<div class="row display-flex">
+    <div class="container-fluid col-sm-12 col-md-12 col-lg-6">
+        <h2>Solution</h2>
+        <p>
+            Let's break down the problem:
+    Create an -element fixed-length array of integers, . Each element  in  is an array of unknown (variable) length, so we'll say each , where  is an array of length . Recall that the value of  is different for each array.
+    Initialize and fill each variable-length array (i.e., ).
+    Perform  queries:
+    The first value of each query denotes an index in the  array that we'll call . The second value denotes an index in the  array located at .
+    Find the  array located at . Then print the value of .
+    See the code below for more detail:
+        </p>
+    </div>
+    <div class="container-fluid col-sm-12 col-md-12 col-lg-6">
+        <pre>
+    #include &lt;iostream>
+    #include &lt;deque>
+    using namespace std;
+    void printKMax(int arr[], int n, int k){
+        deque&lt;pair&lt;int, int &gt; &gt; dq;
+
+        for (int i = 0; i < k; ++i){
+            while (!dq.empty() && dq.back().first <= arr[i])
+                dq.pop_back();
+            dq.push_back({arr[i], i});
+        }
+        cout << dq.front().first << ' ';
+
+        for (int i = k; i < n; ++i){
+            while (!dq.empty() && dq.back().first <= arr[i])
+                dq.pop_back();
+            dq.push_back({arr[i], i});
+            if (dq.front().second <= i - k) dq.pop_front();
+
+            cout << dq.front().first << ' ';
+        }
+        cout << '\n';
+    }
+    int main(){
+
+       int t;
+       cin >> t;
+       while(t>0) {
+          int n,k;
+           cin >> n >> k;
+           int i;
+           int arr[n];
+           for(i=0;i&lt;n;i++)
+                cin >> arr[i];
+           printKMax(arr, n, k);
+           t--;
+         }
+         return 0;
+    }
+
+        </pre>
+</div>
+</div>
+{% end %}
