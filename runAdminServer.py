@@ -9,5 +9,3 @@ if __name__ == "__main__":
     __app__ = make_app()
     __app__.listen(8081)
     tornado.ioloop.IOLoop.current().start()
-
-    x = 2
