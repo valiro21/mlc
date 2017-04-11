@@ -326,7 +326,7 @@ max-attributes=7
 min-public-methods=2
 
 # Maximum number of public methods for a class (see R0904).
-max-public-methods=20
+max-public-methods=80
 
 
 [EXCEPTIONS]
@@ -335,4 +335,4 @@ max-public-methods=20
 # "Exception"
 iovergeneral-exceptions=Exception
 
-disable=W0105, W0104
+disable=W0105, W0104, W0205

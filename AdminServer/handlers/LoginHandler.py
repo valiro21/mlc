@@ -1,7 +1,10 @@
+"""LoginHandler for AdminWebServer."""
+
 from AdminServer.handlers import BaseHandler
 
 
 class LoginHandler(BaseHandler.BaseHandler):
+    """Handler for login."""
     def data_received(self, chunk):
         pass
 
