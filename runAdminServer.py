@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright © 2017 Valen Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
 from AdminServer import make_app
 import tornado.ioloop

@@ -24,4 +24,4 @@ def make_app():
         ("/", MainHandler),
         (r"/problem/.+", ProblemHandler)
         ],
-                                    **options.group_dict('application'))
+        **options.group_dict('application'))
