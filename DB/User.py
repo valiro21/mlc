@@ -3,10 +3,9 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import validates
 
-Base = declarative_base()
+from DB import Base
 
 
 class User(Base):
