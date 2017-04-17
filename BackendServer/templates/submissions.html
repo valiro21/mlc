@@ -11,26 +11,28 @@ statement.html{% extends "base.html" %}
 <h2>Welcome</h2>
 <h2>This is the submissions page for problem {{ problem_id }}!</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Submission ID</th>
-            <th>User</th>
-            <th>Problem name</th>
-            <th>Language</th>
-            <th>Date and time</th>
-            <th>Score</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>15234</td>
-            <td>1123</td>
-            <td>First problem</td>
-            <td>C++</td>
-            <td>Today</td>
-            <td>100 million points</td>
-        </tr>
-    </tbody>
+<div class="row">
+    <table class="table col-xs-12">
+        <thead>
+            <tr>
+                <th>Submission ID</th>
+                <th>User</th>
+                <th>Problem name</th>
+                <th>Language</th>
+                <th>Date and time</th>
+                <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>15234</td>
+                <td>1123</td>
+                <td>First problem</td>
+                <td>C++</td>
+                <td>Today</td>
+                <td>100 million points</td>
+            </tr>
+        </tbody>
 </table>
+</div>
 {% end %}

@@ -1,0 +1,31 @@
+COPYRIGHT="`date +%Y` `git config user.name`"
+FILES=$(git diff --color=never --cached --name-status | awk '$1 $2 { print $2}' | grep --color=never -e \.py$)
+    
+if [ -n "$FILES" ]; then
+    pep8 -r $FILES
+    p8=$?
+    pyflakes $FILES
+    pf=$?
+    if [ "$p8" != "0" -o "$pf" != "0" ]; then
+        exit 1
+    fi
+
+    MISSCP=0
+    for i in $FILES; do
+        git show ":$i" | grep -q "$COPYRIGHT"
+        CP=$?
+        if [ "$CP" != 0 ]; then
+            echo "Missing copyright for file $i."
+            MISSCP=1
+        fi
+    done
+    if [ "$MISSCP" != "0" ]; then
+        echo "Some copyright notices are missing for you and for the current year."
+        echo "If you have done non-trivial contribution in those files, consider"
+        echo "adding your copyright to it."
+        echo "Otherwise, use git commit --no-verify to commit."
+        exit 1
+    fi
+fi
+
+exit 0
