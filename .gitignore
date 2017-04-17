@@ -90,3 +90,7 @@ ENV/
 
 # Idea
 idea
+.idea
+
+# database
+database
