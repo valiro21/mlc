@@ -1,0 +1,8 @@
+version: '2'
+services:
+        db:
+                image: postgres:latest
+                volumes:
+                        - ./database:/var/lib/postgres/data
+                ports:
+                        - localhost:5432:5432
