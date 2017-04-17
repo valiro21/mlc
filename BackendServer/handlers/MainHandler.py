@@ -1,3 +1,4 @@
+# coding=utf-8
 """RootHandler for BackendWebServer."""
 
 import tornado.web
