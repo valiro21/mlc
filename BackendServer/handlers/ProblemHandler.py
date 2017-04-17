@@ -1,3 +1,4 @@
+# coding=utf-8
 """ProblemHandler for contestants."""
 
 import tornado.web
