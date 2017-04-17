@@ -1,4 +1,6 @@
+# coding=utf-8
 """BackendWebServer implementation."""
+
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
