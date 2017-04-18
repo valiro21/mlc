@@ -1,6 +1,9 @@
+/* Copyright © 2017 Alexandru Miron <mironalex96@gmail.com> */
+
+
 .card {
     width: 200px;
-    heigth: auto;
+    height: auto;
 }
 
 #login-dp{
@@ -19,6 +22,81 @@
     padding:14px;
 }
 
+.social-btn{
+    width:100%;
+    height:50px;
+    color:white;
+    border:none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 5px;
+    
+}
+
+#btn_google{
+    background-color:#DF4A32;
+}
+
+#btn_facebook{
+    background-color:#576b95;
+}
+
 .dropdown{
 	padding-right:20px;
+}
+
+.container{
+    padding-top:100px;
+}
+
+.blog-posts{
+
+}
+
+.side-info{
+
+    
+    text-align: center;
+}
+
+
+#post-title a {
+    font-size: 24px;
+}
+
+#info span{
+}
+
+#post-content {
+    
+}
+
+.side-box{
+    width:100%;
+    padding: 5px;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+
+.side-box p{
+    padding-top: 10px;
+    color: #66ABD8;
+    font-size: 24px;
+}
+
+
+.side-box .contest{
+    border-top-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+}
+
+table.rtable{
+    width:100%;
+}
+
+table.rtable th{
+    text-align: center;
 }

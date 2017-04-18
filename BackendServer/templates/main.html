@@ -1,9 +1,96 @@
+<!-- Copyright © 2017 Alexandru Miron <mironalex96@gmail.com> -->
+
 {% extends "base.html" %}
 {% block Imports %}
 <link rel="stylesheet" href="{{ static_url("css/main.css") }}"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 {% end %}
 
 {% block Body %}
 {% include fragments/navbar-top.html %}
-
+<div class="container" id="main-content">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="blog-posts">
+                <div id="post">
+                    <div id="post-title">
+                        <a href="#">
+                            Post Title Here
+                        </a>
+                    </div>
+                    <div id="post-info">
+                        <span id="author">
+                            <a href="#">
+                                Vali
+                            </a>
+                        </span>
+                        <span id="post-date">
+                            Today
+                        </span>
+                    </div>
+                    <div id="post-content">
+                        While I'm typing all of this nonsense I should think of how to stylize all of this HTML code, should be able to think of something decent
+                    </div>
+                    <div id="post-footer">
+                    </div>
+                </div>
+                <div class="blog-pagination">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="side-info">
+                <div class="side-box">
+                    <p>
+                        Upcomming Contests
+                    </p>
+                    <div class="contest">
+                        <div id="contest-title">
+                            FIICode
+                        </div>
+                        <div id="contest-date">
+                            2 days
+                        </div>
+                    </div>
+                     <div class="contest">
+                        <div id="contest-title">
+                            FIICode
+                        </div>
+                        <div id="contest-date">
+                            2 days
+                        </div>
+                    </div>
+                    <div class="contest">
+                        <div id="contest-title">
+                            FIICode
+                        </div>
+                        <div id="contest-date">
+                            2 days
+                        </div>
+                    </div>
+             
+                </div>
+                <div class="side-box">
+                    <p>
+                        Leaderboard
+                    </p>
+                    <table class="rtable">
+                        <tbody>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Rating</th>
+                            </tr>
+                            <tr>
+                                <td>#1</td>
+                                <td>Test</td>
+                                <td>1345</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% end %}

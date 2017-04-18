@@ -1,8 +1,10 @@
+<!-- Copyright © 2017 Alexandru Miron <mironalex96@gmail.com> -->
+
 <!-- Navbar - Top -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data toggle="collapse" data-target="#navbar" aria-expanded="false" aria controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-content" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                 </button>
                 <a class="navbar-brand" href="#">MLC</a>
@@ -14,7 +16,7 @@
                             <input type="text" class="form-control" placeholder="Search..." id="search-bar">
                         </form>
                     </li>
-                    <li><a href="#">Arhive</a></li>
+                    <li><a href="#">Archive</a></li>
                     <li><a href="#">Contests</a></li>
                     <li><a href="#">Submissions</a></li>
                 </ul>
@@ -28,16 +30,19 @@
                             <li>
                                 <div class="col-md-12">
                                     Login using:
-                                    <div class="social-buttons">
-                                        <a href="#" >
-                                            Facebook
-                                        </a>
+                                    <div>
+                                        <button class="social-btn" type="submit" id="btn_facebook" value="btn_facebook_clicked">
+                                           Facebook 
+                                        </button>
                                         <br>
-                                        <a href="#">
+                                        <button class="social-btn" type="submit" id="btn_google" value="btn_google_clicked">
                                             Google
-                                        </a>
+                                        </button>
+                                        
                                     </div>
-                                    or:
+                                    <br>
+                                    Or:
+                                    <br>
                                     <form class="form" role="form" method="post" action=:login" accept-charset="UTF-8" id="login-form">
                                         <div class="form-group">
                                             <label class="sr-only" for="inputEmail">Email address</label>
