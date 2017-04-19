@@ -56,7 +56,7 @@
 
 .side-info{
 
-    
+ 
     text-align: center;
 }
 
@@ -69,11 +69,13 @@
 }
 
 #post-content {
-    
+    font-size: 18px;
 }
 
 .side-box{
-    width:100%;
+    width: 90%;
+    float: none;
+    margin: 0 auto;
     padding: 5px;
     border: 1px solid #222222;
     border-radius: 5px;
@@ -91,6 +93,11 @@
     border-top-style: solid;
     border-width: 1px;
     font-size: 14px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
 }
 
 table.rtable{
