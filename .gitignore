@@ -94,3 +94,6 @@ idea
 
 # database
 database
+
+# Vim backup files
+*.swp
