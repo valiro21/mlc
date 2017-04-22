@@ -3,25 +3,25 @@
   <head>
     <title>MLC! MLC! MLC!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="{{ static_url("js/jquery-3.1.1.min.js") }}"></script>
-    <script type="text/javascript" src="{{ static_url("js/bootstrap.min.js") }}"></script>
-    <script type="text/javascript" src="{{ static_url("js/base.js") }}"></script>
-    <link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css") }}"/>
-    <link rel="stylesheet" href="{{ static_url("css/font-awesome.min.css") }}"/>
-    <link rel="stylesheet" href="{{ static_url("css/base.css") }}"/>
+    <script type="text/javascript" src="{{ static_url('js/jquery-3.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/base.js') }}"></script>
+    <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ static_url('css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ static_url('css/base.css') }}"/>
       {% block Imports %}
       {% end %}
   </head>
 
-  <body>
-    {% if current_user is not None %}
+<body>
+	<main class="main-content">
+        {% if current_user is not None %}
         {% include fragments/navbar.html %}
         {% include fragments/sidebar.html %}
-    {% end %}
-
-    <div class="container-fluid col-xs-9">
-       {% block Body %}
-       {% end %}
-    </div>
-  </body>
+        {% end %}
+        <div class="content-wrapper">
+			{% block Body %}
+            {% end %}
+		</div>
+	</main>
 </html>
