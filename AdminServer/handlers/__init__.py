@@ -9,5 +9,5 @@ handlers = [
     ("/", MainHandler),
     ("/login", LoginHandler),
     ("/settings", SettingsHandler),
-    ("/contest/.*", ContestHandler)
+    ("/contest/.+/.*", ContestHandler)
 ]

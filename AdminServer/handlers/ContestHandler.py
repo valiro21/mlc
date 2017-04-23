@@ -1,6 +1,7 @@
 """ContestHandler for AdminServer. This is used for updating contests. """
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+import os
 
 import tornado
 
@@ -14,4 +15,26 @@ class ContestHandler(BaseHandler.BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        self.render("contest.html")
+        path_elements = [x for x in self.request.path.split("/") if x]
+        contest_id = path_elements[1]
+
+        if len(path_elements) <= 2:
+            self.redirect(os.path.join(self.request.path, "settings"))
+            return
+        if len(path_elements) >= 4:
+            self.redirect("..")
+            return
+
+        if path_elements[2] not in ["settings",
+                                    "announcements",
+                                    "questions",
+                                    "ranking",
+                                    "problems",
+                                    "submissions",
+                                    "user_tests",
+                                    "users"]:
+            self.redirect("settings")
+        if path_elements[2] == "settings":
+            path_elements[2] = "contest_settings"
+
+        self.render(path_elements[2] + ".html", contest_id=contest_id)
