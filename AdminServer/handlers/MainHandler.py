@@ -1,3 +1,7 @@
+"""MainHandler for AdminWebServer."""
+
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+
 from AdminServer.handlers import BaseHandler
 
 
