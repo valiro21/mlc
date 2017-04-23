@@ -2,6 +2,7 @@
 
 from AdminServer.handlers.MainHandler import MainHandler
 from AdminServer.handlers.LoginHandler import LoginHandler
+from AdminServer.handlers.ProblemCreateHandler import ProblemCreateHandler
 from AdminServer.handlers.SettingsHandler import SettingsHandler
 from AdminServer.handlers.ContestHandler import ContestHandler
 
@@ -9,5 +10,6 @@ handlers = [
     ("/", MainHandler),
     ("/login", LoginHandler),
     ("/settings", SettingsHandler),
-    ("/contest/.+/.*", ContestHandler)
+    ("/contest/.+/.*", ContestHandler),
+    ("/create/problem", ProblemCreateHandler)
 ]
