@@ -1,1 +1,43 @@
+.dropdown{
+	padding-right:20px;
+}
 
+.card {
+    width: 200px;
+    height: auto;
+}
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+
+.social-btn{
+    width:100%;
+    height:50px;
+    color:white;
+    border:none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+#btn_google{
+    background-color:#DF4A32;
+}
+
+#btn_facebook{
+    background-color:#576b95;
+}

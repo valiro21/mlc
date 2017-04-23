@@ -10,12 +10,12 @@ body {
 }
 
 .navbar {
+    background: #3e454c;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: auto;
     border-left-width: 0px;
-    background-color: #2C3136;
 }
 
 .navbar div {
@@ -24,6 +24,11 @@ body {
 
 .navbar-item {
     background: #3e454c;
+}
+
+.navbar-search {
+    margin: 8px auto auto auto;
+    height: 50px;
 }
 
 .navbar-search i {
@@ -43,11 +48,11 @@ body {
 
 .navbar-search input {
     color: #ffffff;
-    height: 50px;
+    height: 100%;
     border: none;
     padding-left: 2.6em;
     border-radius: 0;
-    background-color: #2C3136;
+    background-color: #3e454c;
     /*border-left: 1px solid #51575d;*/
     color: #ffffff;
     border-radius: .25em;
@@ -330,4 +335,8 @@ p {
     font-size: 1.5rem;
     margin: auto;
     padding-top: 5px;
+}
+
+.subitem {
+    font-style: bold;
 }
