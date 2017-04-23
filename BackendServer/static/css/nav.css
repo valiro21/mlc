@@ -77,12 +77,16 @@ body {
 }
 
 .navbar-buttons-group {
+    padding-top:5px;
     padding-right: 0.5em;
-    margin-top: auto;
+    margin-top: 0px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #ffffff;
 }
 
 .navbar-buttons-group a {
-    color: #ffffff !important;
     font-size: 1.4rem;
     height: 42px;
 }
@@ -339,4 +343,8 @@ p {
 
 .subitem {
     font-style: bold;
+}
+
+.navbar-login {
+    color: #1c1f22;
 }
