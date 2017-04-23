@@ -180,9 +180,9 @@ body {
     --type:mobile;
   }
   .sidebar {
-    position: relative;
-    float: left;
+    position: fixed;
     top: auto;
+    float:left;
     width: 110px;
     min-height: 100vh;
     visibility: visible;
@@ -190,9 +190,6 @@ body {
     overflow: visible;
     max-height: none;
     box-shadow: none;
-  }
-  .sidebar.is-fixed {
-    position: fixed;
   }
   .sidebar > ul {
     padding: 0;
@@ -389,4 +386,10 @@ p {
 
 .navbar-login {
     color: #1c1f22;
+}
+
+.conteudo {
+  width: -webkit-calc(100% - 110px);
+  width: calc(100% - 110px);
+  float:right;
 }
