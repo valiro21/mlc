@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "contest.html" %}
+
+{% block Body %}
+<div class="container">
+    <form method="POST" action="/login" >
+      <div class="row">
+          <h2>Contest configuration</h2>
+          <hr />
+      </div>
+
+      <div class="row"><h4 class="subtitle">Contest information</h4></div>
+        <br />
+      <div class="row">
+          <div class="col-lg-3">
+              <p>Name</p>
+          </div>
+          <div class="col-lg-3">
+              <input type="email" class="form-control" id="email">
+          </div>
+      </div>
+    </form>
+</div>
+
+{% end %}
