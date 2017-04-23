@@ -9,7 +9,7 @@
 <div class="container">
     <h2>Contest List</h2>
     <p>Here's a list of upcomming contests available to you:</p>
-    <table class="table table-hover table-responsive">
+    <table class="table table-bordered">
         <thread>
             <tr>
                 <th>Name</th>
@@ -25,6 +25,25 @@
             {% include fragments/contestEntry.html %}
             {% include fragments/contestEntry.html %}
         </tbody>
+    </table>
+    <p>Contest Backlog:</p>
+    <table class="table table-bordered">
+        <thread>
+            <tr>
+                <th>Name</th>
+                <th>Contest ID</th>
+                <th>Authors</th>
+                <th>Start Date</th>
+                <th>Length</th>
+            </tr>
+        </thread>
+        <tbody>
+            {% include fragments/contestEntry.html %}
+            {% include fragments/contestEntry.html %}
+            {% include fragments/contestEntry.html %}
+            {% include fragments/contestEntry.html %}
+        </tbody>
+    </table>
 </div>
 
 {% end %}
