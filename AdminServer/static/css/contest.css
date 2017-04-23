@@ -5,3 +5,11 @@
 .row {
     padding-top:5px;
 }
+
+.answer {
+    margin-left:10px;
+}
+
+.reply-box {
+    width:100% !important;
+}
