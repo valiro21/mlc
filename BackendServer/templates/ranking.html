@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url('css/main.css') }}"/>
+{% end %}
+
+{% block Body %}
+{% include fragments/navbar-top.html %}
+
+<div class="container">
+    <h2>Problem Archive</h2>
+    <p>LeaderBoard</p>
+    <table class="table table-hover table-responsive">
+        <thread>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Archive Solved</th>
+                <th>Contest Rating</th>
+            </tr>
+        </thread>
+        <tbody>
+            {% include fragments/rankingEntry.html %}
+            {% include fragments/rankingEntry.html %}
+            {% include fragments/rankingEntry.html %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% end %}
