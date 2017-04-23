@@ -11,7 +11,7 @@ import os
 import tornado.web
 from tornado.options import define, options
 
-from BackendServer.handlers import RankingHandler
+from BackendServer.handlers.RankingHandler import RankingHandler
 from BackendServer.handlers.ArchiveHandler import ArchiveHandler
 from BackendServer.handlers.MainHandler import MainHandler
 from BackendServer.handlers.ProblemHandler import ProblemHandler
