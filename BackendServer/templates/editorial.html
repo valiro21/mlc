@@ -9,19 +9,19 @@
 <h2>This is the editorial page for problem {{ problem_id }}!</h2>
 
 <div class="row display-flex">
-    <div class="container-fluid col-sm-12 col-md-12 col-lg-6">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 well">
         <h2>Solution</h2>
-        <p>
+        <div class="text-justify">
             Let's break down the problem:
-    Create an -element fixed-length array of integers, . Each element  in  is an array of unknown (variable) length, so we'll say each , where  is an array of length . Recall that the value of  is different for each array.
+    Create an n-element fixed-length array of integers, a. Each element is an array of unknown (variable) length, so we'll say each , where  is an array of length . Recall that the value of  is different for each array.
     Initialize and fill each variable-length array (i.e., ).
     Perform  queries:
-    The first value of each query denotes an index in the  array that we'll call . The second value denotes an index in the  array located at .
-    Find the  array located at . Then print the value of .
+    The first value of each query denotes an index in the  array that we'll call . The second value denotes an index in the  array located at position i.
+    Find the  array located at x. Then print the value of x.
     See the code below for more detail:
-        </p>
+            </div>
     </div>
-    <div class="container-fluid col-sm-12 col-md-12 col-lg-6">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 well">
         <pre>
     #include &lt;iostream>
     #include &lt;deque>
