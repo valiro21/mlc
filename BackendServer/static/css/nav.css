@@ -175,7 +175,7 @@ body {
   top: 0;
 }
 
-@media only screen and (min-width: 300px) { /* TO DO: find right size for mobile and etc */
+@media only screen and (min-width: 400px) { /* TO DO: find right size for mobile and etc */
   body {
     --type:mobile;
   }
@@ -379,7 +379,7 @@ body {
 
 .main-content {
     padding-top: 35px;
-    padding-left: 35px;
+    padding-left: 3vh;
 }
 
 p {
