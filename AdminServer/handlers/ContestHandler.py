@@ -34,7 +34,10 @@ class ContestHandler(BaseHandler.BaseHandler):
                                     "user_tests",
                                     "users"]:
             self.redirect("settings")
-        if path_elements[2] == "settings":
-            path_elements[2] = "contest_settings"
+        render = path_elements[2]
+        if render == "settings":
+            render = "contest_settings"
 
-        self.render(path_elements[2] + ".html", contest_id=contest_id)
+        self.render(render + ".html",
+                    last_path=path_elements[2],
+                    contest_id=contest_id)
