@@ -21,6 +21,12 @@ jQuery(document).ready(function(){
         }
         else {
             if (!selectedItem.hasClass('active')) {
+                if (selectedItem.hasClass('unique')) {
+                    var list = sidebar.find('.sidebar-item');
+                    for(i = 0; i < list.length; i++) {
+                        $(list[i]).removeClass('active');
+                    }
+                }
                 selectedItem.addClass('active');
             }
             else {
