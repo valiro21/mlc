@@ -24,6 +24,18 @@ define('template_path',
 define('static_path',
        group='application',
        default=os.path.join(os.path.dirname(__file__), "static"))
+define("autoreload",
+       group='application',
+       default=True)
+define("debug",
+       group='application',
+       default=True)
+define("compiled_template_cache",
+       group='application',
+       default=False)
+define("serve_traceback",
+       group='application',
+       default=True)
 
 
 def make_app():
@@ -33,6 +45,6 @@ def make_app():
         (r"/archive", ArchiveHandler),
         (r"/ranking", RankingHandler),
         (r"/problem/.+", ProblemHandler),
-        (r"/user/.+",UserHandler)
+        (r"/user/.+", UserHandler)
         ],
         **options.group_dict('application'))

@@ -5,13 +5,13 @@
 
 {% block SidebarItems %}
 <li class="sidebar-label">General</li>
-<li class="sidebar-item unique">
+<li class="sidebar-item unique" {% if request.path == './settings' %} class="active"{% end %}>
     <a href="./settings">Settings</a>
 </li>
-<li class="sidebar-item unique">
+<li class="sidebar-item unique" {% if request.path == './announcements' %} class="active"{% end %}>
     <a href="./announcements">Announcements</a>
 </li>
-<li class="sidebar-item unique">
+<li class="sidebar-item unique" {% if request.path == './questions' %} class="active"{% end %}>
     <a href="#">Questions</a>
 </li>
 

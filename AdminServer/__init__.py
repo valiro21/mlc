@@ -8,7 +8,6 @@ import tornado.web
 from tornado.options import define, options
 from AdminServer.handlers import handlers
 
-
 define('template_path',
        group='application',
        default=os.path.join(os.path.dirname(__file__), "templates"))
@@ -18,6 +17,18 @@ define('static_path',
 define('cookie_secret',
        group='application',
        default="fdsafWDFWREDFADAFWRdFGTEQRGQFGQG")
+define("autoreload",
+       group='application',
+       default=True)
+define("debug",
+       group='application',
+       default=True)
+define("compiled_template_cache",
+       group='application',
+       default=False)
+define("serve_traceback",
+       group='application',
+       default=True)
 
 
 def make_app():
