@@ -24,9 +24,9 @@
             {% if current_user is not None %}
                 {% include fragments/sidebar.html %}
             {% end %}
-            <div class="col-xs-11 col-sm-10 col-md-10 col-lg-10 col-lg-10">
-			{% block Body %}
-            {% end %}
+            <div class="col-xs-11 col-sm-10 col-md-10 col-lg-10 col-lg-10 main-content">
+    			{% block Body %}
+                {% end %}
 		    </div>
         </div>
 	</main>

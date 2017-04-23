@@ -325,3 +325,14 @@ body {
   background-color: #1c1f22;
   list-style: none;
 }
+
+.main-content {
+    padding-top: 35px;
+    padding-left: 35px;
+}
+
+p {
+    font-size: 1.5rem;
+    margin: auto;
+    padding-top: 5px;
+}

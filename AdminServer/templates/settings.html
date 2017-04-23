@@ -8,26 +8,22 @@
 <div class="container">
     <form method="POST" action="/login" >
       <div class="row">
-          <h2>Archive settings</h2>
+          <h2>System settings</h2>
           <hr />
       </div>
 
         <div class="row row-centered">
-          <div class="col-md-2 setting-entry">
-            <p>Archive settings</p>
-          </div>
-          <div class="col-md-3 setting-entry">
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-success active">Public</button>
-                <button type="button" class="btn btn-warning">Private</button>
-                <button type="button" class="btn btn-danger">Disabled</button>
+            <div class="col-lg-4">
+                <p>Archive settings</p>
             </div>
-          </div>
-
-
+            <div class="col-lg-2">
+                <select class="form-control" id="archive">
+                    <option>Public</option>
+                    <option>Private</option>
+                    <option>Disabled</option>
+                </select>
+            </div>
       </div>
-
-
     </form>
 </div>
 {% end %}
