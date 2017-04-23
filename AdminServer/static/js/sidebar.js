@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
 	var sidebar = $('.sidebar'),
 	    old_type = getMq();
 
-	if ($('.sidebar.nav').children().length == 0) {
+	if ($('#menu').children().length == 0) {
 	    sidebar.remove();
 	}
 
