@@ -324,6 +324,10 @@ body {
 }
 
 @media (max-width: 915px) {
+  .dropdown-menu {
+    width: 100%;
+  }
+
   .navbar-header {
       float: none;
   }
@@ -357,9 +361,6 @@ body {
   }
   .collapse.in{
       display:block !important;
-  }
-  .dropdown-menu {
-    width: 100%;
   }
 }
 
