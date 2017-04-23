@@ -1,0 +1,33 @@
+.profile {
+    padding-top: 20px;
+}
+
+.badge-rank {
+    margin-left: 20px;
+    background-color: red;
+}
+
+.username {
+
+}
+
+.personal-information {
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 30px;
+}
+
+.personal-information > div {
+    margin: 1px;
+    font-size: small;
+    color: gray;
+}
+
+.onsite-information {
+
+}
+
+.onsite-information > div {
+    margin-bottom: 15px;
+    font-size: large;
+}
