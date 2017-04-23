@@ -17,6 +17,7 @@ from BackendServer.handlers.ArchiveHandler import ArchiveHandler
 from BackendServer.handlers.MainHandler import MainHandler
 from BackendServer.handlers.ProblemHandler import ProblemHandler
 from BackendServer.handlers.UserHandler import UserHandler
+from BackendServer.handlers.ContestsHandler import ContestsHandler
 
 define('template_path',
        group='application',
@@ -33,6 +34,7 @@ def make_app():
         (r"/archive", ArchiveHandler),
         (r"/ranking", RankingHandler),
         (r"/problem/.+", ProblemHandler),
+        (r"/contests", ContestsHandler),
         (r"/user/.+",UserHandler)
         ],
         **options.group_dict('application'))
