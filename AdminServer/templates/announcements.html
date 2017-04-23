@@ -1,0 +1,46 @@
+{% extends "contest.html" %}
+
+{% block Body %}
+<div class="container">
+    <div class="row">
+        <h2>Contest configuration</h2>
+        <hr />
+    </div>
+
+    <form method="POST" action="/">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="white-space:nowrap;">
+                    <p>Make an announcement</p>
+                </div>
+                <div class="panel-body">
+                    <label for="subject">Subject</label>
+                    <input class="form-control input-sm" type="text" id="subject">
+                    <br />
+                    <label for="text">Text body</label>
+                    <input class="form-control input-lg" type="text" id="text">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr />
+
+    <div class="row">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>Input/Output</p>
+                </div>
+                <div class="panel-body">
+                    <p>Please take into consideration that the input/output can slow down your submission</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary">REMOVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %}

@@ -2,22 +2,67 @@
 
 {% block Body %}
 <div class="container">
-    <form method="POST" action="/login" >
-      <div class="row">
-          <h2>Contest configuration</h2>
-          <hr />
-      </div>
+    <form method="POST" action="/">
+        <div class="row">
+            <h2>Contest configuration</h2>
+            <hr />
+        </div>
 
-      <div class="row"><h4 class="subtitle">Contest information</h4></div>
+        <div class="row"><h4 class="subtitle">Contest information</h4></div>
         <br />
-      <div class="row">
-          <div class="col-lg-3">
-              <p>Name</p>
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Name</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="name">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Description</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="description">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Allowed localizations</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="localizations">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Submission download allowed</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="checkbox" id="submission_download_allowed">
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 helper-text">
+              <p>Allow questions</p>
           </div>
           <div class="col-lg-3">
-              <input type="email" class="form-control" id="email">
+              <input type="checkbox" id="allow_questions">
           </div>
-      </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 helper-text">
+              <p>Allow user tests</p>
+          </div>
+          <div class="col-lg-3">
+              <input type="checkbox" id="allow_user_tests">
+          </div>
+        </div>
     </form>
 </div>
 
