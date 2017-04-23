@@ -5,6 +5,7 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
 import os
 
@@ -15,6 +16,7 @@ from BackendServer.handlers.RankingHandler import RankingHandler
 from BackendServer.handlers.ArchiveHandler import ArchiveHandler
 from BackendServer.handlers.MainHandler import MainHandler
 from BackendServer.handlers.ProblemHandler import ProblemHandler
+from BackendServer.handlers.UserHandler import UserHandler
 
 define('template_path',
        group='application',
@@ -30,6 +32,7 @@ def make_app():
         ("/", MainHandler),
         (r"/archive", ArchiveHandler),
         (r"/ranking", RankingHandler),
-        (r"/problem/.+", ProblemHandler)
+        (r"/problem/.+", ProblemHandler),
+        (r"/user/.+",UserHandler)
         ],
         **options.group_dict('application'))
