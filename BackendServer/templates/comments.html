@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "problem.html" %}
 {% block Imports %}
 
 <link rel="stylesheet" href="{{ static_url("css/comments.css") }}"/>
@@ -6,7 +6,6 @@
 {% end %}
 
 {% block Body %}
-{% include fragments/problem_navbar.html %}
 
 <h2>Welcome</h2>
 <h2>This is the comments page for problem {{ problem_id }}!</h2>
