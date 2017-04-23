@@ -19,8 +19,10 @@ class ProblemHandler(tornado.web.RequestHandler):
 
         if len(path_elements) <= 2:
             self.redirect(os.path.join(self.request.path, "statement"))
+            return
         if len(path_elements) >= 4:
             self.redirect("..")
+            return
 
         if path_elements[2] not in ["statement",
                                     "submissions",

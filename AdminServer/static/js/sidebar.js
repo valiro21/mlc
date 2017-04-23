@@ -3,6 +3,10 @@ jQuery(document).ready(function(){
 	var sidebar = $('.sidebar'),
 	    old_type = getMq();
 
+	if ($('#menu').children().length == 0) {
+	    sidebar.remove();
+	}
+
 	$('.sidebar-item').on('click', function(event){
 		var selectedItem = $(this);
 

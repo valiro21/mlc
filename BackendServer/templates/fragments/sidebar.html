@@ -1,9 +1,7 @@
 <!-- Sidebar -->
-<div class="column col-xs-1 col-sm-2 col-md-2 col-lg-2 sidebar-offcanvas" id="sidebar">
+<nav class="col-xs-1 col-sm-2 col-md-2 col-lg-2 sidebar">
     <ul class="nav" id="menu">
-        <li><a href="#"><i class="fa fa-trophy"></i> <span class="collapse in hidden-xs">Contests</span></a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> <span class="collapse in hidden-xs">Problems</span></a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span class="collapse in hidden-xs">Users</span></a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-blackboard"></i> <span class="collapse in hidden-xs">Evaluation</span></a></li>
+        {% block SidebarItems %}
+        {% end %}
     </ul>
-</div>
+</nav>

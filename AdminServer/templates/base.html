@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="{{ static_url('js/jquery-3.1.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ static_url('js/base.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/sidebar.js') }}"></script>
     <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ static_url('css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" href="{{ static_url('css/base.css') }}"/>
@@ -16,7 +16,7 @@
 <body>
 	<main class="container-fluid">
         {% if current_user is not None %}
-        <div class="row" style="height:55px;">
+        <div class="row" style="height:55px;"> <!-- TO DO: create custom class instead of style -->
                 {% include fragments/navbar.html %}
         </div>
         {% end %}
