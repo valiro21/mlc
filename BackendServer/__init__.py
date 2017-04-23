@@ -11,6 +11,7 @@ import os
 import tornado.web
 from tornado.options import define, options
 
+from BackendServer.handlers import RankingHandler
 from BackendServer.handlers.ArchiveHandler import ArchiveHandler
 from BackendServer.handlers.MainHandler import MainHandler
 from BackendServer.handlers.ProblemHandler import ProblemHandler
@@ -28,6 +29,7 @@ def make_app():
     return tornado.web.Application([
         ("/", MainHandler),
         (r"/archive", ArchiveHandler),
+        (r"/ranking", RankingHandler),
         (r"/problem/.+", ProblemHandler)
         ],
         **options.group_dict('application'))
