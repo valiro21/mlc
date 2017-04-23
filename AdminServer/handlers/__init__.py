@@ -5,11 +5,13 @@ from AdminServer.handlers.LoginHandler import LoginHandler
 from AdminServer.handlers.ProblemCreateHandler import ProblemCreateHandler
 from AdminServer.handlers.SettingsHandler import SettingsHandler
 from AdminServer.handlers.ContestHandler import ContestHandler
+from AdminServer.handlers.UserSettingsHandler import UserSettingsHandler
 
 handlers = [
     ("/", MainHandler),
     ("/login", LoginHandler),
     ("/settings", SettingsHandler),
     ("/contest/.+/.*", ContestHandler),
-    ("/create/problem", ProblemCreateHandler)
+    ("/create/problem", ProblemCreateHandler),
+    ("/user/.+/settings", UserSettingsHandler)
 ]
