@@ -3,12 +3,15 @@
 
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 import os
 
 import tornado.web
 from tornado.options import define, options
 
+from BackendServer.handlers.ArchiveHandler import ArchiveHandler
 from BackendServer.handlers.MainHandler import MainHandler
 from BackendServer.handlers.ProblemHandler import ProblemHandler
 
@@ -24,6 +27,7 @@ def make_app():
     """Create a Tornado app for BackendWebServer"""
     return tornado.web.Application([
         ("/", MainHandler),
+        (r"/archive", ArchiveHandler),
         (r"/problem/.+", ProblemHandler)
         ],
         **options.group_dict('application'))
