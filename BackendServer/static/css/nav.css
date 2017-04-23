@@ -70,7 +70,7 @@ body {
 .mlc-logo {
   float: left;
   display: block;
-  margin: 11px 50px 0 5%;
+  margin: 5px 0px 0 5%;
 }
 .mlc-logo img {
   display: block;
@@ -357,6 +357,9 @@ body {
   }
   .collapse.in{
       display:block !important;
+  }
+  .dropdown-menu {
+    width: 100%;
   }
 }
 

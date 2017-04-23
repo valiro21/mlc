@@ -1,0 +1,70 @@
+{% extends "contest.html" %}
+
+{% block Body %}
+<div class="container">
+        <div class="row">
+            <h2>Questions</h2>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="white-space:nowrap;">
+                    <p>When will you post the editorials?</p>
+                </div>
+                <div class="panel-header">
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#reply">Reply</button>
+                    <div id="reply" class="collapse">
+                        <form method="POST" action="/" class="form-inline">
+                            <label for="answer">Answer:</label>
+                            <select id="answer" class="form-control answer" data-toggle="text-reply">
+                                <option>Yes</option>
+                                <option>No</option>
+                                <option>No comment</option>
+                                <option>Answered in task description</option>
+                                <option>Invalid questions</option>
+                                <option>Other</option>
+                            </select>
+
+                            <div id="text-reply" class="collapse">
+                                <br />
+                                <input type="text" class="form-control reply-box">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" style="white-space:nowrap;">
+                    <p>Luke I am your father</p>
+                </div>
+                <div class="panel-header">
+                    <p class="answer">Yes ...</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-default" data-toggle="collapse" data-target="#reply2">Edit</button>
+                    <div id="reply2" class="collapse">
+                        <form method="POST" action="/" class="form-inline">
+                            <label for="answer2">Answer:</label>
+                            <select id="answer2" class="form-control answer" data-toggle="text-reply2">
+                                <option>Yes</option>
+                                <option>No</option>
+                                <option>No comment</option>
+                                <option>Answered in task description</option>
+                                <option>Invalid questions</option>
+                                <option>Other</option>
+                            </select>
+
+                            <div id="text-reply2" class="collapse">
+                                <br />
+                                <input type="text" class="form-control reply-box">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% end %}
