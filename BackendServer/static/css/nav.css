@@ -27,8 +27,13 @@ body {
 }
 
 .navbar-search {
+<<<<<<< HEAD
     margin: 8px auto auto auto;
     height: 50px;
+=======
+    margin: 8px auto 8px auto;
+    height: 35px; 
+>>>>>>> 8b9dca9027b75166d3a539ec35d250fd68e6b295
 }
 
 .navbar-search i {
@@ -52,7 +57,7 @@ body {
     border: none;
     padding-left: 2.6em;
     border-radius: 0;
-    background-color: #3e454c;
+    background-color: #222222;
     /*border-left: 1px solid #51575d;*/
     color: #ffffff;
     border-radius: .25em;
@@ -335,4 +340,8 @@ p {
     font-size: 1.5rem;
     margin: auto;
     padding-top: 5px;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8b9dca9027b75166d3a539ec35d250fd68e6b295
