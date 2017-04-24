@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
 
 	if ($('#menu').children().length == 0) {
 	    sidebar.remove();
-	    $('.conteudo').width('100%');
+	    $('.conteudo').removeClass ('conteudo');
 	}
 
 	$('.sidebar-item').on('click', function(event){

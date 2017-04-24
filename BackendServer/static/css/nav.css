@@ -399,3 +399,8 @@ p {
 .conteudo {
   float:right;
 }
+
+.conteudo-full {
+   width: -webkit-calc(100%);
+   width: calc(100%);
+}
