@@ -1,0 +1,145 @@
+{% extends "main.html" %}
+{% block Imports %}
+
+<link rel="stylesheet" href="{{ static_url('css/submission.css') }}"/>
+
+{% end %}
+
+{% block Body %}
+
+<div class="row display-flex">
+
+    <div class="col-xs-12 col-md-6">
+    <table class="table table-filter table-responsive">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Submission ID</td>
+                <td>{{ id }}</td>
+            </tr>
+            <tr>
+                <td>Task name</td>
+                <td>Oua Pascale</td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>valiro21</td>
+            </tr>
+            <tr>
+                <td>Language</td>
+                <td>C++11</td>
+            </tr>
+            <tr>
+                <td>Result</td>
+                <td>0/100</td>
+            </tr>
+            <tr>
+                <td>Re-evaluate</td>
+                <td>
+                    <button class="btn btn-primary">C</button>
+                    <button class="btn btn-warning">E</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+  <!-- Source code -->
+    <div class="col-xs-12 col-md-6">
+      <pre class="pre-scrollable">
+          <code>include, text
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+              code here
+              haha
+              code code
+              cody cody
+          </code>
+      </pre>
+    </div>
+
+  <!-- Tests -->
+
+    <div class="col-xs-12">
+    <table class="table table-responsive table-filter">
+      <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Time taken</th>
+            <th>Memory used</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+            <td>1</td>
+            <td>Success</td>
+            <td>0.1s</td>
+            <td>10 MB</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Success</td>
+            <td>0.1s</td>
+            <td>10 MB</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>FAILURE</td>
+            <td>1.001s</td>
+            <td>100 MB</td>
+        </tr>
+    </tbody>
+  </table>
+        </div>
+</div>
+
+{% end %}
