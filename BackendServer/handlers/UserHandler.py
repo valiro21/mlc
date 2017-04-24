@@ -5,6 +5,9 @@ import tornado.web
 import os
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 
 class UserHandler(tornado.web.RequestHandler):
@@ -26,6 +29,7 @@ class UserHandler(tornado.web.RequestHandler):
 
         if path_elements[2] not in ["profile",
                                     "settings",
+                                    "user_submissions",
                                     "statistics"]:
             self.redirect("profile")
 
