@@ -45,6 +45,8 @@ class ContestHandler(BaseHandler.BaseHandler):
             render = "contest_user_tests"
         elif render == "users":
             render = "contest_users"
+        elif render == "ranking":
+            render = "contest_ranking"
 
         self.render(render + ".html",
                     last_path=path_elements[2],
