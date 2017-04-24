@@ -1,0 +1,60 @@
+{% extends "contest.html" %}
+
+{% block Body %}
+    <div class="row">
+        <h2>User tests for contest</h2>
+        <br />
+    </div>
+
+    <table class="table table-filter">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Problem</th>
+                <th>Status</th>
+                <th>File</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2017-04-18 08:26:13</td>
+                <td>valiro21</td>
+                <td>Valentin Rosca</td>
+                <td>Oua Pascale</td>
+                <td>Evaluated</td>
+                <td><a>oua.cpp</a></td>
+                <td>
+                    <button class="btn btn-primary">See Input</button>
+                    <button class="btn btn-danger">Remove</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2017-04-18 08:25:13</td>
+                <td>TheDesertFoxM</td>
+                <td>Miron Alexandru</td>
+                <td>Oua Pascale</td>
+                <td>Compilation failed</td>
+                <td><a>oua.cpp</a></td>
+                <td>
+                    <button class="btn btn-primary">See Input</button>
+                    <button class="btn btn-danger">Remove</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2017-04-18 08:22:45</td>
+                <td>valiro21</td>
+                <td>Valentin Rosca</td>
+                <td>Treaps</td>
+                <td>Evaluated</td>
+                <td><a>treaps.cpp</a></td>
+                <td>
+                    <button class="btn btn-primary">See Input</button>
+                    <button class="btn btn-danger">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% end %}
