@@ -1,8 +1,111 @@
-{% extends "contest.html %}
+{% extends "contest.html" %}
 {% block Imports %}
-
+<link rel="stylesheet" href="{{ static_url("css/contest_standings.css") }}"/>
 {% end %}
 
 {% block Body %}
-
+    <div class="container-fluid" id="standings-content">
+        <h2>{{ contest_id }} Standings:</h2>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <th>#</th>
+                <th>Name</th>
+                <th>Solved</th>
+                <th>Penalties</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+            </thead>
+            <tbody>
+                <td>1</td>
+                <td>Vali</th>
+                <td>5</td>
+                <td>31</td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(0)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(3)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(4)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(7)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(2)</span>
+                </td>
+            </tbody>
+            <tbody>
+                <td>2</td>
+                <td>Fox</th>
+                <td>4</td>
+                <td>744</td>
+                <td>
+                    <span class="rejected">-</span>
+                    <br>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(15)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(20)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(3)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(24)</span>
+                </td>
+            </tbody>
+            <tbody>
+                <td>3</td>
+                <td>Andrei</th>
+                <td>3</td>
+                <td>10</td>
+                <td>
+                    <span class="rejected">-</span>
+                </td>
+                <td>
+                    <span class="rejected">-</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(2)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(1)</span>
+                </td>
+                <td>
+                    <span class="accepted">+</span>
+                    <br>
+                    <span class="submissions">(1)</span>
+                </td>
+            </tbody>
+        </table>
+    </div>
 {% end %}
