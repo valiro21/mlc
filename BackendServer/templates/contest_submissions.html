@@ -1,8 +1,107 @@
-{% extends "contest.html %}
+{% extends "contest.html" %}
 {% block Imports %}
-
+<link rel="stylesheet" href="{{ static_url("css/contest_submissions.css") }}"/>
 {% end %}
 
 {% block Body %}
+    <div class="container-fluid" id="submissions-content">
+        <h2>{{ contest_id }} Submissions</h2>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Problem</th>
+                    <th>Language</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                    <th>Memory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3541335</td>
+                    <td>2017-04-23 04:20:12</td>
+                    <td>valiro21</td>
+                    <td>
+                        <a href="/problem/a+b">a+b</a>
+                    </td>
+                    <td>GNU C++11</td>
+                    <td>
+                        <span class="accepted">Accepted</span>
+                    </td>
+                    <td>100 ms</td>
+                    <td>100 KB</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>1461453</td>
+                    <td>2017-03-01 01:06:59</td>
+                    <td>TDF</td>
+                    <td>
+                        <a href="/problem/gcd">gcd</a>
+                    </td>
+                    <td>Java</td>
+                    <td>
+                        <span class="rejected">Wrong Answer on Test 5</span>
+                    </td>
+                    <td>1500 ms</td>
+                    <td>1633 KB</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>14671257</td>
+                    <td>2017-02-21 23:02:15</td>
+                    <td>netedu_andrei</td>
+                    <td>
+                        <a href="/problem/lee">Lee's Maze</a>
+                    </td>
+                    <td>Python</td>
+                    <td>
+                        <span class="rejected">Time limit exceeded on Test 10</span>
+                    </td>
+                    <td>3500 ms</td>
+                    <td>3151 KB</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>13433135</td>
+                    <td>2017-02-15 11:20:12</td>
+                    <td>cosmin_pascaru</td>
+                    <td>
+                        <a href="/problem/a+b">a+b</a>
+                    </td>
+                    <td>GNU C++11</td>
+                    <td>
+                        <span class="accepted">Accepted</span>
+                    </td>
+                    <td>100 ms</td>
+                    <td>100 KB</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>1354145</td>
+                    <td>2017-01-14 03:13:31</td>
+                    <td>valiro21</td>
+                    <td>
+                        <a href="/problem/fft">FFT</a>
+                    </td>
+                    <td>GNU C++11</td>
+                    <td>
+                        <span class="accepted">Accepted</span>
+                    </td>
+                    <td>1500 ms</td>
+                    <td>15134 KB</td>
+                </tr>
+            </tbody>
 
+
+
+        </table>
+    </div>
 {% end %}
