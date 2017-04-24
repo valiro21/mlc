@@ -1,12 +1,13 @@
 {% extends "user.html" %}
 {% block Imports %}
 <link rel="stylesheet" href="{{ static_url("css/profile.css") }}"/>
+<link rel="stylesheet" href="{{ static_url("css/user_general.css") }}"/>
 {% end %}
 
 {% block Body %}
 
-<div class = "col-lg-2 container profile">
-    <h1 class = "username">AndreiNetedu<span class="badge badge-default badge-rank">Grand Master</span></h1>
+<div class = "container profile user_table">
+    <h1 class = "username user_title">AndreiNetedu<span class="badge badge-default badge-rank">Grand Master</span></h1>
     <div class = "personal-information">
         <div>
             <span>Real Name:</span>

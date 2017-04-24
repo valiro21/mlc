@@ -1,0 +1,64 @@
+{% extends "user.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url('css/user_general.css') }}"/>
+<link rel="stylesheet" href="{{ static_url('css/user_statistics.css') }}"/>
+{% end %}
+
+{% block Body %}
+{% include fragments/navbar.html %}
+
+<div class="container user_table">
+    <h1 class="user_title">Statistics</h1>
+
+    <div>
+        <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <title>Layer 1</title>
+                <rect id="svg_1" height="300" width="550" y="100" x="100" stroke-width="0" stroke="#000"
+                      fill="#ff0000"/>
+                <rect id="svg_2" height="200" width="550" y="200" x="100" stroke-opacity="null" stroke-width="0"
+                      stroke="#000" fill="#ff7f00"/>
+                <rect id="svg_3" height="140" width="550" y="260" x="100" stroke-opacity="null" stroke-width="0"
+                      stroke="#000" fill="#5656ff"/>
+                <rect id="svg_4" height="90" width="550" y="320" x="100" stroke-opacity="null" stroke-width="0"
+                      stroke="#000" fill="#00bf00"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="150" x2="650" y1="150" x1="100"
+                      stroke="#000" fill="white"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="200" x2="650" y1="200" x1="100"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="250" x2="650" y1="250" x1="100"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="300" x2="650" y1="300" x1="100"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="350" x2="650" y1="350" x1="100"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="400" x2="650" y1="400" x1="100"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="150" y1="100" x1="150"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="200" y1="100" x1="200"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="250" y1="100" x1="250"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="300" y1="100" x1="300"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="350" y1="100" x1="350"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="400" y1="100" x1="400"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="450" y1="100" x1="450"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="500" y1="100" x1="500"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="550" y1="100" x1="550"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+                <line stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="410" x2="600" y1="100" x1="600"
+                      fill-opacity="null" stroke-opacity="null" stroke="#000" fill="none"/>
+            </g>
+        </svg>
+    </div>
+
+</div>
+
+{% end %}
+
