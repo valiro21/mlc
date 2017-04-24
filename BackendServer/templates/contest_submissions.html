@@ -21,7 +21,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>3541335</td>
+                    <td>
+						<a data-toggle="modal" href="#submission-modal">15234</a>
+					</td>
                     <td>2017-04-23 04:20:12</td>
                     <td>valiro21</td>
                     <td>
@@ -37,7 +39,9 @@
             </tbody>
             <tbody>
                 <tr>
-                    <td>1461453</td>
+                    <td>
+						<a data-toggle="modal" href="#submission-modal">15234</a>
+					</td>
                     <td>2017-03-01 01:06:59</td>
                     <td>TDF</td>
                     <td>
@@ -53,7 +57,9 @@
             </tbody>
             <tbody>
                 <tr>
-                    <td>14671257</td>
+                    <td>
+						<a data-toggle="modal" href="#submission-modal">15234</a>
+					</td>
                     <td>2017-02-21 23:02:15</td>
                     <td>netedu_andrei</td>
                     <td>
@@ -69,7 +75,9 @@
             </tbody>
             <tbody>
                 <tr>
-                    <td>13433135</td>
+                    <td>
+						<a data-toggle="modal" href="#submission-modal">15234</a>
+					</td>
                     <td>2017-02-15 11:20:12</td>
                     <td>cosmin_pascaru</td>
                     <td>
@@ -85,7 +93,9 @@
             </tbody>
             <tbody>
                 <tr>
-                    <td>1354145</td>
+                    <td>
+						<a data-toggle="modal" href="#submission-modal">15234</a>
+					</td>
                     <td>2017-01-14 03:13:31</td>
                     <td>valiro21</td>
                     <td>
@@ -104,4 +114,65 @@
 
         </table>
     </div>
+
+<!-- Modal -->
+<div id="submission-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Submission #1123</h4>
+      </div>
+      <div class="modal-body">
+          <!-- Source code -->
+          <pre class="pre-scrollable">
+              <code>
+                  include, text
+                  code here
+                  haha
+                  text
+              </code>
+          </pre>
+
+          <!-- Tests -->
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Result</th>
+                    <th>Time taken</th>
+                    <th>Memory used</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Success</td>
+                    <td>0.1s</td>
+                    <td>10 MB</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Success</td>
+                    <td>0.1s</td>
+                    <td>10 MB</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>FAILURE</td>
+                    <td>1.001s</td>
+                    <td>100 MB</td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 {% end %}
