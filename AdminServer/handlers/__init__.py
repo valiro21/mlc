@@ -2,7 +2,7 @@
 from AdminServer.handlers.AdminListHandler import AdminListHandler
 from AdminServer.handlers.MainHandler import MainHandler
 from AdminServer.handlers.LoginHandler import LoginHandler
-from AdminServer.handlers.ProblemCreateHandler import ProblemCreateHandler
+from AdminServer.handlers.ProblemHandler import ProblemHandler
 from AdminServer.handlers.SettingsHandler import SettingsHandler
 from AdminServer.handlers.ContestHandler import ContestHandler
 from AdminServer.handlers.SubmissionHandler import SubmissionHandler
@@ -15,7 +15,7 @@ handlers = [
     (r"/settings", SettingsHandler),
     (r"/monitor", MonitorHandler),
     (r"/contest.*", ContestHandler),
-    (r"/create/problem", ProblemCreateHandler),
+    (r"/problem.*", ProblemHandler),
     (r"/user/.+/settings", UserSettingsHandler),
     (r"/admin_list", AdminListHandler),
     (r"/submission/.+", SubmissionHandler)
