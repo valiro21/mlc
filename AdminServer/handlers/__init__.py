@@ -1,4 +1,5 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+from AdminServer.handlers.AdminListHandler import AdminListHandler
 from AdminServer.handlers.MainHandler import MainHandler
 from AdminServer.handlers.LoginHandler import LoginHandler
 from AdminServer.handlers.ProblemCreateHandler import ProblemCreateHandler
@@ -16,5 +17,6 @@ handlers = [
     (r"/contest.*", ContestHandler),
     (r"/create/problem", ProblemCreateHandler),
     (r"/user/.+/settings", UserSettingsHandler),
+    (r"/admin_list", AdminListHandler),
     (r"/submission/.+", SubmissionHandler)
 ]
