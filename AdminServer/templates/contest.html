@@ -1,8 +1,4 @@
-{% extends "base.html" %}
-{% block Imports %}
-<link rel="stylesheet" href="{{ static_url('css/contest.css') }}"/>
-<script type="text/javascript" src="{{ static_url('js/contest.js') }}"></script>
-{% end %}
+{% extends "contests.html" %}
 
 {% block SidebarItems %}
 <li class="sidebar-label">General</li>
@@ -39,5 +35,5 @@
 {% end %}
 
 {% block Body %}
-
+{% include "fragments/contests_rows.html" %}
 {% end %}

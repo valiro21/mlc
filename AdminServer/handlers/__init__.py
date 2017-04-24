@@ -13,7 +13,7 @@ handlers = [
     (r"/login", LoginHandler),
     (r"/settings", SettingsHandler),
     (r"/monitor", MonitorHandler),
-    (r"/contest/.+/.*", ContestHandler),
+    (r"/contest.*", ContestHandler),
     (r"/create/problem", ProblemCreateHandler),
     (r"/user/.+/settings", UserSettingsHandler)
 ]

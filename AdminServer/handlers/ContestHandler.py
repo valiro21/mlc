@@ -16,6 +16,9 @@ class ContestHandler(BaseHandler.BaseHandler):
     @tornado.web.authenticated
     def get(self):
         path_elements = [x for x in self.request.path.split("/") if x]
+        if len(path_elements) == 1:
+            self.render("contests.html")
+            return
         contest_id = path_elements[1]
 
         if len(path_elements) <= 2:
