@@ -11,8 +11,8 @@ jQuery(document).ready(function(){
         }
     });
 
-    $('.table').tableAddCounter();
-    $('tbody').sortable();
+    $('.table-sort').tableAddCounter();
+    $('.table-sort tbody').sortable();
 });
 
 (function ($) {
@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
                 title: '#',
                 start: 1,
                 id: true,
-                cssClass: false
+                cssClass: true
             };
 
             var options = $.extend({}, defaults, options);

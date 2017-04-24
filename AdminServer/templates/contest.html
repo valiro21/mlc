@@ -17,19 +17,19 @@
 </li>
 
 <li class="sidebar-label">Data</li>
-<li class="sidebar-item unique">
+<li class="sidebar-item unique {% if last_path == 'ranking' %} active{% end %}">
     <a href="#">Ranking</a>
 </li>
 
-<li class="sidebar-item unique">
+<li class="sidebar-item unique {% if last_path == 'problems' %} active{% end %}">
     <a href="./problems">Problems</a>
 </li>
 
-<li class="sidebar-item unique">
-    <a href="#">Submissions</a>
+<li class="sidebar-item unique {% if last_path == 'submissions' %} active{% end %}">
+    <a href="./submissions">Submissions</a>
 </li>
 
-<li class="sidebar-item unique">
+<li class="sidebar-item unique {% if last_path == 'user_tests' %} active{% end %}">
     <a href="#">User tests</a>
 </li>
 

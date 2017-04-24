@@ -398,6 +398,7 @@ p {
 
 .conteudo {
   float:right;
+  overflow: hidden;
 }
 
 .navbar-login {
