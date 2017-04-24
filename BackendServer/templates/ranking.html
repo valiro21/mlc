@@ -1,31 +1,36 @@
 {% extends "base.html" %}
 {% block Imports %}
-<link rel="stylesheet" href="{{ static_url('css/ranking.css') }}"/>
+<link rel="stylesheet" href="{{ static_url('css/archive.css') }}"/>
 {% end %}
 
 {% block Body %}
 {% include fragments/navbar.html %}
 
 <div class="container">
-    <h2>Problem Archive</h2>
-    <p>LeaderBoard</p>
-    <table class="table table-hover table-responsive">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Display Name</th>
-                <th>Username</th>
-                <th>Archive Solved</th>
-                <th>Contest Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% include fragments/rankingEntry.html %}
-            {% include fragments/rankingEntry.html %}
-            {% include fragments/rankingEntry.html %}
-        </tbody>
+    <div style="padding-top: 20px">
+        <h2>Problem Archive</h2>
+        <p>LeaderBoard</p>
+    </div>
 
-    </table>
+    <div class="archive-table">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Display Name</th>
+                    <th>Username</th>
+                    <th>Archive Solved</th>
+                    <th>Contest Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% include fragments/rankingEntry.html %}
+                {% include fragments/rankingEntry.html %}
+                {% include fragments/rankingEntry.html %}
+            </tbody>
+
+        </table>
+    </div>
 
 </div>
 
