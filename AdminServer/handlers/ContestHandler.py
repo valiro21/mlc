@@ -38,6 +38,9 @@ class ContestHandler(BaseHandler.BaseHandler):
                                     "users"]:
             self.redirect("settings")
         render = path_elements[2]
+
+        render = "contest_" + render
+        """
         if render == "settings":
             render = "contest_settings"
         elif render == "problems":
@@ -50,6 +53,7 @@ class ContestHandler(BaseHandler.BaseHandler):
             render = "contest_users"
         elif render == "ranking":
             render = "contest_ranking"
+        """
 
         self.render(render + ".html",
                     last_path=path_elements[2],
