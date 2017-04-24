@@ -1,0 +1,24 @@
+#standings-content{
+    padding-top:50px;
+}
+
+.table{
+    text-align:center;
+}
+
+th{
+    text-align:center;
+}
+
+.accepted{
+    color: #22BB22;
+}
+
+.rejected{
+    color: #BB2222;
+
+}
+
+.submissions{
+    color: #b2b2b2;
+}
