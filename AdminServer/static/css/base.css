@@ -405,6 +405,10 @@ p {
     color: #1c1f22;
 }
 
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+    color: #ffffff;
+}
+
 .table-filter {
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
