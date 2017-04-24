@@ -21,9 +21,7 @@ jQuery(document).ready(function(){
                     $(list[i]).removeClass('selected');
                 }
 
-                if (event.target.hasClass('sidebar-item')) {
-                    selectedItem.addClass('selected');
-                }
+                selectedItem.addClass('selected');
             }
         }
         else {
@@ -34,9 +32,7 @@ jQuery(document).ready(function(){
                         $(list[i]).removeClass('active');
                     }
                 }
-                sif (event.target.hasClass('sidebar-item')) {
-                    selectedItem.addClass('selected');
-                }
+                selectedItem.addClass('active');
             }
             else {
                 selectedItem.removeClass('active');

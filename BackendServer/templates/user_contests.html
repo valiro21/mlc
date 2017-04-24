@@ -1,0 +1,45 @@
+{% extends "user.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url('css/user_general.css') }}"/>
+<link rel="stylesheet" href="{{ static_url('css/user_contests.css') }}"/>
+{% end %}
+
+{% block Body %}
+{% include fragments/navbar.html %}
+
+<div class="container user_table">
+    <h1 class="user_title">Previous Participation's</h1>
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Contest ID</th>
+                <th>Contest End Date</th>
+                <th>Rank</th>
+                <th>Solved</th>
+                <th>Rating Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class = 'clickable-row' data-href='/contest/fiicode-round-1'>
+                <td>1</td>
+                <td>FiiCode - Round 1</td>
+                <td>7-1-2017</td>
+                <td>3</td>
+                <td>3</td>
+                <td class = "rating-change-positive">+65</td>
+            </tr>
+            <tr class = 'clickable-row' data-href='/contest/fiicode-round-2'>
+                <td>2</td>
+                <td>FiiCode - Round 2</td>
+                <td>14-2-2017</td>
+                <td>20</td>
+                <td>1</td>
+                <td class = "rating-change-negative">-30</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% end %}
+

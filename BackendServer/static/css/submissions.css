@@ -1,3 +1,19 @@
+#submissions-content{
+    padding: 50px 3em 0px 3em;
+}
+
+table, th{
+    text-align:center;
+}
+
+.accepted{
+    color: #22BB22;
+}
+
+.rejected{
+    color: #2222BB;
+}
+
 td a {
     display:block;
     width:100%;

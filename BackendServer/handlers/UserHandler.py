@@ -30,7 +30,8 @@ class UserHandler(tornado.web.RequestHandler):
         if path_elements[2] not in ["profile",
                                     "settings",
                                     "user_submissions",
-                                    "statistics"]:
+                                    "user_contests",
+                                    "user_statistics"]:
             self.redirect("profile")
 
         self.render(path_elements[2] + ".html", user_id=user_id)

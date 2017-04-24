@@ -1,12 +1,13 @@
 {% extends "user.html" %}
 {% block Imports %}
 <link rel="stylesheet" href="{{ static_url('css/settings.css') }}"/>
+<link rel="stylesheet" href="{{ static_url('css/user_general.css') }}"/>
 {% end %}
 
 {% block Body %}
 
-<div class = "col-lg-2 container" style = "padding-left: 40px">
-    <h1 class="settings" style = "padding-bottom: 20px">Settings</h1>
+<div class = "container user_table">
+    <h1 class = "user_title">Settings</h1>
 
     <div class = "update-profile">
         <form>

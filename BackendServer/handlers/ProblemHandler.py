@@ -30,4 +30,4 @@ class ProblemHandler(tornado.web.RequestHandler):
                                     "comments"]:
             self.redirect("statement")
 
-        self.render(path_elements[2] + ".html", problem_id=problem_id)
+        self.render("problem_" + path_elements[2] + ".html", problem_id=problem_id)
