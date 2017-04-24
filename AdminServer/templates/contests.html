@@ -6,4 +6,14 @@
 
 {% block Body %}
 {% include "fragments/contests_rows.html" %}
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="problem">Create Contest</label>
+                <input type="text" class="form-control" id="problem" placeholder="Enter contest name">
+            </div>
+        </form>
+    </div>
+</div>
 {% end %}

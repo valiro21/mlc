@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block Body %}
+<div class="container">
+    <form method="POST" action="problem">
+        <div class="row">
+            <h2>Edit problem</h2>
+            <hr />
+        </div>
+
+        <div class="row"><h4 class="subtitle">General information</h4></div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Name</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="name">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Description</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="description">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Statements</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="file" class="form-control input-sm" id="statement">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Attachments</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="file" class="form-control input-sm" id="attachment">
+            </div>
+        </div>
+
+
+        <!-- Datasets -->
+        <div class="row"><h4 class="subtitle">Datasets</h4></div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Time limit</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="timelimit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Memory limit</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control input-sm" id="memorylimit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 helper-text">
+                <p>Max Score</p>
+            </div>
+            <div class="col-lg-3">
+                <input type="number" class="form-control input-sm" id=maxscore>
+            </div>
+        </div>
+
+        <div class="row"><h4 class="subtitle">Testcases</h4></div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Public</th>
+                            <th>Input</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Test 1</td>
+                            <td class="text-center">
+                                <label><input type="checkbox" value=""></label>
+                            </td>
+                            <td>file.in</td>
+                            <td>file.out</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Test 2</td>
+                            <td class="text-center">
+                                <label><input type="checkbox" value=""></label>
+                            </td>
+                            <td>file2.in</td>
+                            <td>file2.out</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <a href="#">Upload testcases</a>
+        <input type="file" class="form-control input-sm" id="testcases">
+
+        <br />
+
+        <button class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% end %}

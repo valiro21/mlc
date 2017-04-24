@@ -10,6 +10,7 @@ from AdminServer.handlers import BaseHandler
 
 class ContestHandler(BaseHandler.BaseHandler):
     """Handler for login."""
+
     def data_received(self, chunk):
         pass
 
@@ -21,10 +22,14 @@ class ContestHandler(BaseHandler.BaseHandler):
             return
         contest_id = path_elements[1]
 
-        if len(path_elements) <= 2:
+        if len(path_elements) < 2 or (len(path_elements) == 2 and
+                                      contest_id != "create"):
             self.redirect(os.path.join(self.request.path, "settings"))
             return
-        if len(path_elements) >= 4:
+        elif len(path_elements) == 2 and contest_id == "create":
+            self.render("contest_create.html")
+            return
+        elif len(path_elements) >= 4:
             self.redirect("..")
             return
 
