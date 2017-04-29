@@ -4,7 +4,9 @@
 import json
 
 from sqlalchemy import create_engine
-from DB import Contest, Participation, Problem, User, Submission, Dataset, Testcase
+from DB import Contest, Participation, \
+    Problem, User, Submission, Dataset, \
+    Testcase
 from DB import Base
 
 
@@ -24,9 +26,16 @@ with open('config.json', 'r') as config_file:
         db_host = nvl(config['database_host'], 'localhost')
         db_port = nvl(config['database_port'], '5432')
         connection_string = db_driver + "://" + db_user + \
-                            (":" + db_password if db_password is not '' else '') + \
-                            "@" + db_host + ":" + db_port + "/" + db_name
+            (":" + db_password
+             if db_password is not ''
+             else '') + \
+            "@" + db_host + ":" + db_port + "/" + db_name
 
     engine = create_engine(
         connection_string)
     Base.Base.metadata.create_all(engine)
+
+__all__ = [
+    "Contest", "Problem", "Submission",
+    "User", "Dataset", "Testcase", "Participation"
+]

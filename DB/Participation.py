@@ -3,8 +3,6 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from sqlalchemy import Column, Integer, Boolean, ForeignKey, String, null
-from sqlalchemy import PrimaryKeyConstraint
-
 from DB.Base import Base
 
 
