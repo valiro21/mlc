@@ -3,12 +3,12 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from sqlalchemy import Column, Integer, String, Boolean, null
-
-from DB import Base
+from DB.Base import Base
 
 
 class Contest(Base):
-    __tableName__ = 'contests'
+    __tablename__ = 'contests'
+
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String)
@@ -25,9 +25,9 @@ class Contest(Base):
 
     start_time = Column(Integer, nullable=False)
     end_time = Column(Integer, nullable=False)
-    timezone = Column(String, dafault=null)
-    length_of_contest = Column(Integer, dafault=null)
-    max_submissions = Column(Integer, dafault=null)
+    timezone = Column(String, default=null)
+    length_of_contest = Column(Integer, default=null)
+    max_submissions = Column(Integer, default=null)
     max_user_test = Column(Integer, default=null)
     min_submission_interval = Column(Integer, default=0, nullable=False)
     min_user_test_interval = Column(Integer, default=0, nullable=False)

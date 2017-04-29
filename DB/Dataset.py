@@ -4,13 +4,14 @@
 
 from sqlalchemy import Column, Integer, String, null, ForeignKey, Float
 
-from DB import Base
+from DB.Base import Base
 
 
 class Dataset(Base):
-    __tableName__ = 'dataset'
+    __tablename__ = 'datasets'
+
     id = Column(Integer, primary_key=True)
-    problem_id = Column(Integer, ForeignKey("Problem.id"))
+    problem_id = Column(Integer, ForeignKey("problems.id"))
     name = Column(String)
     input_file = Column(String, default=null)
     output_file = Column(String, default=null)

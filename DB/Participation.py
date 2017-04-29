@@ -3,14 +3,17 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from sqlalchemy import Column, Integer, Boolean, ForeignKey, String, null
+from sqlalchemy import PrimaryKeyConstraint
 
-from DB import Base
+from DB.Base import Base
 
 
 class Participation(Base):
-    __tableName__ = 'participation'
-    user_id = Column(Integer, ForeignKey("user.id"))
-    contest_id = Column(Integer, ForeignKey("contest.id"))
+    __tablename__ = 'participations'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    contest_id = Column(Integer, ForeignKey("contests.id"))
     type = Column(Integer,
                   default=1,
                   nullable=False)  # 1 is official, 2 is unofficial
