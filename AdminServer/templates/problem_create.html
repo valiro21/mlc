@@ -8,13 +8,29 @@
     </div>
 
     <div class="row">
-        <form method="POST" action="/" class="form-inline">
+        <form id="create-form" method="POST" action="/problem/create" class="form-inline">
             <label for="name">Problem name: </label>
-            <input id="name" type="text" class="form-control input-sm" style="margin-left: 20px;">
+            <input id="name" name="name" type="text" class="form-control input-sm" style="margin-left: 20px;">
+
+            <hr/>
+
+            <label for="description-area">Description:</label>
+            <br/>
+            <textarea form="create-form"  rows="4" cols="50" id="description-area" name="description"></textarea>
+
             <hr />
-            <input type="submit" class="form-control">
+
+            <input type="submit" class="form-control" value="Submit">
         </form>
     </div>
+
+    {% if globals().get('error_msg', False) %}
+    <div class="row alert">
+        <p>An error has occured.</p>
+        <pre class="pre alert-danger">{{ globals().get('error_msg') }}</pre>
+    </div>
+    {% end %}
+
 </div>
 
 {% end %}

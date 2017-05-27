@@ -13,7 +13,7 @@ class Problem(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
-    title = Column(String)  # TODO: index
+    description = Column(String)
 
     difficulty = Column(Integer,
                         default=0,

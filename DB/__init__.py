@@ -2,8 +2,11 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 import json
+import os
 
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 from DB import Contest, Participation, \
     Problem, User, Submission, Dataset, \
     Testcase
@@ -13,8 +16,9 @@ from DB import Base
 def nvl(value, empty):
     return empty if value == '' else value
 
+with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
+        as config_file:
 
-with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
     connection_string = config['custom_connection_string']
@@ -31,11 +35,15 @@ with open('config.json', 'r') as config_file:
              else '') + \
             "@" + db_host + ":" + db_port + "/" + db_name
 
-    engine = create_engine(
-        connection_string)
+    engine = create_engine(connection_string)
+
+    session_factory = sessionmaker()
+    session_factory.configure(bind=engine)
+
     Base.Base.metadata.create_all(engine)
 
 __all__ = [
     "Contest", "Problem", "Submission",
-    "User", "Dataset", "Testcase", "Participation"
+    "User", "Dataset", "Testcase", "Participation",
+    "session_factory"
 ]
