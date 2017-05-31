@@ -40,6 +40,9 @@ define("compiled_template_cache",
 define("serve_traceback",
        group='application',
        default=True)
+define('cookie_secret',
+       group='application',
+       default="fdsafWDFWREDFADAFWRdFGTEQRGQFGQG")
 
 
 def make_app():
@@ -52,6 +55,6 @@ def make_app():
         (r"/contestlist", ContestListHandler),
         (r"/submissions", SubmissionsHandler),
         (r"/contest/.+", ContestHandler),
-        (r"/user/.+",UserHandler)
+        (r"/user/.+", UserHandler)
         ],
         **options.group_dict('application'))
