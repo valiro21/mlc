@@ -5,11 +5,12 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
 
-from DB import Base
+from DB.Base import Base
 
 
 class User(Base):
-    __tableName__ = 'users'
+    __tablename__ = 'users'
+
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)  # TODO: index
     firstName = Column(String)

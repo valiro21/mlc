@@ -5,14 +5,15 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import validates
 
-from DB import Base
+from DB.Base import Base
 
 
 class Problem(Base):
-    __tableName__ = 'problems'
+    __tablename__ = 'problems'
+
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
-    title = Column(String)  # TODO: index
+    description = Column(String)
 
     difficulty = Column(Integer,
                         default=0,
@@ -21,7 +22,7 @@ class Problem(Base):
                        default=0,
                        nullable=False)
     # 0 for batch, 1 for interactive, 2 for output only
-    active_dataset = Column(Integer, ForeignKey("Dataset.id"))
+    active_dataset = Column(Integer, ForeignKey("datasets.id"))
 
     @validates("difficulty")
     def __validateDifficulty__(self, key, difficulty):

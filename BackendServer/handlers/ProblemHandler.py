@@ -1,13 +1,14 @@
 # coding=utf-8
 """ProblemHandler for contestants."""
 
-import tornado.web
 import os
+from BackendServer.handlers.BaseHandler import BaseHandler
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
 
-class ProblemHandler(tornado.web.RequestHandler):
+class ProblemHandler(BaseHandler):
     """Tornado handler for a problem."""
     def data_received(self, chunk):
         pass
@@ -30,4 +31,6 @@ class ProblemHandler(tornado.web.RequestHandler):
                                     "comments"]:
             self.redirect("statement")
 
-        self.render("problem_" + path_elements[2] + ".html", problem_id=problem_id)
+        self.render("problem_" +
+                    path_elements[2] +
+                    ".html", problem_id=problem_id)

@@ -2,3 +2,7 @@
     width: 200px;
     heigth: auto;
 }
+
+.show-newlines{
+    white-space:pre-wrap;
+}
