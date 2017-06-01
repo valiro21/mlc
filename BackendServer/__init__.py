@@ -20,6 +20,7 @@ from BackendServer.handlers.UserHandler import UserHandler
 from BackendServer.handlers.ContestListHandler import ContestListHandler
 from BackendServer.handlers.ContestHandler import ContestHandler
 from BackendServer.handlers.SubmissionsHandler import SubmissionsHandler
+from BackendServer.handlers.RegisterHandler import RegisterHandler
 
 
 define('template_path',
@@ -54,6 +55,7 @@ def make_app():
         (r"/problem/.+", ProblemHandler),
         (r"/contestlist", ContestListHandler),
         (r"/submissions", SubmissionsHandler),
+        (r"/register", RegisterHandler),
         (r"/contest/.+", ContestHandler),
         (r"/user/.+", UserHandler)
         ],
