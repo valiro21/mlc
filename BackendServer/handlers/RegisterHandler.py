@@ -53,7 +53,8 @@ class RegisterHandler(BaseHandler):
             firstName=first_name,
             email=email,
             lastName=last_name,
-            password=bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt()),
+            password=bcrypt.hashpw(password.encode('utf8'),
+                                   bcrypt.gensalt()).decode('utf8')
         )
 
         self.session.add(new_user)
