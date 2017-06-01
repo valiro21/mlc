@@ -425,3 +425,6 @@ p {
 .table-filter tbody tr.selected td {
 	background-color: #eee;
 }
+.base-body-custom {
+    height:55px;
+}

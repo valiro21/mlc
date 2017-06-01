@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-
+<link rel="stylesheet" href="{{ static_url('css/problem.css') }}"/>
 {% block Body %}
 <div class="container">
     <div class="row">
@@ -10,7 +10,7 @@
     <div class="row">
         <form id="create-form" method="POST" action="/problem/create" class="form-inline">
             <label for="name">Problem name: </label>
-            <input id="name" name="name" type="text" class="form-control input-sm" style="margin-left: 20px;">
+            <input id="name" name="name" type="text" class="form-control input-sm problem-create-input-custom">
 
             <hr/>
 
