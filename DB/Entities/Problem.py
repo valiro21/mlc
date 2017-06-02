@@ -5,7 +5,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import validates
 
-from DB.Base import Base
+from DB.Entities import Base
 
 
 class Problem(Base):
@@ -23,6 +23,10 @@ class Problem(Base):
                        nullable=False)
     # 0 for batch, 1 for interactive, 2 for output only
     active_dataset = Column(Integer, ForeignKey("datasets.id"))
+
+    @staticmethod
+    def get_by_contest_id(session):
+        pass
 
     @validates("difficulty")
     def __validateDifficulty__(self, key, difficulty):

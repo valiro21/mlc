@@ -6,7 +6,7 @@
 from sqlalchemy import Column, Integer, String, LargeBinary
 from sqlalchemy.orm import validates
 
-from DB.Base import Base
+from DB.Entities import Base
 
 
 class User(Base):

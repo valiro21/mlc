@@ -4,7 +4,7 @@
 
 from sqlalchemy import Column, Integer, String, null, ForeignKey, Float
 
-from DB.Base import Base
+from DB.Entities import Base
 
 
 class Dataset(Base):

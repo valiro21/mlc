@@ -7,14 +7,10 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from DB import Contest, Participation, \
+from DB.Entities import Base, Contest, Participation, \
     Problem, User, Submission, Dataset, \
     Testcase
-from DB import Base
-
-
-def nvl(value, empty):
-    return empty if value == '' else value
+from DB.Utils import nvl
 
 with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
         as config_file:
@@ -40,10 +36,8 @@ with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
     session_factory = sessionmaker()
     session_factory.configure(bind=engine)
 
-    Base.Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
 __all__ = [
-    "Contest", "Problem", "Submission",
-    "User", "Dataset", "Testcase", "Participation",
     "session_factory"
 ]

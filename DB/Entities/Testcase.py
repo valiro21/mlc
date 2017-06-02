@@ -5,7 +5,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy import LargeBinary
 
-from DB.Base import Base
+from DB.Entities import Base
 
 
 class Testcase(Base):
