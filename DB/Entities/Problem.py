@@ -4,7 +4,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, LargeBinary, ARRAY
 from sqlalchemy.orm import validates, relationship
 
-from DB.Entities import Base
+from DB.Entities import Base, Dataset
 
 
 class Problem(Base):
@@ -16,9 +16,11 @@ class Problem(Base):
 
     contests = relationship("Problem_Contest", back_populates="problem")
 
-    datasets = relationship('Dataset',
-                            foreign_keys='Dataset.problem_id',
-                            back_populates='problem')
+    # datasets is a legit variable in this class
+
+    # datasets = relationship('Dataset',
+    #                         foreign_keys=Dataset.problem_id)
+
     active_dataset_id = Column(Integer, ForeignKey("datasets.id"))
     active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
 

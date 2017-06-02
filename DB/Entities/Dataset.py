@@ -16,8 +16,8 @@ class Dataset(Base):
 
     problem_id = Column(Integer, ForeignKey("problems.id"))
     problem = relationship('Problem',
-                           back_populates='datasets',
-                           foreign_keys='problem_id')
+                           backref='datasets',
+                           foreign_keys=problem_id)
 
     testcases = relationship('Testcase')
 
