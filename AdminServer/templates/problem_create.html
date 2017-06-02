@@ -10,8 +10,12 @@
     <div class="row">
         <form id="create-form" method="POST" action="/problem/create" class="form-inline">
             <label for="name">Problem name: </label>
-            <input id="name" name="name" type="text" class="form-control input-sm" style="margin-left: 20px;">
 
+            {% if 'problem_name' in globals() %}
+            <input id="name" name="name" type="text" class="form-control input-sm" style="margin-left: 20px;" value="{{ problem_name }}">
+            {% else %}
+            <input id="name" name="name" type="text" class="form-control input-sm" style="margin-left: 20px;">
+            {% end %}
             <hr/>
 
             <label for="description-area">Description:</label>

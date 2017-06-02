@@ -21,5 +21,5 @@ class BaseHandler(tornado.web.RequestHandler):
         self.init_connection()
 
     def init_connection(self):
-        """Initializes the session variable"""
+        """Initializes the database connection session variable"""
         self.session = session_factory()
