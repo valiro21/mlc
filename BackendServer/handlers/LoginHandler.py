@@ -1,6 +1,7 @@
 """Handler for Login Form"""
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import User

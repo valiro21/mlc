@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block Imports %}
 <link rel="stylesheet" href="{{ static_url('css/archive.css') }}"/>
+<link rel="stylesheet" href="{{ static_url('css/ranking.css') }}"/>
 {% end %}
 
 {% block Body %}
 {% include fragments/navbar.html %}
 
 <div class="container-fluid">
-    <div style="padding-top: 20px">
+    <div class="ranking-header-custom">
         <h2>Problem Archive</h2>
         <p>LeaderBoard</p>
     </div>
