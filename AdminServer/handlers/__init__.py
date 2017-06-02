@@ -3,6 +3,7 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from AdminServer.handlers.AdminListHandler import AdminListHandler
+from AdminServer.handlers.DatasetHandler import DatasetHandler
 from AdminServer.handlers.MainHandler import MainHandler
 from AdminServer.handlers.LoginHandler import LoginHandler
 from AdminServer.handlers.ProblemHandler import ProblemHandler
@@ -21,6 +22,7 @@ handlers = [
     (r"/monitor", MonitorHandler),
     (r"/contest.*", ContestHandler),
     (r"/problem.*", ProblemHandler),
+    (r"/dataset.*", DatasetHandler),
     (r"/user/.+/settings", UserSettingsHandler),
     (r"/admin_list", AdminListHandler),
     (r"/submission/.+", SubmissionHandler),

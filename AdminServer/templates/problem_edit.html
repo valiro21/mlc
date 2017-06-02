@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block Imports %}
+    <script type="text/javascript" src="{{ static_url('js/problem_edit.js') }}"></script>
+{% end %}
+
 {% block Body %}
 <div class="container">
     <form method="POST" action="problem">
@@ -44,7 +48,9 @@
                 {% if problem.statements != None %}
                 <ul class="list-group">
                     {% for i in range(len(problem.statements)) %}
-                        <li class="list-group-item"> {{ problem.statement_names }} </li>
+                        <li class="list-group-item">
+                            <a href="#">{{ problem.statement_names[i] }}</a>
+                        </li>
                     {% end %}
                 </ul>
                 {% end %}
@@ -74,105 +80,142 @@
         <!-- Datasets -->
         <div class="row"><h2 class="subtitle">Datasets</h2></div>
 
+        <hr/>
         <div class="row">
+            <table class="table-responsive">
+                <thead>
+                    <tr>
+                        <th>Dataset name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if problem.datasets != None %}
+                    {% for dataset in problem.datasets %}
+                        <tr>
+                            <td>
+                                <a href="#">{{ dataset.name }}</a>
+                            </td>
+                        </tr>
+                    {% end %}
+                    {% end %}
+
+                    <tr>
+                        <td>
+                            <a href="#" data-target="#new-dataset-modal" data-toggle="modal">Add new dataset...</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
 
-        <hr/>
+        <!-- New dataset modal -->
+        <div class="modal fade" id="new-dataset-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Modal title -->
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add new dataset</h4>
+                    </div>
 
-        {% if problem.datasets != None %}
-        {% for dataset in problem.datasets %}
+                    <!-- Modal body -->
+                    <div class="modal-body">
 
-            <form action="#" method="post">
+                        {# Intentional fucked up indenting #}
 
-            <div class="row">
-                <a href="#">
-                    <h3 class="subtitle">{{ dataset.name }}</h3>
-                </a>
-            </div>
+<form enctype="multipart/form-data" action="/dataset/create" method="post">
 
-            <div class="row">
-                <div class="col-lg-3 helper-text">
-                    <p>Time limit</p>
-                </div>
+    <input type="number" class="hidden" value="{{ problem.id }}" name="problem-id" id="new-dataset-problem-id"/>
 
-                <div class="col-lg-3">
-                    {{ dataset.time_limit }}
-                </div>
+    <div class="row">
+        <label for="name" class="col-lg-3 helper-text">Name</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control input-sm" id="name" name="name">
+        </div>
+    </div>
 
-                <div class="col-lg-3">
-                    <input type="text" class="form-control input-sm" name="time_limit">
-                </div>
-            </div>
+    <div class="row">
+        <label for="time-limit" class="col-lg-3 helper-text">Time limit</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control input-sm" name="time-limit" id="time-limit">
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-lg-3 helper-text">
-                    <p>Memory limit</p>
-                </div>
 
-                <div class="col-lg-3">
-                    {{ dataset.memory_limit }}
-                </div>
+    <div class="row">
+        <label for="memory-limit" class="col-lg-3 helper-text">Memory limit</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control input-sm" name="memory-limit" id="memory-limit">
+        </div>
+    </div>
 
-                <div class="col-lg-3">
-                    <input type="text" class="form-control input-sm" name="memory_limit">
-                </div>
-            </div>
+    <div class="row">
+        <label for="max-score" class="col-lg-3 helper-text">Max score</label>
+        <div class="col-lg-3">
+            <input type="number" class="form-control input-sm" id="max-score" name="max-score">
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-lg-3 helper-text">
-                    <p>Max Score</p>
-                </div>
+    <div class="row">
+        <label for="testcases" class="col-lg-3 helper-text">Test cases</label>
+        <input type="file" class="form-control input-sm" id="testcases" name="testcases">
+    </div>
 
-                <div class="col-lg-3">
-                    <input type="number" class="form-control input-sm" id=maxscore>
-                </div>
-            </div>
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</form>
 
-            <div class="row"><h4 class="subtitle">Testcases</h4></div>
 
-            <div class="row">
-                <div class="col-lg-3">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Public</th>
-                                <th>Input</th>
-                                <th>Output</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% if dataset.testcases != None %}
-                            {% for testcase in dataset.testcases %}
-                                <tr>
-                                    <td>{{ testcase.id }}</td>
-                                    <td class="text-center">
-                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>
-                                    </td>
-                                    <td>
-                                        <a href="#">input</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">output</a>
-                                    </td>
-                                </tr>
-                            {% end %}
-                            {% end %}
-                        </tbody>
-                    </table>
+                        {# Intentional fucked up indenting end #}
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <a href="#">Upload testcases</a>
-            <input type="file" class="form-control input-sm" id="testcases">
+
+{#            <div class="row"><h4 class="subtitle">Testcases</h4></div>#}
+{##}
+{#            <div class="row">#}
+{#                <div class="col-lg-3">#}
+{#                    <table class="table table-bordered">#}
+{#                        <thead>#}
+{#                            <tr>#}
+{#                                <th>#</th>#}
+{#                                <th>Public</th>#}
+{#                                <th>Input</th>#}
+{#                                <th>Output</th>#}
+{#                            </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                            {% if dataset.testcases != None %}#}
+{#                            {% for testcase in dataset.testcases %}#}
+{#                                <tr>#}
+{#                                    <td>{{ testcase.id }}</td>#}
+{#                                    <td class="text-center">#}
+{#                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <a href="#">input</a>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <a href="#">output</a>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% end %}#}
+{#                            {% end %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#            </div>#}
 
             <hr />
 
-            </form>
-        {% end %}
-        {% end %}
-
-        <button class="btn btn-primary">Submit</button>
 </div>
 
 {% end %}
