@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy import LargeBinary
 from sqlalchemy import String
 
-from DB.Base import Base
+from DB.Entities import Base
 
 
 class Submission(Base):
@@ -18,3 +18,4 @@ class Submission(Base):
     result = Column(Integer)  # TODO: decide scoring and result types
     file = Column(LargeBinary, nullable=False)
     file_digest = Column(String, nullable=False)
+    executable_file = Column(LargeBinary, nullable=False)

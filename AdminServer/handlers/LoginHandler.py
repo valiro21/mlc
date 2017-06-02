@@ -4,9 +4,10 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
-from AdminServer.handlers import BaseHandler
-from DB.Admin import Admin
 import bcrypt
+
+from AdminServer.handlers import BaseHandler
+from DB.Entities.Admin import Admin
 
 
 class LoginHandler(BaseHandler.BaseHandler):

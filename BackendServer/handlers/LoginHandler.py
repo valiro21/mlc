@@ -4,7 +4,7 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
-from DB.User import User
+from DB.Entities import User
 from sqlalchemy.sql import or_
 import bcrypt
 

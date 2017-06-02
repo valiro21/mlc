@@ -9,14 +9,11 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from DB import Contest, Participation, \
+from DB.Entities import Base, Contest, Participation, \
     Problem, User, Submission, Dataset, \
-    Testcase, Permission, Admin, Admin_Permission
-from DB import Base
-
-
-def nvl(value, empty):
-    return empty if value == '' else value
+    Testcase, Job, Process, Log, AdminPermission, \
+    Admin, Permission
+from DB.Utils import nvl
 
 with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
         as config_file:
@@ -42,11 +39,13 @@ with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
     session_factory = sessionmaker()
     session_factory.configure(bind=engine)
 
-    Base.Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
 __all__ = [
-    "Contest", "Problem", "Submission",
-    "User", "Dataset", "Testcase",
-    "Participation", "Admin", "Permission", "Admin_Permission",
-    "session_factory"
+    'Base', 'Contest', 'Problem',
+    'Dataset', 'Testcase', 'Participation',
+    'Submission', 'User', 'Job',
+    'Process', 'Log', 'Admin',
+    'AdminPermission', 'Permission',
+    'Problem_Contest', 'session_factory'
 ]

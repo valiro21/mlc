@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from tornado.web import HTTPError
 
 from AdminServer.handlers.BaseHandler import BaseHandler
-from DB.Problem import Problem
+from DB.Entities import Problem
 
 
 class ProblemHandler(BaseHandler):
