@@ -8,10 +8,32 @@
     </div>
 
     <div class="row">
-        <form method="POST" action="/" class="form-inline">
+        <form method="POST" action="/contest/create" class="form-inline">
             <label for="name">Contest name: </label>
-            <input id="name" type="text" class="form-control input-sm contest-create-input-custom">
+            <input id="name" type="text" name="contest_name" class="form-control input-sm contest-create-input-custom">
+
+            <label>Start date:</label>
+            <div class="form-group">
+                <div class='input-group date' id='start_time'>
+                    <input type='text' name="start_date" class="form-control datetimepicker" style="overflow:visible;" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+            <label>End date:</label>
+            <div class="form-group">
+                <div class='input-group date' id='end_time'>
+                    <input type='text' name="end_date" class="form-control datetimepicker" style="overflow:visible;" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
             <hr />
+
             <input type="submit" class="form-control">
         </form>
     </div>
