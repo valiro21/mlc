@@ -2,6 +2,7 @@
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 import calendar
 import os
 from datetime import datetime
@@ -9,7 +10,7 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
-from DB.Contest import Contest
+from DB.Entities import Contest
 
 
 class ContestHandler(BaseHandler.BaseHandler):
