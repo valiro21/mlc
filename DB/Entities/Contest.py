@@ -2,6 +2,7 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 import time
+from sqlalchemy.orm import relationship
 
 from sqlalchemy import Column, Integer, String, Boolean, null
 
@@ -15,6 +16,9 @@ class Contest(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String)
+
+    problems = relationship("Problem_Contest", back_populates="contest")
+
     type = Column(Integer,
                   default=1,
                   nullable=False)  # 1 for open, 2 for public, 3 for private

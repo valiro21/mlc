@@ -1,3 +1,5 @@
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+
 from sqlalchemy import Column
 from sqlalchemy import Float
 from sqlalchemy import Integer
@@ -8,6 +10,11 @@ from DB.Entities import Base
 
 
 class Job(Base):
+    """
+    Class used to describe a job for a worker.
+    For example we need to evaluate testcase 4 on problem 2
+    in contest 1. This table is used for queueing tasks.
+    """
     __tablename__ = 'jobs'
 
     submission_id = Column(Integer, nullable=False, primary_key=True)

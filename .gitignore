@@ -94,6 +94,7 @@ idea
 
 # database
 database
+DB/config.json
 
 # Vim backup files
 *.swp

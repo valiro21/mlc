@@ -1,6 +1,8 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+
 import json
 import os
 
@@ -9,7 +11,8 @@ from sqlalchemy.orm import sessionmaker
 
 from DB.Entities import Base, Contest, Participation, \
     Problem, User, Submission, Dataset, \
-    Testcase
+    Testcase, Job, Process, Log, AdminPermission, \
+    Admin, Permission
 from DB.Utils import nvl
 
 with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
@@ -39,5 +42,10 @@ with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
     Base.metadata.create_all(engine)
 
 __all__ = [
-    "session_factory"
+    'Base', 'Contest', 'Problem',
+    'Dataset', 'Testcase', 'Participation',
+    'Submission', 'User', 'Job',
+    'Process', 'Log', 'Admin',
+    'AdminPermission', 'Permission',
+    'Problem_Contest', 'session_factory'
 ]

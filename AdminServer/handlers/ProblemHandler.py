@@ -6,47 +6,67 @@
 import os
 
 from sqlalchemy.exc import SQLAlchemyError
+from tornado.web import HTTPError
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import Problem
 
 
 class ProblemHandler(BaseHandler):
-    """Handler for login."""
+    """Handler for problem pages."""
 
     def data_received(self, chunk):
         pass
 
     def get(self):
+
         path_elements = [x for x in self.request.path.split("/") if x]
         if len(path_elements) == 1:
             self.render("problem_list.html")
             return
-        problem_id = path_elements[1]
+        problem_name = path_elements[1]
 
         if len(path_elements) < 2 or \
-                (len(path_elements) == 2 and problem_id != "create"):
+                (len(path_elements) == 2 and problem_name != "create"):
             self.redirect(os.path.join(self.request.path, "edit"))
             return
-        elif len(path_elements) == 2 and problem_id == "create":
+        elif len(path_elements) == 2 and problem_name == "create":
             self.render("problem_create.html")
             return
         elif len(path_elements) >= 4:
             self.redirect("..")
             return
 
+        # Find problem (by name)
+        problem = self.session.query(Problem)\
+            .filter_by(name=problem_name)\
+            .first()
+
+        if problem is None:
+            # Problem not existing, redirect to creation page
+            self.render("problem_create.html", problem_name=problem_name)
+            return
+
         self.render("problem_edit.html",
-                    last_path=path_elements[2],
-                    problem_id=problem_id)
+                    problem=problem)
 
     def post(self):
         print("POST to ProblemHandler")
 
-        path_elements = [x for x in self.request.path.split("/") if x]
+        functions = {'create': getattr(self, 'create_problem'),
+                     'edit': getattr(self, 'edit_problem')}
 
-        if (path_elements[-1] == 'create'):
-            self.create_problem()
-            return
+        path_elements = [x for x in self.request.path.split("/") if x]
+        action = path_elements[-1]
+
+        if action in functions.keys():
+            functions[action]()
+        else:
+            raise HTTPError(404)
+
+    def edit_problem(self):
+        print('Not implemented!')
+        pass
 
     def create_problem(self):
         """Creates a problem with given name and description"""
