@@ -7,6 +7,7 @@
 import tornado
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.Admin import Admin
+from DB.Entities.Permission import Permission
 
 
 class AdminListHandler(BaseHandler):
@@ -18,7 +19,16 @@ class AdminListHandler(BaseHandler):
 
         admins = self.session.execute(querry)
 
-        self.render("admin_list.html", admins=admins)
+        admin_list = []
+
+        for admin in admins:
+            admin_list.append(admin)
+
+        querry = self.session.query(Permission)
+
+        permissions = self.session.execute(querry)
+
+        self.render("admin_list.html", admins=admin_list, permissions=permissions)
 
     def post(self):
         # to do

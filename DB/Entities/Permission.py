@@ -13,4 +13,4 @@ class Permission(Base):
     __tablename__ = 'permissions'
 
     permission_id = Column(Integer, primary_key=True)
-    permission_name = Column(String, nullable=False)
+    permission_name = Column(String, nullable=False, unique=True)
