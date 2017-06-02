@@ -64,7 +64,7 @@ $('document').ready(function(){
                 })
             },
             success :  function(data) {
-                if(data=="registered"){
+                if(data === "registered"){
                     $("#error").fadeIn(1000, function(){
                         $("#error").html('<p>Registration Successful!</p>');
                     });
@@ -72,9 +72,14 @@ $('document').ready(function(){
                 }
                 else{
                     $("#error").fadeIn(1000, function(){
-                        $("#error").html('<p>Unexpected error!</p>');
+                        $("#error").html('<p class="alert-danger">Unexpected error!' + data + '</p>');
                     });
                 }
+            },
+            error : function (data) {
+                $("#error").fadeIn(1000, function(){
+                    $("#error").html('<p class="alert-danger">Unexpected error!' + data + '</p>');
+                });
             }
         });
         return false;
