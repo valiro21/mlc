@@ -12,37 +12,74 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>valiro21</td>
-        <td>Valentin Rosca</td>
-        <td>rosca.valentin2012@gmail.com</td>
-        <td>
-            <!-- Min width is to prevent buttons from going on different lines in low resolutions -->
-            <div style="min-width: 125px">
-                <button class="btn btn-primary">Edit</button>
-                <button class="btn btn-danger">Delete</button>
-            </div>
-        </td>
+    {% for admin in admins %}
+        <tr>
+            <td>{{admin[1]}}</td>
+            <td>{{ admin[2] }}</td>
+            <td>{{ admin[5] }}</td>
+            <td>
+                <!-- Min width is to prevent buttons from going on different lines in low resolutions -->
+                <div style="min-width: 125px">
+                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </div>
+            </td>
 
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-    </tr>
-    <tr>
-        <td>TheDesertFoxM</td>
-        <td>Miron Alexandru</td>
-        <td>mironalex96@gmail.com</td>
-
-        <td>
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </td>
-
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-        <td class="text-center"><label><input type="checkbox" value=""></label></td>
-    </tr>
+            <td class="text-center"><label><input type="checkbox" value=""></label></td>
+            <td class="text-center"><label><input type="checkbox" value=""></label></td>
+            <td class="text-center"><label><input type="checkbox" value=""></label></td>
+            <td class="text-center"><label><input type="checkbox" value=""></label></td>
+        </tr>
+    {% end %}
     </tbody>
 </table>
+
+<!-- Trigger for Admin Creation Form Modal -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createAdminModal">
+    Create Admin
+</button>
+
+<!-- Admin Creation Form Modal -->
+
+<div id="createAdminModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <p>Create a new admin:</p>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="/create_admin" method="POST" id="create-admin-form">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <input type="submit" value="REGISTER" class="btn btn-info btn-block" id="btn-submit">
+                </form>
+            </div>
+            <div class="modal-footer" id="error">
+            </div>
+        </div>
+    </div>
+</div>

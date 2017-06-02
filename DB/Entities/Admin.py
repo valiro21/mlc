@@ -16,8 +16,7 @@ class Admin(Base):
 
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)  # TODO: index
-    firstName = Column(String)
-    lastName = Column(String)
+    name = Column(String)
     password = Column(String)
     avatar = Column(LargeBinary)
     email = Column(String, unique=True)

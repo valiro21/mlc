@@ -2,10 +2,11 @@
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
 import tornado
-
 from AdminServer.handlers.BaseHandler import BaseHandler
+from DB.Entities.Admin import Admin
 
 
 class AdminListHandler(BaseHandler):
@@ -13,7 +14,11 @@ class AdminListHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        self.render("admin_list.html")
+        querry = self.session.query(Admin)
+
+        admins = self.session.execute(querry)
+
+        self.render("admin_list.html", admins=admins)
 
     def post(self):
         # to do
