@@ -1,8 +1,8 @@
 # coding=utf-8
 """UserHandler for contestants."""
 
-import tornado.web
 import os
+from BackendServer.handlers.BaseHandler import BaseHandler
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
@@ -10,7 +10,7 @@ import os
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 
-class UserHandler(tornado.web.RequestHandler):
+class UserHandler(BaseHandler):
     """Tornado handler for a problem."""
     def data_received(self, chunk):
         pass

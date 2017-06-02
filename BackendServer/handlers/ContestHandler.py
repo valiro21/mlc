@@ -1,13 +1,13 @@
 # coding=utf-8
 """Contest Handler for contest page."""
 
-import tornado.web
 import os
+from BackendServer.handlers.BaseHandler import BaseHandler
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
 
-class ContestHandler(tornado.web.RequestHandler):
+class ContestHandler(BaseHandler):
     """Tornado handler for a contest."""
     def data_received(self, chunk):
         pass
@@ -31,4 +31,6 @@ class ContestHandler(tornado.web.RequestHandler):
                                     "standings"]:
             self.redirect("problems")
 
-        self.render("contest_" + path_elements[2] + ".html", contest_id=contest_id)
+        self.render("contest_" +
+                    path_elements[2] +
+                    ".html", contest_id=contest_id)

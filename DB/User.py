@@ -1,8 +1,9 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, LargeBinary
 from sqlalchemy.orm import validates
 
 from DB.Base import Base
@@ -16,6 +17,8 @@ class User(Base):
     firstName = Column(String)
     lastName = Column(String)
     password = Column(String)
+    rating = Column(Integer, default=1337)
+    avatar = Column(LargeBinary)
     email = Column(String, unique=True)
 
     @validates("email")

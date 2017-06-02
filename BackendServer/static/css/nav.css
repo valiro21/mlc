@@ -404,3 +404,24 @@ p {
    width: -webkit-calc(100%);
    width: calc(100%);
 }
+.modal-header{
+    background: rgba(62, 69, 76, 0.8);
+    color: #ffffff;
+}
+
+.modal-body{
+}
+
+.modal-footer{
+    text-align: center;
+    color: #31cb0c;
+}
+
+.form-group{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+form .btn{
+    background: rgba(100,100,100,0.8);
+}

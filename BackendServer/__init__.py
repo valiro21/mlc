@@ -20,6 +20,9 @@ from BackendServer.handlers.UserHandler import UserHandler
 from BackendServer.handlers.ContestListHandler import ContestListHandler
 from BackendServer.handlers.ContestHandler import ContestHandler
 from BackendServer.handlers.SubmissionsHandler import SubmissionsHandler
+from BackendServer.handlers.RegisterHandler import RegisterHandler
+from BackendServer.handlers.LoginHandler import LoginHandler
+from BackendServer.handlers.LogoutHandler import LogoutHandler
 
 
 define('template_path',
@@ -40,6 +43,9 @@ define("compiled_template_cache",
 define("serve_traceback",
        group='application',
        default=True)
+define('cookie_secret',
+       group='application',
+       default="fdsafWDFWREDFADAFWRdFGTEQRGQFGQG")
 
 
 def make_app():
@@ -51,7 +57,10 @@ def make_app():
         (r"/problem/.+", ProblemHandler),
         (r"/contestlist", ContestListHandler),
         (r"/submissions", SubmissionsHandler),
+        (r"/register", RegisterHandler),
         (r"/contest/.+", ContestHandler),
-        (r"/user/.+",UserHandler)
+        (r"/user/.+", UserHandler),
+        (r"/login", LoginHandler),
+        (r"/logout", LogoutHandler)
         ],
         **options.group_dict('application'))
