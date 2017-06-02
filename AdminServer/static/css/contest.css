@@ -9,3 +9,11 @@
 .reply-box {
     width:100% !important;
 }
+
+.contest-create-input-custom {
+    margin-left: 20px;
+}
+
+.announcement-name-custom {
+    white-space:nowrap;
+}
