@@ -17,5 +17,8 @@ class Dataset(Base):
 
     testcases = relationship('Testcase')
 
+    stdin = Column(String, nullable=True)  # default is stdin
+    stdout = Column(String, nullable=True)  # default is stdout
+
     time_limit = Column(Float, default=1, nullable=False)
     memory_limit = Column(Float, default=16, nullable=False)
