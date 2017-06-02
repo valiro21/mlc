@@ -16,10 +16,7 @@ class Problem(Base):
 
     contests = relationship("Problem_Contest", back_populates="problem")
 
-    # datasets is a legit variable in this class
-
-    # datasets = relationship('Dataset',
-    #                         foreign_keys=Dataset.problem_id)
+    datasets = None # This is for autocomplete, actual attribute gets overwritten
 
     active_dataset_id = Column(Integer, ForeignKey("datasets.id"))
     active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
