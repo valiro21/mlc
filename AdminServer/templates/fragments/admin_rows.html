@@ -4,7 +4,6 @@
         <th>Username</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -13,13 +12,6 @@
             <td>{{ admin[1] }}</td>
             <td>{{ admin[2] }}</td>
             <td>{{ admin[5] }}</td>
-            <td>
-                <!-- Min width is to prevent buttons from going on different lines in low resolutions -->
-                <div style="min-width: 125px">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#editAdminModal">Edit</button>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAdminModal">Delete</button>
-                </div>
-            </td>
         </tr>
     {% end %}
     </tbody>
@@ -28,6 +20,10 @@
 <!-- Trigger for Admin Creation Form Modal -->
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createAdminModal">
     Create Admin
+</button>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editAdminModal">
+    Edit Admin
 </button>
 
 <!-- Admin Creation Form Modal -->
@@ -81,10 +77,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <p>Edit admin {{ admins[0][1] }}:</p>
+                <p>Edit admin:</p>
             </div>
             <div class="modal-body">
-                <form role="form" action="" method="POST" id="edit-admin-form">
+                <form role="form" action="/edit_admin" method="POST" id="edit-admin-form">
+                    <div class="row">
+                        <div class="form-group">
+                            <select class="form-control" id="username" name="username">
+                                {% for admin in admins %}
+                                    <option>{{ admin[1] }}</option>
+                                {% end %}
+                            </select>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="form-group">
                             <input type="text" name="name" id="name" class="form-control input-sm" placeholder="New name">
@@ -104,6 +109,16 @@
                         <div class="form-group">
                             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
                         </div>
+                    </div>
+                    <div class="row">
+                        <p>Permissions:</p>
+                         <div class="form-group well well-sm pre-scrollable">
+                             {% for permission in permissions %}
+                             <div class="checkbox">
+                                <label><input type="checkbox" value="{{permission[1]}}">{{permission[1]}}</label>
+                             </div>
+                             {% end %}
+                         </div>
                     </div>
                     <input type="submit" value="REGISTER" class="btn btn-info btn-block" id="btn-submit">
                 </form>

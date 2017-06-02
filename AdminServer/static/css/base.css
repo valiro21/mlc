@@ -428,3 +428,8 @@ p {
 .base-body-custom {
     height:55px;
 }
+
+.modal-body{
+    margin-left: 10px;
+    margin-right: 10px;
+}
