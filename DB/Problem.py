@@ -15,6 +15,12 @@ class Problem(Base):
     name = Column(String, unique=True, nullable=False)
     description = Column(String)
 
+    contests = relationship("Problem_Contest", back_populates="problem")
+
+    datasets = relationship('Dataset', foreign_keys=[Dataset.problem_id])
+    active_dataset_id = Column(Integer, ForeignKey("datasets.id"))
+    active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
+
     statement_names = Column(ARRAY(String, zero_indexes=True))
     statements = Column(ARRAY(LargeBinary, zero_indexes=True))
 
@@ -28,11 +34,6 @@ class Problem(Base):
                        default=0,
                        nullable=False)
     # 0 for batch, 1 for interactive, 2 for output only
-
-    datasets = relationship('Dataset', foreign_keys=[Dataset.problem_id])
-
-    active_dataset_id = Column(Integer, ForeignKey("datasets.id"))
-    active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
 
     @validates("difficulty")
     def __validateDifficulty__(self, key, difficulty):

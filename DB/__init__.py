@@ -11,7 +11,8 @@ from sqlalchemy.orm import sessionmaker
 
 from DB import Contest, Participation, \
     Problem, User, Submission, Dataset, \
-    Testcase, Permission, Admin, Admin_Permission
+    Testcase, Permission, Admin, Admin_Permission, \
+    Problem_Contest
 from DB import Base
 
 
@@ -45,7 +46,7 @@ with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
     Base.Base.metadata.create_all(engine)
 
 __all__ = [
-    "Contest", "Problem", "Submission",
+    "Problem", "Contest", "Problem_Contest", "Submission",
     "User", "Dataset", "Testcase",
     "Participation", "Admin", "Permission", "Admin_Permission",
     "session_factory"
