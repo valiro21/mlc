@@ -13,11 +13,13 @@ class Testcase(Base):
 
     id = Column(Integer, primary_key=True)
     dataset_id = Column(Integer, ForeignKey("datasets.id"))
+
     public = Column(Boolean,
                     default=False,
                     nullable=False)  # True public test, False private test
     allow_download = Column(Boolean, default=False, nullable=False)
     codename = Column(String)
+
     input_file = Column(LargeBinary, nullable=False)
     input_file_digest = Column(String, nullable=False)
     output_file = Column(LargeBinary, nullable=False)

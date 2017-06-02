@@ -1,6 +1,7 @@
 """Handler for the register form"""
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.User import User
@@ -53,7 +54,8 @@ class RegisterHandler(BaseHandler):
             firstName=first_name,
             email=email,
             lastName=last_name,
-            password=bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt()),
+            password=bcrypt.hashpw(password.encode('utf8'),
+                                   bcrypt.gensalt()).decode('utf8')
         )
 
         self.session.add(new_user)

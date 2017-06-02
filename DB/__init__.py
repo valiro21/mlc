@@ -1,6 +1,8 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+
 import json
 import os
 
@@ -9,7 +11,7 @@ from sqlalchemy.orm import sessionmaker
 
 from DB import Contest, Participation, \
     Problem, User, Submission, Dataset, \
-    Testcase
+    Testcase, Permission, Admin, Admin_Permission
 from DB import Base
 
 
@@ -44,6 +46,7 @@ with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
 
 __all__ = [
     "Contest", "Problem", "Submission",
-    "User", "Dataset", "Testcase", "Participation",
+    "User", "Dataset", "Testcase",
+    "Participation", "Admin", "Permission", "Admin_Permission",
     "session_factory"
 ]

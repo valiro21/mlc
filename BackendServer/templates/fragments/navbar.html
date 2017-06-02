@@ -1,75 +1,79 @@
 <!-- Navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="mlc-logo navbar-brand">MLC</a>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="mlc-logo navbar-brand">MLC</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+        <div class="nav navbar navbar-left navbar-search">
+            <i class="glyphicon glyphicon-search"></i>
+            <form action="#0">
+                <input type="search" placeholder="Search...">
+            </form>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <div class="nav navbar navbar-left navbar-search">
-                <i class="glyphicon glyphicon-search"></i>
-                <form action="#0">
-                    <input type="search" placeholder="Search...">
-                </form>
-            </div>
-
-             <ul class="nav navbar-nav navbar-right navbar-buttons-group">
-                 <li><a href="/">Home</a></li>
-                    <li><a href="/archive">Archive</a></li>
-                    <li><a href="/ranking">Rankings</a></li>
-                    <li><a href="/contestlist">Contests</a></li>
-                    <li><a href="/submissions">Submissions</a></li>
-                    <li class="dropdown" >
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <b>Login</b>
-                            <span class="caret"></span>
-                        </a>
-                        <ul id="login-dp" class="dropdown-menu">
-                            <li>
-                                <div class="col-md-12">
-                                    <p class="navbar-login">Login using:</p>
-                                    <div>
-                                        <button class="social-btn" type="submit" id="btn_facebook" value="btn_facebook_clicked">
-                                           Facebook
-                                        </button>
-                                        <br>
-                                        <button class="social-btn" type="submit" id="btn_google" value="btn_google_clicked">
-                                            Google
-                                        </button>
-                                    </div>
-                                    <br>
-                                    Or:
-                                    <br>
-                                    <form class="form" role="form" method="post"
-                                        action=:"login" accept-charset="UTF-8" id="login-form">
-                                        <div class="form-group">
-                                            <label class="sr-only navbar-login" for="inputEmail">Email address</label>
-                                            <input type="email" class="form-control" id="inputEmail" placeholder="Email address" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only navbar-login" for="inputPass">Password</label>
-                                            <input type="password" class="form-control" id="inputPass" placeholder="Password" required>
-                                            <div class="help-block text-right"><a href="#" class="navbar-login">Forgot your password?</a></div>
-                                        </div>
-                                    </form>
-                                    <!-- Trigger for the register modal -->
-                                    <div class="bottom text-center">
-                                        <p>New here?</p>
-                                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registerModal">
-                                            Register here!
-                                        </button>
-                                    </div>
+        <ul class="nav navbar-nav navbar-right navbar-buttons-group">
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive">Archive</a></li>
+            <li><a href="/ranking">Rankings</a></li>
+            <li><a href="/contestlist">Contests</a></li>
+            <li><a href="/submissions">Submissions</a></li>
+            {% if current_user is not None %}
+                <li><a href="/user/{{ current_user }}">{{ current_user }}</a></li>
+                <li><a href="/logout">Logout</a></li>
+            {% else %}
+                <li class="dropdown" >
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <b>Login</b>
+                    <span class="caret"></span>
+                </a>
+                <ul id="login-dp" class="dropdown-menu">
+                    <li>
+                        <div class="col-md-12">
+                            <p class="navbar-login">Login using:</p>
+                        <div>
+                            <button class="social-btn" type="submit" id="btn_facebook" value="btn_facebook_clicked">
+                                Facebook
+                            </button>
+                            <br>
+                            <button class="social-btn" type="submit" id="btn_google" value="btn_google_clicked">
+                                Google
+                            </button>
+                        </div>
+                        <br>
+                            Or:
+                        <br>
+                            <form class="form" role="form" method="post"
+                                  action="" accept-charset="UTF-8" id="login-form">
+                                <div class="form-group">
+                                    <label class="sr-only navbar-login" for="login_username">Email</label>
+                                    <input type="text" class="form-control" name="username" id="login_username" placeholder="Email / Username" required>
                                 </div>
-                           </li>
-                        </ul>
+                                <div class="form-group">
+                                    <label class="sr-only navbar-login" for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" id="login_password" placeholder="Password" required>
+                                </div>
+                                <input type="submit" value="Login" class="btn btn-info btn-block" id="btn-submit">
+                                <div class="help-block text-right"><a href="#" class="navbar-login">Forgot your password?</a></div>
+                            </form>
+                            <!-- Trigger for the register modal -->
+                            <div class="bottom text-center">
+                                <p>New here?</p>
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registerModal">
+                                    Register here!
+                                </button>
+                            </div>
+                        </div>
                     </li>
                 </ul>
-
-        </div>
+            </li>
+            {% end %}
+        </ul>
+    </div>
 </nav>
 <!-- Register Modal -->
 <div id="registerModal" class="modal fade" role="dialog">

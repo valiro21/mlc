@@ -4,7 +4,7 @@
 <div class="container">
     <form method="POST" action="problem">
         <div class="row">
-            <h2>Edit problem</h2>
+            <h2>Edit problem {{ problem.name }}</h2>
             <hr />
         </div>
 
@@ -16,6 +16,9 @@
                 <p>Name</p>
             </div>
             <div class="col-lg-3">
+                <p> {{ problem.name }}</p>
+            </div>
+            <div class="col-lg-3">
                 <input type="text" class="form-control input-sm" id="name">
             </div>
         </div>
@@ -23,6 +26,9 @@
         <div class="row">
             <div class="col-lg-3 helper-text">
                 <p>Description</p>
+            </div>
+            <div class="col-lg-3">
+                <p> {{ problem.description }}</p>
             </div>
             <div class="col-lg-3">
                 <input type="text" class="form-control input-sm" id="description">
@@ -34,6 +40,15 @@
                 <p>Statements</p>
             </div>
             <div class="col-lg-3">
+
+                {% if problem.statements != None %}
+                <ul class="list-group">
+                    {% for i in range(len(problem.statements)) %}
+                        <li class="list-group-item"> {{ problem.statement_names }} </li>
+                    {% end %}
+                </ul>
+                {% end %}
+
                 <input type="file" class="form-control input-sm" id="statement">
             </div>
         </div>
@@ -43,86 +58,121 @@
                 <p>Attachments</p>
             </div>
             <div class="col-lg-3">
+
+                {% if problem.attachments != None %}
+                <ul class="list-group">
+                    {% for i in range(len(problem.attachments)) %}
+                        <li class="list-group-item"> {{ problem.attachment_names }} </li>
+                    {% end %}
+                </ul>
+                {% end %}
                 <input type="file" class="form-control input-sm" id="attachment">
             </div>
         </div>
-
+    </form>
 
         <!-- Datasets -->
-        <div class="row"><h4 class="subtitle">Datasets</h4></div>
+        <div class="row"><h2 class="subtitle">Datasets</h2></div>
 
         <div class="row">
-            <div class="col-lg-3 helper-text">
-                <p>Time limit</p>
-            </div>
-            <div class="col-lg-3">
-                <input type="text" class="form-control input-sm" id="timelimit">
-            </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-3 helper-text">
-                <p>Memory limit</p>
-            </div>
-            <div class="col-lg-3">
-                <input type="text" class="form-control input-sm" id="memorylimit">
-            </div>
-        </div>
+        <hr/>
 
-        <div class="row">
-            <div class="col-lg-3 helper-text">
-                <p>Max Score</p>
+        {% if problem.datasets != None %}
+        {% for dataset in problem.datasets %}
+
+            <form action="#" method="post">
+
+            <div class="row">
+                <a href="#">
+                    <h3 class="subtitle">{{ dataset.name }}</h3>
+                </a>
             </div>
-            <div class="col-lg-3">
-                <input type="number" class="form-control input-sm" id=maxscore>
+
+            <div class="row">
+                <div class="col-lg-3 helper-text">
+                    <p>Time limit</p>
+                </div>
+
+                <div class="col-lg-3">
+                    {{ dataset.time_limit }}
+                </div>
+
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" name="time_limit">
+                </div>
             </div>
-        </div>
 
-        <div class="row"><h4 class="subtitle">Testcases</h4></div>
+            <div class="row">
+                <div class="col-lg-3 helper-text">
+                    <p>Memory limit</p>
+                </div>
 
-        <div class="row">
-            <div class="col-lg-3">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Public</th>
-                            <th>Input</th>
-                            <th>Output</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Test 1</td>
-                            <td class="text-center">
-                                <label><input type="checkbox" value=""></label>
-                            </td>
-                            <td>file.in</td>
-                            <td>file.out</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Test 2</td>
-                            <td class="text-center">
-                                <label><input type="checkbox" value=""></label>
-                            </td>
-                            <td>file2.in</td>
-                            <td>file2.out</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-lg-3">
+                    {{ dataset.memory_limit }}
+                </div>
+
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" name="memory_limit">
+                </div>
             </div>
-        </div>
 
-        <a href="#">Upload testcases</a>
-        <input type="file" class="form-control input-sm" id="testcases">
+            <div class="row">
+                <div class="col-lg-3 helper-text">
+                    <p>Max Score</p>
+                </div>
 
-        <br />
+                <div class="col-lg-3">
+                    <input type="number" class="form-control input-sm" id=maxscore>
+                </div>
+            </div>
+
+            <div class="row"><h4 class="subtitle">Testcases</h4></div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Public</th>
+                                <th>Input</th>
+                                <th>Output</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if dataset.testcases != None %}
+                            {% for testcase in dataset.testcases %}
+                                <tr>
+                                    <td>{{ testcase.id }}</td>
+                                    <td class="text-center">
+                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>
+                                    </td>
+                                    <td>
+                                        <a href="#">input</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">output</a>
+                                    </td>
+                                </tr>
+                            {% end %}
+                            {% end %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="#">Upload testcases</a>
+            <input type="file" class="form-control input-sm" id="testcases">
+
+            <hr />
+
+            </form>
+        {% end %}
+        {% end %}
 
         <button class="btn btn-primary">Submit</button>
-    </form>
 </div>
 
 {% end %}
