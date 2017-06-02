@@ -18,7 +18,12 @@ class AdminListHandler(BaseHandler):
 
         admins = self.session.execute(querry)
 
-        self.render("admin_list.html", admins=admins)
+        admin_list = []
+
+        for admin in admins:
+            admin_list.append(admin)
+
+        self.render("admin_list.html", admins=admin_list)
 
     def post(self):
         # to do
