@@ -1,15 +1,11 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
-from DB.Entities import Dataset
+from DB.Entities import Submission
 
 
-class DatasetRepository:
+class SubmissionRepository:
     @staticmethod
     def get_by_id(session, id):
         if isinstance(id, int):
-            return session.query(Dataset).filter(Dataset.id == id)
+            return session.query(Submission).filter(Submission.id == id)
         raise ValueError("id must be integer")
-
-    @staticmethod
-    def get_by_problem_id(session, id):
-        pass

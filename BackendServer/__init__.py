@@ -49,7 +49,9 @@ define('cookie_secret',
 
 
 def make_app():
-    """Create a Tornado app for BackendWebServer"""
+    """
+    Create a Tornado app for BackendWebServer.
+    """
     return tornado.web.Application([
         ("/", MainHandler),
         (r"/archive", ArchiveHandler),
@@ -59,6 +61,7 @@ def make_app():
         (r"/submissions", SubmissionsHandler),
         (r"/register", RegisterHandler),
         (r"/contest/.+", ContestHandler),
+        (r"/contest/.+/problem/.+", ProblemHandler),
         (r"/user/.+", UserHandler),
         (r"/login", LoginHandler),
         (r"/logout", LogoutHandler)

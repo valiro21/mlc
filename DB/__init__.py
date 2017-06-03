@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 from DB.Entities import Base, Contest, Participation, \
     Problem, User, Submission, Dataset, \
     Testcase, Job, Process, Log, AdminPermission, \
-    Admin, Permission
+    Admin, Permission, BlogPost
 from DB.Utils import nvl
 
 with open(os.path.join(os.path.dirname(__file__), 'config.json'), 'r') \
@@ -47,5 +47,6 @@ __all__ = [
     'Submission', 'User', 'Job',
     'Process', 'Log', 'Admin',
     'AdminPermission', 'Permission',
-    'Problem_Contest', 'session_factory'
+    'Problem_Contest', 'session_factory',
+    'BlogPost'
 ]
