@@ -3,11 +3,14 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 import os
 import traceback
 import zipfile
 
 from io import StringIO, BytesIO
+
+import tornado
 from sqlalchemy.exc import SQLAlchemyError
 from tornado.web import HTTPError
 
@@ -25,6 +28,7 @@ class DatasetHandler(BaseHandler):
     def get(self):
         pass
 
+    @tornado.web.authenticated
     def post(self):
         print("POST to DatasetHandler")
 

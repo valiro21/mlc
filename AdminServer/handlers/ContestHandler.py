@@ -7,6 +7,7 @@ import calendar
 import os
 from datetime import datetime
 
+import tornado
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
@@ -19,6 +20,7 @@ class ContestHandler(BaseHandler.BaseHandler):
     def data_received(self, chunk):
         pass
 
+    @tornado.web.authenticated
     def post(self):
         path_elements = [x for x in self.request.path.split("/") if x]
         contest_id = path_elements[1]
@@ -101,6 +103,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                 return
             self.redirect(os.path.join(self.request.path, "settings"))
 
+    @tornado.web.authenticated
     def get(self):
         path_elements = [x for x in self.request.path.split("/") if x]
         if len(path_elements) == 1:

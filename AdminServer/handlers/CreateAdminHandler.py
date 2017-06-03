@@ -1,4 +1,5 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+import tornado
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.Admin import Admin
@@ -8,6 +9,7 @@ import bcrypt
 class CreateAdminHandler(BaseHandler):
     """Handler for creating a new admin"""
 
+    @tornado.web.authenticated
     def post(self):
         name = self.get_argument('name', '')
         username = self.get_argument('username', '')

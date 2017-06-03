@@ -1,6 +1,7 @@
 """AdminWebServer implementation."""
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
 import os
 
@@ -29,6 +30,9 @@ define("compiled_template_cache",
 define("serve_traceback",
        group='application',
        default=True)
+define("login_url",
+       group='application',
+       default="/login")
 
 
 def make_app():
