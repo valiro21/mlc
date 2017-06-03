@@ -21,13 +21,14 @@ jQuery(document).ready(function () {
             enableCursorHotkey: false,
             resizable: false,
             spacing_open: 0,
-            spacing_closed: 0
+            spacing_closed: 0,
+            showOverflowOnHover: true
+        },
+        west: {
+            showOverflowOnHover: true
         }
     });
 
-
-
     bodyLayout.sizePane("north", 80);
-    bodyLayout.allowOverflow("west");
     bodyLayout.allowOverflow("north");
 });

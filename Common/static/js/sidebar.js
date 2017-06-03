@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
 	var sidebar = $('.sidebar'),
 	    old_type = getMq();
 
-	if ($('#menu').children().length == 0) {
+	if ($('#menu').children().length === 0) {
 	    sidebar.remove();
 	    $('.conteudo').removeClass ('conteudo');
 	}
@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
 	$('.sidebar-item').on('click', function(event){
 		var selectedItem = $(this);
 
-        if (getMq() == 'mobile') {
+        if (getMq() === 'mobile') {
             if (selectedItem.hasClass('selected')) {
                 selectedItem.removeClass('selected');
             }
@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
                 for(i = 0; i < list.length; i++) {
                     $(list[i]).removeClass('selected');
                 }
-                if (event.target.hasClass('sidebar-item')) {
+                if ($(event.target).hasClass('sidebar-item')) {
                     selectedItem.addClass('selected');
                 }
             }
@@ -33,7 +33,7 @@ jQuery(document).ready(function(){
                         $(list[i]).removeClass('active');
                     }
                 }
-                if (event.target.hasClass('sidebar-item')) {
+                if ($(event.target).hasClass('sidebar-item')) {
                     selectedItem.addClass('selected');
                 }
             }
@@ -45,7 +45,7 @@ jQuery(document).ready(function(){
 	});
 
 	$('.sidebar-item').mouseenter (function(event){
-	    if (getMq () != 'mobile') {
+	    if (getMq () !== 'mobile') {
             var selectedItem = $(this);
 
             if (!selectedItem.hasClass('no-hover'))
@@ -58,7 +58,7 @@ jQuery(document).ready(function(){
             }
         }
 	}).mouseleave(function(event){
-    	if (getMq () != 'mobile') {
+    	if (getMq () !== 'mobile') {
 	    	var selectedItem = $(this);
 
             if (selectedItem.hasClass('selected')) {
@@ -69,7 +69,7 @@ jQuery(document).ready(function(){
 	});
 
 	$(document).on('click', function(event) {
-	    if (getMq () != 'mobile') {
+	    if (getMq () !== 'mobile') {
             if( !$(event.target).is('.sidebar-item') ) {
                 sidebar.find('.sidebar-item.selected').removeClass('selected');
             }
@@ -78,8 +78,8 @@ jQuery(document).ready(function(){
 
 	$( window ).resize(function() {
         type = getMq ();
-        if (type != old_type) {
-            if (type == 'mobile') {
+        if (type !== old_type) {
+            if (type === 'mobile') {
                 var list = sidebar.find('.sidebar-item');
                 for(i = 0; i < list.length; i++){
                     $(list[i]).removeClass('selected');
@@ -89,7 +89,7 @@ jQuery(document).ready(function(){
                     }
                 }
             }
-            else if (type == 'desktop') {
+            else if (type === 'desktop') {
                 var list = sidebar.find('.sidebar-item');
                 for(i = 0; i < list.length; i++) {
                     if ($(list[i]).hasClass('selected')) {

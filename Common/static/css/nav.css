@@ -16,6 +16,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     padding-top: auto;
     border-left-width: 0px;
+    overflow: hidden;
 }
 
 .navbar div {
