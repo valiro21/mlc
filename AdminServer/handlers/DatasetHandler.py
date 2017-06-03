@@ -33,7 +33,8 @@ class DatasetHandler(BaseHandler):
         print("POST to DatasetHandler")
 
         functions = {'create': getattr(self, 'create_complete_dataset'),
-                     'edit': getattr(self, 'edit_dataset')}
+                     'edit': getattr(self, 'edit_dataset'),
+                     'delete': getattr(self, 'delete_dataset')}
 
         path_elements = [x for x in self.request.path.split("/") if x]
         action = path_elements[-1]
@@ -115,3 +116,14 @@ class DatasetHandler(BaseHandler):
 
     def edit_dataset(self):
         pass
+
+    def delete_dataset(self):
+        try:
+            id = self.get_argument('datasetId')
+            dataset = self.session.query(Dataset).filter_by(id=id).first()
+            print(dataset)
+            self.session.delete(dataset)
+            self.session.commit()
+        except Exception as e:
+            raise HTTPError(400)
+
