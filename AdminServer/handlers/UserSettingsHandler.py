@@ -3,7 +3,7 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
-import tornado
+import tornado.web
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 

@@ -7,7 +7,7 @@ import calendar
 import os
 from datetime import datetime
 
-import tornado
+import tornado.web
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
