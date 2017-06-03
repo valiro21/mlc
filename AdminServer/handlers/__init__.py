@@ -14,6 +14,7 @@ from AdminServer.handlers.UserSettingsHandler import UserSettingsHandler
 from AdminServer.handlers.MonitorHandler import MonitorHandler
 from AdminServer.handlers.LogoutHandler import LogoutHandler
 from AdminServer.handlers.CreateAdminHandler import CreateAdminHandler
+from AdminServer.handlers.EditAdminHandler import EditAdminHandler
 
 handlers = [
     (r"/", MainHandler),
@@ -27,5 +28,6 @@ handlers = [
     (r"/admin_list", AdminListHandler),
     (r"/submission/.+", SubmissionHandler),
     (r"/logout", LogoutHandler),
-    (r"/create_admin", CreateAdminHandler)
+    (r"/create_admin", CreateAdminHandler),
+    (r"/edit_admin", EditAdminHandler)
 ]
