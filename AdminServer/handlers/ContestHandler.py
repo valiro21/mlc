@@ -82,9 +82,11 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.get_argument('contest_start_time')
 
             contest_start_time_non_utc = \
-                datetime.strptime(contest_start_time_string, '%m/%d/%Y %I:%M %p')
+                datetime.strptime(contest_start_time_string,
+                                  '%m/%d/%Y %I:%M %p')
 
-            contest_start_time = calendar.timegm(contest_start_time_non_utc.timetuple())
+            contest_start_time = \
+                calendar.timegm(contest_start_time_non_utc.timetuple())
 
             contest_end_time = \
                 self.get_argument('contest_end_time')
@@ -92,10 +94,11 @@ class ContestHandler(BaseHandler.BaseHandler):
             contest_end_time_non_utc = \
                 datetime.strptime(contest_end_time, '%m/%d/%Y %I:%M %p')
 
-            contest_end_time = calendar.timegm(contest_end_time_non_utc.timetuple())
+            contest_end_time = \
+                calendar.timegm(contest_end_time_non_utc.timetuple())
 
             # contest_timezone = \
-            # self.get_argument('contest_timezone')  # make date time picker boss
+            # self.get_argument('contest_timezone')# make date time picker boss
             contest_max_submissions = \
                 self.get_argument('contest_max_submissions')
             contest_max_user_tests = \
@@ -106,7 +109,8 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.get_argument('contest_min_user_test_interval')
             try:
                 contest_old_name = path_elements[1]
-                stmt = update(Contest).where(Contest.name == contest_old_name). \
+                stmt = update(Contest).\
+                    where(Contest.name == contest_old_name). \
                     values(name=contest_name,
                            description=contest_description,
                            type=contest_type,

@@ -4,7 +4,7 @@
 import time
 from sqlalchemy.orm import relationship
 
-from sqlalchemy import Column, Integer, String, Boolean, null
+from sqlalchemy import Column, Integer, String, Boolean
 
 from DB.Entities import Base
 from DB.Utils import nvl
