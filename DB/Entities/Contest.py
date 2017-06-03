@@ -33,9 +33,9 @@ class Contest(Base):
     start_time = Column(Integer, nullable=False)
     end_time = Column(Integer, nullable=False)
     timezone = Column(String, default='UTC+0')
-    length_of_contest = Column(Integer, default=0, nullable=True)
-    max_submissions = Column(Integer, default=100)
-    max_user_test = Column(Integer, default=100)
+    length_of_contest = Column(Integer, default=0, nullable=False)
+    max_submissions = Column(Integer, default=100, nullable=False)
+    max_user_test = Column(Integer, default=100, nullable=False)
     min_submission_interval = Column(Integer, default=0, nullable=False)
     min_user_test_interval = Column(Integer, default=0, nullable=False)
 
