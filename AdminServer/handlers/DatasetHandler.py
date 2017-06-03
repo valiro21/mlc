@@ -59,6 +59,7 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(400) # Bad request
 
         try:
+            # Create a new empty dataset (in order to get an ID)
             new_dataset = self.create_empty_dataset(memory_limit,
                                                     name,
                                                     problem_id,
@@ -69,6 +70,7 @@ class DatasetHandler(BaseHandler):
 
             # Go through files and construct testcases
             self.create_testcases(extracted, new_dataset)
+            # Commit changes (add testcases)
             self.session.commit()
         except Exception as e:
             traceback.print_exc()
@@ -97,11 +99,8 @@ class DatasetHandler(BaseHandler):
                               time_limit=time_limit,
                               memory_limit=memory_limit)
         self.session.add(new_dataset)
-        self.session.commit()
+        self.session.flush() # Runs the insert, and sets the ID of the dataset
         return new_dataset
-
-    def edit_dataset(self):
-        pass
 
     def extract_zip(self, input_zip):
 
@@ -109,3 +108,5 @@ class DatasetHandler(BaseHandler):
 
         return {name: zip_ref.read(name) for name in zip_ref.namelist()}
 
+    def edit_dataset(self):
+        pass
