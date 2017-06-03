@@ -15,18 +15,18 @@ class AdminListHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
-        querry = self.session.query(Admin)
+        query = self.session.query(Admin)
 
-        admins = self.session.execute(querry)
+        admins = self.session.execute(query)
 
         admin_list = []
 
         for admin in admins:
             admin_list.append(admin)
 
-        querry = self.session.query(Permission)
+        query = self.session.query(Permission)
 
-        permissions = self.session.execute(querry)
+        permissions = self.session.execute(query)
 
         self.render("admin_list.html", admins=admin_list, permissions=permissions)
 
