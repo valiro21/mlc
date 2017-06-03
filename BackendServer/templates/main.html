@@ -3,132 +3,72 @@
 <link rel="stylesheet" href="{{ static_url("css/main.css") }}"/>
 {% end %}
 
+{% include fragments/main_sidebar.html %}
+
 {% block Body %}
 <div class="container" id="main-content">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-8">
-            <div class="blog-posts">
-                <div id="post">
-                    <div id="post-title">
-                        <h1>Welcome to MLC</h1>
+        <!--Elo Rating Ranking-->
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
+            <div class="side-info">
+                <div class="panel panel-primary">
+                    <div style="cursor: pointer;" class="panel-heading" data-toggle="collapse" data-target="#leaderboard-data">
+                        Leaderboard
+                        <!-- FIXME: Create class insteam of inline style-->
+                        <span style="float: right;" class="glyphicon glyphicon-chevron-down"></span>
                     </div>
-                    <div id="post-info">
-                        <span id="author">
-                            <a href="/user/fox">
-                                Fox
-                            </a>
-                        </span>
-                        <span id="post-date">
-                            19 Apr 2017
-                        </span>
-                        <br></br>
+                    <div id="leaderboard-data" class="panel-body panel-collapse collapse in">
+                        <table class="table table-responsive table-filter">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Name</td>
+                                    <td>Rating</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set rank=1 %}
+                                {% for user in most_rated_users %}
+                                    <tr>
+                                        <td>{{ rank }}</td>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.rating }}</td>
+                                    </tr>
+                                    {% set rank=rank+1 %}
+                                {% end %}
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="post-content">
-                        <p>Welcome to MLC,a platform dedicated for hosting programming contests. Here you can participate in a variaty of competitions of varying formats such as acm. We support a multitude of languages in which you can use to participate in the contests hosted here or to solve any of the problems available in our arhive.  </p>
-                        <p> To get started, all you need to do is to register a new account by using the login button at the top after which you're free to register for any of the available upcomming contests or to solve any of the problems from our archive. </p>
-                    </div>
-                    <div id="post-footer">
-                    </div>
-                </div>
-                <div class="blog-pagination">
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-            <div class="side-info">
-                <div class="side-box">
 
-                    <p>
-                        <a href="contestlist">
-                            Upcomming Contests
-                        </a>
-                    </p>
-                    <div class="contest">
-                        <div id="contest-title">
-                            <a href="contest/fiicode-round-1/">FIICode Round 1</a>
+
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-md-offset-1">
+            {% if recent_blog_posts is None or len(recent_blog_posts) == 0 %}
+                <h2>Sorry there are no blog posts to show :(</h2>
+            {% else %}
+            <div class="panel-group">
+                <div class="blog-posts">
+                    {% for post in recent_blog_posts %}
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <!-- FIXME: Inline style -->
+                                <h3 style="display: inline-block">{{ post.title }}</h3>
+                                <p style="display: inline-block; float: right;">Posted by {{ post.username }} on {{ post.created_at }}</p>
+                            </div>
+
+                            <div class="panel-body">
+                                <p>{{ post.body }}</p>
+                            </div>
                         </div>
-                        <div id="contest-date">
-                            2 days
-                        </div>
+                    {% end %}
+
+                    <div class="blog-pagination">
                     </div>
-                     <div class="contest">
-                        <div id="contest-title">
-                            <a href="contest/fiicode-round-2/">FIICoude Round 2</a>
-                        </div>
-                        <div id="contest-date">
-                            10 days
-                        </div>
-                    </div>
-                    <div class="contest">
-                        <div id="contest-title">
-                            <a href="contest/moisil2017/">
-                                Urmasii lui Moisil 2017
-                            </a>
-                        </div>
-                        <div id="contest-date">
-                            30 days
-                        </div>
-                    </div>
-             
-                </div>
-                <div class="side-box">
-                    <p>
-                        <a href="/ranking">
-                            Leaderboard
-                        </a>
-                    </p>
-                    <table class="rtable">
-                        <tbody>
-                            <tr>
-                                <th class="left" style="width:1.5em;">#</th>
-                                <th>Name</th>
-                                <th class style="width:4em;">Rating</th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <a href="/user/fox">
-                                        Fox
-                                    </a>
-                                </td>
-                                <td>1345</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <a href="/user/vali">
-                                        Vali
-                                    </a>
-                                </td>
-                                <td>1324</td>
-                            </tr> 
-
-
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <a href="/user/netedu_andrei">
-                                        netedu_andrei
-                                    </a>
-                                </td>
-                                <td>1319</td>
-                            </tr>
-
-                            
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <a href="/user/cosmin">
-                                        Cosmin
-                                    </a>
-                                </td>
-                                <td>1294</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
+            {% end %}
         </div>
     </div>
 </div>

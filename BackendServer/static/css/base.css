@@ -62,3 +62,10 @@
 .base-body-custom {
     height:55px;
 }
+
+/* Vertical hr bar
+ */
+.vr {
+    border-left: 2px solid #EEEEEE;
+    height: auto;
+}

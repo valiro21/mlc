@@ -2,7 +2,7 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, null
 from sqlalchemy import LargeBinary
 from sqlalchemy import String
 
@@ -13,9 +13,13 @@ class Submission(Base):
     __tablename__ = 'submissions'
 
     id = Column(Integer, primary_key=True)
-    problemId = Column(Integer, ForeignKey("problems.id"))  # TODO: index
-    userId = Column(Integer, ForeignKey("users.id"))  # TODO: index
-    result = Column(Integer)  # TODO: decide scoring and result types
+    problem_id = Column(Integer, ForeignKey("problems.id"))  # TODO: index
+    participation_id = Column(Integer,
+                              ForeignKey("participations.id"))  # TODO: index
     file = Column(LargeBinary, nullable=False)
-    file_digest = Column(String, nullable=False)
-    executable_file = Column(LargeBinary, nullable=False)
+    executable_file = Column(LargeBinary, nullable=True, default=null)
+    language = Column(String, nullable=False)
+    compilation_code = Column(Integer, default=null)
+    compilation_message = Column(String, default=null)
+    evaluation_code = Column(Integer, default=null)
+    evaluation_message = Column(String, default=null)

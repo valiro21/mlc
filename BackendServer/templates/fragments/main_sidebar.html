@@ -1,0 +1,32 @@
+{% include "sidebar.html" %}
+
+{% block SidebarItems %}
+    {% if contests_running is not None and len(contests_running) > 0 %}
+        <li class="sidebar-label">Running Contests</li>
+        {% for contest in contests_running %}
+            <li class="sidebar-item unique">
+                <a href="/contest/{{ contest.name }}">{{  contest.name }}</a>
+            </li>
+        {% end %}
+    {% end %}
+
+    {% if contests_upcoming is not None and len(contests_upcoming) > 0 %}
+        <li class="sidebar-label">Upcoming Contests</li>
+
+        {% for contest in contests_upcoming %}
+            <li class="sidebar-item unique">
+                <a href="/contest/{{ contest.name }}">{{  contest.name }}</a>
+            </li>
+        {% end %}
+    {% end %}
+
+    {% if contests_recent is not None and len(contests_recent) > 0 %}
+        <li class="sidebar-label">Upcoming Contests</li>
+
+        {% for contest in contests_recent %}
+            <li class="sidebar-item unique">
+                <a href="/contest/{{ contest.name }}">{{  contest.name }}</a>
+            </li>
+        {% end %}
+    {% end %}
+{% end %}
