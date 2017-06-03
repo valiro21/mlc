@@ -8,10 +8,11 @@ import os
 from datetime import datetime
 
 import tornado
+from sqlalchemy import update
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
-from DB.Entities import Contest
+from DB import Contest
 
 
 class ContestHandler(BaseHandler.BaseHandler):
@@ -27,10 +28,12 @@ class ContestHandler(BaseHandler.BaseHandler):
         if len(path_elements) == 2 and contest_id == "create":
             contest_name = self.get_argument('contest_name')
             start_date_string = self.get_argument('start_date')
-            print(start_date_string)
+
             start_date = \
                 datetime.strptime(start_date_string, '%m/%d/%Y %I:%M %p')
+
             start_date_utc = calendar.timegm(start_date.timetuple())
+
             end_date_string = self.get_argument('end_date')
             end_date = datetime.strptime(end_date_string, '%m/%d/%Y %I:%M %p')
             end_date_utc = calendar.timegm(end_date.timetuple())
@@ -42,32 +45,57 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.session.add(new_contest)
                 self.session.commit()
             except SQLAlchemyError as e:
-                self.redirect("contest_create.html")
+                self.redirect("create")
                 print(e)
                 return
-            self.redirect(os.path.join(self.request.path, "settings"))
+            self.redirect(contest_name + "/settings")
             return
-        elif len(path_elements) == 3 and path_elements[2] == 'setting':
+        elif len(path_elements) == 3 and path_elements[2] == 'settings':
             contest_name = self.get_argument('contest_name')
             contest_description = self.get_argument('contest_description')
-            contest_type = \
-                self.get_argument('contest_type')
-            contest_virtual = \
+            contest_type = self.get_argument('contest_type')
+            try:
                 self.get_argument('contest_virtual')
-            contest_allow_download = \
+                contest_virtual = True
+            except:
+                contest_virtual = False
+            try:
                 self.get_argument('contest_allow_download')
-            contest_allow_questions = \
+                contest_allow_download = True
+            except:
+                contest_allow_download = False
+            try:
                 self.get_argument('contest_allow_questions')
-            contest_allow_usertest = \
+                contest_allow_questions = True
+            except:
+                contest_allow_questions = False
+            try:
                 self.get_argument('contest_allow_usertest')
+                contest_allow_usertest = True
+            except:
+                contest_allow_usertest = False
+
             contest_restricted_ip = \
                 self.get_argument('contest_restricted_ip')
-            contest_start_time = \
+
+            contest_start_time_string = \
                 self.get_argument('contest_start_time')
+
+            contest_start_time_non_utc = \
+                datetime.strptime(contest_start_time_string, '%m/%d/%Y %I:%M %p')
+
+            contest_start_time = calendar.timegm(contest_start_time_non_utc.timetuple())
+
             contest_end_time = \
                 self.get_argument('contest_end_time')
-            contest_timezone = \
-                self.get_argument('contest_timezone')
+
+            contest_end_time_non_utc = \
+                datetime.strptime(contest_end_time, '%m/%d/%Y %I:%M %p')
+
+            contest_end_time = calendar.timegm(contest_end_time_non_utc.timetuple())
+
+            # contest_timezone = \
+            # self.get_argument('contest_timezone')  # make date time picker boss
             contest_max_submissions = \
                 self.get_argument('contest_max_submissions')
             contest_max_user_tests = \
@@ -78,9 +106,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.get_argument('contest_min_user_test_interval')
             try:
                 contest_old_name = path_elements[1]
-                contest_table = self.session.query(Contest)
-                contest_table.update(). \
-                    where(contest_table.name == contest_old_name). \
+                stmt = update(Contest).where(Contest.name == contest_old_name). \
                     values(name=contest_name,
                            description=contest_description,
                            type=contest_type,
@@ -91,17 +117,18 @@ class ContestHandler(BaseHandler.BaseHandler):
                            restricted_ip=contest_restricted_ip,
                            start_time=contest_start_time,
                            end_time=contest_end_time,
-                           time_zone=contest_timezone,
                            max_submissions=contest_max_submissions,
-                           max_user_tests=contest_max_user_tests,
+                           max_user_test=contest_max_user_tests,
                            min_submission_interval=contest_submission_delay,
-                           min_user_test_interval=contest_user_test_delay)
+                           min_user_test_interval=contest_user_test_delay,
+                           )
+                self.session.execute(stmt)
                 self.session.commit()
             except SQLAlchemyError as e:
                 print(e)
-                self.redirect(os.path.join(self.request.path, "settings"))
+                self.redirect("settings")
                 return
-            self.redirect(os.path.join(self.request.path, "settings"))
+            self.redirect("problems")
 
     @tornado.web.authenticated
     def get(self):

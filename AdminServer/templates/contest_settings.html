@@ -2,7 +2,7 @@
 
 {% block Body %}
 <div class="container">
-    <form method="POST" action="/">
+    <form method="POST" action="/contest/{{ contest_id }}/settings">
         <div class="row">
             <h2>Contest configuration</h2>
             <hr />
@@ -15,7 +15,7 @@
                 <p>Name</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" id="name">
+                <input type="text" class="form-control input-sm" name="contest_name">
             </div>
         </div>
 
@@ -24,16 +24,29 @@
                 <p>Description</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" id="description">
+                <input type="text" class="form-control input-sm" name="contest_description">
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
-                <p>Allowed localizations</p>
+                <p>Contest type</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" id="localizations">
+                <select name="contest_type">
+                    <option value="1">Open</option>
+                    <option value="2">Public</option>
+                    <option value="3">Private</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Virtual contest</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="off" type="checkbox" name="contest_virtual">
             </div>
         </div>
 
@@ -42,7 +55,7 @@
                 <p>Submission download allowed</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="checkbox" id="submission_download_allowed">
+                <input default="off" type="checkbox" name="contest_allow_download">
             </div>
         </div>
 
@@ -51,7 +64,7 @@
               <p>Allow questions</p>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-              <input type="checkbox" id="allow_questions">
+              <input default="off" type="checkbox" name="contest_allow_questions">
           </div>
         </div>
 
@@ -60,9 +73,86 @@
               <p>Allow user tests</p>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-              <input type="checkbox" id="allow_user_tests">
+              <input default="off" type="checkbox" name="contest_allow_usertest">
           </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Allowed IP</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="text" class="form-control input-sm" name="contest_restricted_ip">
+            </div>
+        </div>
+
+        <label>Start date:</label>
+        <div class="form-group">
+            <div class='input-group date' id='contest_start_time'>
+                <input type='text' name="contest_start_time" class="form-control datetimepicker" style="overflow:visible;" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <label>End date:</label>
+        <div class="form-group">
+            <div class='input-group date' id='contest_end_time'>
+                <input type='text' name="contest_end_time" class="form-control datetimepicker" style="overflow:visible;" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Timezone</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                    <select name="contest_timezone" class="input-medium bfh-timezones" data-country="US"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest Max Submissions</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="100" type="number" class="form-control input-sm" name="contest_max_submissions">
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest Max User Tests</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="100" type="number" class="form-control input-sm" name="contest_max_user_tests">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest Consecutive Submission Delay</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="5" type="number" class="form-control input-sm" name="contest_min_submission_interval">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest Consecutive User Test Delay</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="5" type="number" class="form-control input-sm" name="contest_min_user_test_interval">
+            </div>
+        </div>
+
+        <input type="submit" class="form-control">
+
     </form>
 </div>
 

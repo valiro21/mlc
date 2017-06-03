@@ -22,7 +22,7 @@ class Contest(Base):
     type = Column(Integer,
                   default=1,
                   nullable=False)  # 1 for open, 2 for public, 3 for private
-    virtual = Column(Boolean, default=0, nullable=False)
+    virtual = Column(Boolean, default=True, nullable=False)
     submission_download_allowed = Column(Boolean,
                                          default=True,
                                          nullable=False)
@@ -32,10 +32,10 @@ class Contest(Base):
 
     start_time = Column(Integer, nullable=False)
     end_time = Column(Integer, nullable=False)
-    timezone = Column(String, default=null)
-    length_of_contest = Column(Integer, default=null)
-    max_submissions = Column(Integer, default=null)
-    max_user_test = Column(Integer, default=null)
+    timezone = Column(String, default='UTC+0')
+    length_of_contest = Column(Integer, default=100)
+    max_submissions = Column(Integer, default=100)
+    max_user_test = Column(Integer, default=100)
     min_submission_interval = Column(Integer, default=0, nullable=False)
     min_user_test_interval = Column(Integer, default=0, nullable=False)
 
