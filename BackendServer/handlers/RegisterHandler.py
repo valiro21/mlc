@@ -48,18 +48,17 @@ class RegisterHandler(BaseHandler):
 
         else:
             register_response = 'registered'
+            new_user = User(
+                username=username,
+                firstName=first_name,
+                email=email,
+                lastName=last_name,
+                password=bcrypt.hashpw(password.encode('utf8'),
+                                       bcrypt.gensalt()).decode('utf8')
+            )
 
-        new_user = User(
-            username=username,
-            firstName=first_name,
-            email=email,
-            lastName=last_name,
-            password=bcrypt.hashpw(password.encode('utf8'),
-                                   bcrypt.gensalt()).decode('utf8')
-        )
+            self.session.add(new_user)
 
-        self.session.add(new_user)
-
-        self.session.commit()
+            self.session.commit()
 
         self.write(register_response)
