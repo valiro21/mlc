@@ -89,7 +89,8 @@ class DatasetHandler(BaseHandler):
 
                 new_testcase = Testcase(dataset_id=new_dataset.id,
                                         input_file=in_file,
-                                        output_file=ok_file)
+                                        output_file=ok_file,
+                                        codename=base)
                 self.session.add(new_testcase)
 
     def create_empty_dataset(self, memory_limit, name, problem_id, time_limit):
