@@ -49,7 +49,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.redirect("create")
                 print(e)
                 return
-            self.redirect(contest_name + "/settings")
+            self.redirect("/" + contest_name + "/settings")
             return
         elif len(path_elements) == 3 and path_elements[2] == 'settings':
             contest_name = self.get_argument('contest_name')
