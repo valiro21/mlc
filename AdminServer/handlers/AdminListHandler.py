@@ -4,7 +4,7 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
-import tornado
+import tornado.web
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.Admin import Admin
 from DB.Entities.Permission import Permission

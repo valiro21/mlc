@@ -1,8 +1,9 @@
 """MonitorHandler for AdminWebServer."""
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
-import tornado
+import tornado.web
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 

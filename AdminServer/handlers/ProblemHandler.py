@@ -7,7 +7,7 @@
 
 import os
 
-import tornado
+import tornado.web
 from sqlalchemy.exc import SQLAlchemyError
 from tornado.web import HTTPError
 

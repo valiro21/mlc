@@ -81,19 +81,42 @@
         <div class="row"><h2 class="subtitle">Datasets</h2></div>
 
         <hr/>
+
+        <div id="error-container" class="alert-danger hidden">
+            <span id="error-message"></span>
+        </div>
+
+        <div id="success-container" class="alert-success hidden">
+            <span id="success-message"></span>
+        </div>
+
         <div class="row">
-            <table class="table-responsive">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Dataset name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if problem.datasets != None %}
                     {% for dataset in problem.datasets %}
-                        <tr>
+                        <tr id="dataset-row-{{ dataset.id }}">
+                            <td> {{ dataset.name }} </td>
                             <td>
-                                <a href="#">{{ dataset.name }}</a>
+                                <button type="button"
+                                        class="btn btn-warning"
+                                        id="edit-dataset-{{ dataset.id }}"
+                                        onclick="loadEditModal({{ dataset.id }})"
+                                        >Edit</button>
+                            </td>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        id="delete-dataset-{{ dataset.id }}"
+                                        onclick="deleteDataset({{ dataset.id }})"
+                                >Delete</button>
                             </td>
                         </tr>
                     {% end %}
