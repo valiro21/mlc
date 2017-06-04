@@ -146,7 +146,9 @@ class ContestHandler(BaseHandler.BaseHandler):
 
         if len(path_elements) < 2 or \
                 (len(path_elements) == 2 and contest_id != "create"):
-            self.redirect_to_settings(self, os.path.join(self.request.path, "settings"))
+            self.redirect_to_settings(self,
+                                      os.path.join(self.request.path,
+                                                   "settings"))
             return
         elif len(path_elements) == 2 and contest_id == "create":
             self.render("contest_create.html")
@@ -193,9 +195,12 @@ class ContestHandler(BaseHandler.BaseHandler):
                         contest_description=contest.description,
                         contest_type=self.type_format(contest.type),
                         virtual_contest=self.checkbox_format(contest.virtual),
-                        allow_download=self.checkbox_format(contest.submission_download_allowed),
-                        allow_questions=self.checkbox_format(contest.allow_questions),
-                        allow_usertest=self.checkbox_format(contest.allow_user_test),
+                        allow_download=self
+                        .checkbox_format(contest.submission_download_allowed),
+                        allow_questions=self
+                        .checkbox_format(contest.allow_questions),
+                        allow_usertest=self
+                        .checkbox_format(contest.allow_user_test),
                         start_time=self.time_format(contest.start_time),
                         end_time=self.time_format(contest.end_time),
                         restricted_ip=contest.restricted_ip,
