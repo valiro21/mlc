@@ -43,7 +43,6 @@ class ProblemHandler(BaseHandler):
         if len(path_elements) >= 4:
             self.redirect("..")
             return
-
         pdf_id = self.get_argument("id", None)
         if pdf_id is None:
             pdf_id = 0  # Defaults to the first statement
@@ -61,11 +60,6 @@ class ProblemHandler(BaseHandler):
                 # Set application type
                 self.set_header("Content-Type",
                                 'application/pdf; charset="utf-8"')
-
-                # For chrome
-                self.set_header("Content-Type",
-                                'application/x-google-chrome-pdf;'
-                                ' charset="utf-8"')
 
                 # The actual file headers
                 self.set_header("Content-Disposition",

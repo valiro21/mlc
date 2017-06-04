@@ -7,8 +7,22 @@
 
 {% block Body %}
 {% if problem.statements is not None and len(problem.statements) > 0 %}
-<object data="pdf?pdf_id={{ pdf_id }}" type="application/pdf" width="100%" height="100%">
-</object>
+
+<div class="panel panel-default editor full-height" style="width: 100%;">
+    <div class="panel-heading">
+        Statement
+        <a class="btn btn-primary align-right pull-right correct" href="pdf?pdf_id={{ pdf_id }}" download>
+            Download statement (pdf)
+        </a>
+    </div>
+    <div class="panel-body full-height" style="width: 100%;">
+        <object data="pdf?pdf_id={{ pdf_id }}" type="application/pdf" width="100%" height="100%">
+            <p class="text-center">Unfortunately, it seems that your browser does not support embedded pdf :(</p>
+        </object>
+    </div>
+</div>
+
+
 {% else %}
     This problem has no statements :(
 {% end %}
