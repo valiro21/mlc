@@ -5,6 +5,7 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 import calendar
 import os
+import time
 from datetime import datetime
 
 import tornado
@@ -49,7 +50,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.redirect("create")
                 print(e)
                 return
-            self.redirect(contest_name + "/settings")
+            self.redirect_to_settings(self, contest_name + "/settings")
             return
         elif len(path_elements) == 3 and path_elements[2] == 'settings':
             contest_name = self.get_argument('contest_name')
@@ -131,7 +132,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.session.commit()
             except SQLAlchemyError as e:
                 print(e)
-                self.redirect("settings")
+                self.redirect_to_settings(self, "settings")
                 return
             self.redirect("problems")
 
@@ -145,7 +146,7 @@ class ContestHandler(BaseHandler.BaseHandler):
 
         if len(path_elements) < 2 or \
                 (len(path_elements) == 2 and contest_id != "create"):
-            self.redirect(os.path.join(self.request.path, "settings"))
+            self.redirect_to_settings(self, os.path.join(self.request.path, "settings"))
             return
         elif len(path_elements) == 2 and contest_id == "create":
             self.render("contest_create.html")
@@ -162,7 +163,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                                     "submissions",
                                     "user_tests",
                                     "users"]:
-            self.redirect("settings")
+            self.redirect_to_settings(self, "settings")
         render = path_elements[2]
 
         render = "contest_" + render
@@ -181,6 +182,57 @@ class ContestHandler(BaseHandler.BaseHandler):
             render = "contest_ranking"
         """
 
+        if render == "contest_settings":
+            contest = self.session.query(Contest)\
+                .filter_by(name=contest_id)\
+                .first()
+            self.render(render + ".html",
+                        last_path=path_elements[2],
+                        contest_id=contest_id,
+                        contest_name=contest.name,
+                        contest_description=contest.description,
+                        contest_type=self.type_format(contest.type),
+                        virtual_contest=self.checkbox_format(contest.virtual),
+                        allow_download=self.checkbox_format(contest.submission_download_allowed),
+                        allow_questions=self.checkbox_format(contest.allow_questions),
+                        allow_usertest=self.checkbox_format(contest.allow_user_test),
+                        start_time=self.time_format(contest.start_time),
+                        end_time=self.time_format(contest.end_time),
+                        restricted_ip=contest.restricted_ip,
+                        max_submissions=contest.max_submissions,
+                        max_user_tests=contest.max_user_test,
+                        submission_delay=contest.min_submission_interval,
+                        user_test_delay=contest.min_user_test_interval,
+                        )
+            return
         self.render(render + ".html",
                     last_path=path_elements[2],
                     contest_id=contest_id)
+
+    @staticmethod
+    def redirect_to_settings(self, path):
+        self.redirect(path)
+
+    @staticmethod
+    def checkbox_format(val):
+        if val:
+            return "checked"
+        return ""
+
+    @staticmethod
+    def type_format(val):
+        if val == 1:
+            return "Open"
+        elif val == 2:
+            return "Public"
+        elif val == 3:
+            return "Private"
+        return "Open"
+
+    @staticmethod
+    def time_format(time_utc):
+        calendar_time = \
+            time.gmtime(time_utc)
+        correct_time = \
+            time.strftime('%m/%d/%Y %I:%M %p', calendar_time)
+        return correct_time
