@@ -1,11 +1,7 @@
 /**
- * Created by andreiwork on 01.06.2017.
+ * Created by vrosca on 6/3/17.
  */
-jQuery(document).ready(function() {
-    $(function () {
-        $('.datetimepicker').datetimepicker();
-    });
-
+jQuery(document).ready(function () {
     jQuery.browser = {};
     (function () {
         jQuery.browser.msie = false;

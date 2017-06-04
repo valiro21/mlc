@@ -16,6 +16,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     padding-top: auto;
     border-left-width: 0px;
+    overflow: hidden;
 }
 
 .navbar div {
@@ -51,16 +52,10 @@ body {
     height: 100%;
     border: none;
     padding-left: 2.6em;
-    border-radius: 0;
     background-color: #3e454c;
-    /*border-left: 1px solid #51575d;*/
-    color: #ffffff;
     border-radius: .25em;
     -webkit-appearance: none;
     -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    appearance: none;
 }
 
 .navbar-search input:focus {
@@ -95,6 +90,10 @@ body {
     padding-bottom: 39px;
 }
 
+.navbar {
+    height: 100%;
+}
+
 .dropdown-menu {
     background-color: #1c1f22;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
@@ -107,34 +106,11 @@ body {
 }
 
 .sidebar {
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 0;
   width: 100%;
   padding: 10px 0 0;
   margin-right: 50px;
   background-color: #2c3136;
-  visibility: hidden;
-  opacity: 0;
   min-height: 100vh;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-transition: opacity 0.2s 0s, visibility 0s 0.2s;
-  -moz-transition: opacity 0.2s 0s, visibility 0s 0.2s;
-  transition: opacity 0.2s 0s, visibility 0s 0.2s;
-}
-.sidebar.nav-is-visible {
-  opacity: 1;
-  visibility: visible;
-  overflow: visible;
-  -webkit-overflow-scrolling: touch;
-  -webkit-transition: opacity 0.2s 0s, visibility 0s 0s;
-  -moz-transition: opacity 0.2s 0s, visibility 0s 0s;
-  transition: opacity 0.2s 0s, visibility 0s 0s;
-  max-height: none;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 .sidebar > ul {
   padding: 0.6em 0;
@@ -180,20 +156,9 @@ body {
     --type:mobile;
   }
   .sidebar {
-    position: fixed;
-    top: auto;
-    float:left;
-    width: 110px;
     min-height: 100vh;
-    visibility: visible;
-    opacity: 1;
-    overflow: visible;
     max-height: none;
     box-shadow: none;
-  }
-  .conteudo {
-    width: -webkit-calc(100% - 110px);
-    width: calc(100% - 110px);
   }
   .sidebar > ul {
     padding: 0;
@@ -211,35 +176,14 @@ body {
   .sidebar > ul > li > a::before {
     left: 50%;
     right: auto;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
     top: 2.4em;
   }
   .sidebar .active > a {
     box-shadow: inset 3px 0 0 #1784c7;
     background-color: #33383e;
   }
-  .sidebar .count {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    padding: 0;
-    top: 2em;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
-    left: calc(50% + 5px);
-    right: auto;
-    color: transparent;
-  }
   .sidebar-item.selected > ul {
-    margin-left:110px;
+    margin-left:200px;
   }
 }
 @media only screen and (min-width: 1170px) {
@@ -248,10 +192,6 @@ body {
   }
   .sidebar {
     width: 200px;
-  }
-  .conteudo {
-    width: -webkit-calc(100% - 200px);
-    width: calc(100% - 200px);
   }
   .sidebar > ul {
     padding: 0.6em 0;
@@ -264,36 +204,9 @@ body {
     text-align: left;
     border-bottom: none;
   }
-  .sidebar > ul > li > a::before {
-    top: 50%;
-    bottom: auto;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    left: 18px;
-  }
   .sidebar .sidebar-label {
     display: block;
     padding: 1em 18px;
-  }
-  .sidebar .count {
-    color: #ffffff;
-    height: auto;
-    width: auto;
-    border-radius: .25em;
-    padding: .2em .4em;
-    top: 50%;
-    bottom: auto;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    right: 18px;
-    left: auto;
-    box-shadow: none;
   }
   .sidebar-item {
     position: relative;
@@ -332,7 +245,6 @@ body {
   .dropdown-menu {
     width: 100%;
   }
-
   .navbar-header {
       float: none;
   }
@@ -394,15 +306,6 @@ p {
 
 .navbar-login {
     color: #1c1f22;
-}
-
-.conteudo {
-  float:right;
-}
-
-.conteudo-full {
-   width: -webkit-calc(100%);
-   width: calc(100%);
 }
 .modal-header{
     background: rgba(62, 69, 76, 0.8);

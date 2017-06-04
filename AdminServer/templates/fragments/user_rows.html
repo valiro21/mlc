@@ -1,0 +1,29 @@
+<table class="table table-responsive table-filter">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[2] }}</td>
+            <td>{{ user[3] }}</td>
+            <td>{{ user[7] }}</td>
+        </tr>
+    {% end %}
+    </tbody>
+</table>
+
+<!-- Trigger for User Creation Form Modal -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createUserModal">
+    Create User
+</button>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editUserModal">
+    Edit User
+</button>

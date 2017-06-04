@@ -18,12 +18,8 @@ define('static_path',
 define('cookie_secret',
        group='application',
        default="fdsafWDFWREDFADAFWRdFGTEQRGQFGQG")
-define("autoreload",
-       group='application',
-       default=True)
-define("debug",
-       group='application',
-       default=True)
+
+
 define("compiled_template_cache",
        group='application',
        default=False)

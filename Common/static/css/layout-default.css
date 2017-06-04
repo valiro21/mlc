@@ -15,20 +15,6 @@
  */
 
 /*
-*	BASIC PAGE COSMETICS
-*/
-body {
-	font-family:	Lucida Grande, Lucida Sans, Geneva, Arial, Helvetica, sans-serif;
-	font-size:		100%;
-	*font-size:		80%;
-	background-color: #EEE;
-}
-p {
-	margin: 1em 0;
-}
-
-
-/*
 *	PANES
 */
 .ui-layout-pane { /* all 'panes' */

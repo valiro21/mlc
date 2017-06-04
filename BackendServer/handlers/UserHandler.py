@@ -11,7 +11,7 @@ from BackendServer.handlers.BaseHandler import BaseHandler
 
 
 class UserHandler(BaseHandler):
-    """Tornado handler for a problem."""
+    """Tornado handler for a user."""
     def data_received(self, chunk):
         pass
 

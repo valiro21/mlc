@@ -132,7 +132,52 @@
             </table>
         </div>
 
-        <!-- New dataset modal -->
+
+
+
+{#            <div class="row"><h4 class="subtitle">Testcases</h4></div>#}
+{##}
+{#            <div class="row">#}
+{#                <div class="col-lg-3">#}
+{#                    <table class="table table-bordered">#}
+{#                        <thead>#}
+{#                            <tr>#}
+{#                                <th>#</th>#}
+{#                                <th>Public</th>#}
+{#                                <th>Input</th>#}
+{#                                <th>Output</th>#}
+{#                            </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                            {% if dataset.testcases != None %}#}
+{#                            {% for testcase in dataset.testcases %}#}
+{#                                <tr>#}
+{#                                    <td>{{ testcase.id }}</td>#}
+{#                                    <td class="text-center">#}
+{#                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <a href="#">input</a>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <a href="#">output</a>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% end %}#}
+{#                            {% end %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#            </div>#}
+
+            <hr />
+
+</div>
+
+{% end %}
+
+{% block Modals %}
+<!-- New dataset modal -->
         <div class="modal fade" id="new-dataset-modal" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content -->
@@ -203,45 +248,4 @@
                 </div>
             </div>
         </div>
-
-
-{#            <div class="row"><h4 class="subtitle">Testcases</h4></div>#}
-{##}
-{#            <div class="row">#}
-{#                <div class="col-lg-3">#}
-{#                    <table class="table table-bordered">#}
-{#                        <thead>#}
-{#                            <tr>#}
-{#                                <th>#</th>#}
-{#                                <th>Public</th>#}
-{#                                <th>Input</th>#}
-{#                                <th>Output</th>#}
-{#                            </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                            {% if dataset.testcases != None %}#}
-{#                            {% for testcase in dataset.testcases %}#}
-{#                                <tr>#}
-{#                                    <td>{{ testcase.id }}</td>#}
-{#                                    <td class="text-center">#}
-{#                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="#">input</a>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="#">output</a>#}
-{#                                    </td>#}
-{#                                </tr>#}
-{#                            {% end %}#}
-{#                            {% end %}#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{#            </div>#}
-
-            <hr />
-
-</div>
-
 {% end %}

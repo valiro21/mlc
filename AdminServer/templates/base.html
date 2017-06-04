@@ -3,37 +3,36 @@
   <head>
     <title>MLC! MLC! MLC!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="{{ static_url('js/jquery-3.1.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ static_url('js/sidebar.js') }}"></script>
-      <script type="text/javascript" src="{{ static_url('js/moment-with-locales.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/jquery-3.1.1.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/jquery-ui.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/jquery.validate.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/jquery.layout.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/bootstrap.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/moment-with-locales.min.js') }}"></script>
+      <script type="text/javascript" src="{{ static_url('js/common/bootstrap-datetimepicker.min.js') }}"></script>
+      <link rel="stylesheet" href="{{ static_url('css/common/bootstrap.min.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/common/bootstrap-datetimepicker.min.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/common/font-awesome.min.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/common/layout-default.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/common/nav.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/common/jquery-ui.min.css') }}"/>
+      <link rel="stylesheet" href="{{ static_url('css/base.css') }}"/>
       <script type="text/javascript" src="{{ static_url('js/base.js') }}"></script>
-      <script type="text/javascript" src="{{ static_url('js/bootstrap-datetimepicker.min.js') }}"></script>\
-      <script type="text/javascript" src="{{ static_url('js/jquery-ui.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ static_url('css/bootstrap-datetimepicker.min.css') }}"/>
-    <link rel="stylesheet" href="{{ static_url('css/font-awesome.min.css') }}"/>
-    <link rel="stylesheet" href="{{ static_url('css/base.css') }}"/>
-      <link rel="stylesheet" href="{{ static_url('css/jquery-ui.min.css') }}"/>
+      <script type="text/javascript" src="{{ static_url('js/common/sidebar.js') }}"></script>
       {% block Imports %}
       {% end %}
   </head>
 
-<body>
-	<main class="container-fluid">
-        {% if current_user is not None %}
-        <div class="row base-body-custom"> <!-- TO DO: create custom class instead of style -->
-                {% include fragments/navbar.html %}
-        </div>
+<body class="container-fluid">
+    {% if current_user is not None %}
+        {% include fragments/navbar.html %}
+        {% include fragments/sidebar.html %}
+    {% end %}
+    <div class="ui-layout-center main-content">
+        {% block Body %}
         {% end %}
-        <div class="row">
-            {% if current_user is not None %}
-                {% include fragments/sidebar.html %}
-            {% end %}
-            <div class="conteudo container-fluid main-content">
-    			{% block Body %}
-                {% end %}
-		    </div>
-        </div>
-	</main>
+    </div>
+    {% block Modals %}
+    {% end %}
+</body>
 </html>

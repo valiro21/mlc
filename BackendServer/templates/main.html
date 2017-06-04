@@ -8,14 +8,15 @@
 {% block Body %}
 <div class="container" id="main-content">
     <div class="row">
+
         <!--Elo Rating Ranking-->
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
             <div class="side-info">
                 <div class="panel panel-primary">
-                    <div style="cursor: pointer;" class="panel-heading" data-toggle="collapse" data-target="#leaderboard-data">
+                    <div class="panel-heading filter-heading" data-toggle="collapse" data-target="#leaderboard-data">
                         Leaderboard
                         <!-- FIXME: Create class insteam of inline style-->
-                        <span style="float: right;" class="glyphicon glyphicon-chevron-down"></span>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
                     </div>
                     <div id="leaderboard-data" class="panel-body panel-collapse collapse in">
                         <table class="table table-responsive table-filter">
@@ -43,7 +44,7 @@
             </div>
         </div>
 
-
+        <!-- Blog Posts -->
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-md-offset-1">
             {% if recent_blog_posts is None or len(recent_blog_posts) == 0 %}
                 <h2>Sorry there are no blog posts to show :(</h2>

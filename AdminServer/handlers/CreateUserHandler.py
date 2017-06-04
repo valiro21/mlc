@@ -8,9 +8,9 @@ from DB.Entities import User
 import bcrypt
 
 
-class RegisterHandler(BaseHandler):
+class CreateUserHandler(BaseHandler):
     """
-    Handler that listens for POST requests on '/register' and
+    Handler that listens for POST requests on '/create_user' and
     creates a user if POST request is valid
     """
 
