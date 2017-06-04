@@ -1,6 +1,10 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+import traceback
+
 import tornado.web
 
+from tornado.web import HTTPError
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.Admin import Admin
 import bcrypt
@@ -46,10 +50,20 @@ class CreateAdminHandler(BaseHandler):
                                    bcrypt.gensalt()).decode('utf8')
         )
 
-        self.session.add(new_admin)
+        try:
+            session = self.acquire_sql_session()
+        except:
+            traceback.print_exc()
+            # TODO: handle error
+            return
 
-        self.session.commit()
+        try:
+            session.add(new_admin)
+            session.commit()
+        except:
+            raise HTTPError(400, 'Database error')
+        finally:
+            session.close()
 
         self.write(register_response)
-
         self.redirect(r"/admin_list")

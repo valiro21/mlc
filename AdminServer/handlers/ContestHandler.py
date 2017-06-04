@@ -3,9 +3,11 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 import calendar
 import os
 import time
+import traceback
 from datetime import datetime
 
 import tornado
@@ -39,19 +41,30 @@ class ContestHandler(BaseHandler.BaseHandler):
             end_date_string = self.get_argument('end_date')
             end_date = datetime.strptime(end_date_string, '%m/%d/%Y %I:%M %p')
             end_date_utc = calendar.timegm(end_date.timetuple())
+
+            try:
+                session = self.acquire_sql_session()
+            except:
+                traceback.print_exc()
+                # TODO: handle error
+                return
+
             try:
                 new_contest = Contest(name=contest_name,
                                       description='',
                                       start_time=start_date_utc,
                                       end_time=end_date_utc)
-                self.session.add(new_contest)
-                self.session.commit()
+                session.add(new_contest)
+                session.commit()
             except SQLAlchemyError as e:
                 self.redirect("create")
                 print(e)
                 return
+
             self.redirect_to_settings(self, contest_name + "/settings")
+            session.close()
             return
+
         elif len(path_elements) == 3 and path_elements[2] == 'settings':
             contest_name = self.get_argument('contest_name')
             contest_description = self.get_argument('contest_description')
@@ -109,6 +122,14 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.get_argument('contest_min_submission_interval')
             contest_user_test_delay = \
                 self.get_argument('contest_min_user_test_interval')
+
+            try:
+                session = self.acquire_sql_session()
+            except:
+                traceback.print_exc()
+                # TODO: handle error
+                return
+
             try:
                 contest_old_name = path_elements[1]
                 stmt = update(Contest).\
@@ -128,13 +149,14 @@ class ContestHandler(BaseHandler.BaseHandler):
                            min_submission_interval=contest_submission_delay,
                            min_user_test_interval=contest_user_test_delay,
                            )
-                self.session.execute(stmt)
-                self.session.commit()
+                session.execute(stmt)
+                session.commit()
             except SQLAlchemyError as e:
                 print(e)
                 self.redirect_to_settings(self, "settings")
                 return
             self.redirect("problems")
+            session.close()
 
     @tornado.web.authenticated
     def get(self):
@@ -184,8 +206,15 @@ class ContestHandler(BaseHandler.BaseHandler):
             render = "contest_ranking"
         """
 
+        try:
+            session = self.acquire_sql_session()
+        except:
+            traceback.print_exc()
+            # TODO: handle error
+            return
+
         if render == "contest_settings":
-            contest = self.session.query(Contest)\
+            contest = session.query(Contest)\
                 .filter_by(name=contest_id)\
                 .first()
             self.render(render + ".html",
@@ -209,7 +238,10 @@ class ContestHandler(BaseHandler.BaseHandler):
                         submission_delay=contest.min_submission_interval,
                         user_test_delay=contest.min_user_test_interval,
                         )
+            session.close()
             return
+
+        session.close()
         self.render(render + ".html",
                     last_path=path_elements[2],
                     contest_id=contest_id)

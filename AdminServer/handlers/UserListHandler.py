@@ -1,21 +1,27 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
-import tornado.web
+from tornado.web import HTTPError
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.User import User
 
 
 class UserListHandler(BaseHandler):
-
     def get(self):
-        query = self.session.query(User)
 
-        users = self.session.execute(query)
+        try:
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Could not acquire session for database')
 
-        user_list = []
-
-        for user in users:
-            user_list.append(user)
+        try:
+            query = session.query(User)
+            users = session.execute(query)
+            user_list = users.fetchall()
+        except:
+            raise HTTPError(500, 'Database error')
+        finally:
+            session.close()
 
         self.render("user_list.html", users=user_list)

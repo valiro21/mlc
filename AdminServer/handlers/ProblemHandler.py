@@ -42,10 +42,20 @@ class ProblemHandler(BaseHandler):
             self.redirect("..")
             return
 
+        try:
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Could not acquire session for database')
+
         # Find problem (by name)
-        problem = self.session.query(Problem) \
-            .filter_by(name=problem_name) \
-            .first()
+        try:
+            problem = session.query(Problem) \
+                .filter_by(name=problem_name) \
+                .first()
+        except:
+            raise HTTPError(500, 'Database error')
+        finally:
+            session.close()
 
         if problem is None:
             # Problem not existing, redirect to creation page
@@ -81,7 +91,12 @@ class ProblemHandler(BaseHandler):
             raise HTTPError(400)
 
         try:
-            problem = ProblemRepository.get_by_name(self.session, old_name)
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Could not acquire session for database')
+
+        try:
+            problem = ProblemRepository.get_by_name(session, old_name)
 
             problem.name = new_name
             problem.description = new_description
@@ -90,7 +105,7 @@ class ProblemHandler(BaseHandler):
                                                 new_statements,
                                                 problem)
 
-            self.session.commit()
+            session.commit()
         except Exception as e:
             raise HTTPError(400)
 
@@ -127,15 +142,22 @@ class ProblemHandler(BaseHandler):
             return
 
         try:
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Could not acquire session for database')
+
+        try:
             new_problem = Problem(name=name, description=description)
-            self.session.add(new_problem)
-            self.session.commit()
+            session.add(new_problem)
+            session.commit()
         except SQLAlchemyError as e:
             print(e)
 
             msg = repr(e).replace('\\n', '\n')  # to output message properly
             self.render('problem_create.html', error_msg=msg)
             return
+        finally:
+            session.close()
 
         print('Created problem ' + name)
         self.redirect('/problem/' + name)

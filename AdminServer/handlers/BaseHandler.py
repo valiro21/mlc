@@ -20,8 +20,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def __init__(self, application, request, **kwargs):
         super().__init__(application, request, **kwargs)
-        self.init_connection()
 
-    def init_connection(self):
-        """Initializes the database connection session variable"""
-        self.session = session_factory()
+    def acquire_sql_session(self):
+        return session_factory()

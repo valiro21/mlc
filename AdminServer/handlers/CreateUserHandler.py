@@ -1,7 +1,11 @@
 """Handler for the register form"""
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+import traceback
+
+from tornado.web import HTTPError
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import User
@@ -57,8 +61,19 @@ class CreateUserHandler(BaseHandler):
                                        bcrypt.gensalt()).decode('utf8')
             )
 
-            self.session.add(new_user)
+            try:
+                session = self.acquire_sql_session()
+            except:
+                traceback.print_exc()
+                # TODO: handle error
+                return
 
-            self.session.commit()
+            try:
+                session.add(new_user)
+                session.commit()
+            except:
+                raise HTTPError(500, 'An error has occured')
+            finally:
+                session.close()
 
         self.write(register_response)

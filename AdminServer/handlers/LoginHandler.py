@@ -2,9 +2,11 @@
 
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 import bcrypt
+from tornado.web import HTTPError
 
 from AdminServer.handlers import BaseHandler
 from DB.Entities.Admin import Admin
@@ -12,6 +14,7 @@ from DB.Entities.Admin import Admin
 
 class LoginHandler(BaseHandler.BaseHandler):
     """Handler for login."""
+
     def data_received(self, chunk):
         pass
 
@@ -26,10 +29,21 @@ class LoginHandler(BaseHandler.BaseHandler):
         password = self.get_argument('password', '')
 
         if username != 'admin' and password != 'admin':
-            querry = self.session.query(Admin.password)\
-                .filter(Admin.username == username)
 
-            result = self.session.execute(querry)
+            try:
+                session = self.acquire_sql_session()
+            except:
+                raise HTTPError(500, 'Could not acquire session for database')
+
+            try:
+                query = session.query(Admin.password) \
+                    .filter(Admin.username == username)
+
+                result = session.execute(query)
+            except:
+                raise HTTPError(500, 'Database error')
+            finally:
+                session.close()
 
             db_pass = None
 
