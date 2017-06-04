@@ -16,12 +16,14 @@ class ContestListHandler(BaseHandler):
         pass
 
     def get(self):
+        session = self.acquire_sql_session()
+        contests_running = ContestRepository.get_active_contests(session)
+        contests_upcoming = ContestRepository.get_future_contests(session)
+        contests_recent = ContestRepository.get_recent_contests(session)
+        session.close()
         self.render("contest_list.html",
-                    contests_running=ContestRepository
-                    .get_active_contests(self.session),
-                    contests_upcoming=ContestRepository
-                    .get_future_contests(self.session),
-                    contests_recent=ContestRepository
-                    .get_recent_contests(self.session),
+                    contests_running=contests_running,
+                    contests_upcoming=contests_upcoming,
+                    contests_recent=contests_recent,
                     dateOf=dateOf,
                     timeOf=timeOf)

@@ -6,19 +6,22 @@
 
 <li class="sidebar-item unique">
     <a href="statement">Statement</a>
+
+    <ul>
+        {% if problem.statements is not None and len(problem.statements) > 0 %}
+        {% set counter=0 %}
+        {% for lang in problem.statement_names %}
+        <li><a href="?pdf_id={{ counter }}">{{ lang }}</a></li>
+        {% set counter=counter+1 %}
+        {% end %}
+        {% end %}
+    </ul>
 </li>
 <li class="sidebar-item unique">
     <a href="submissions">Submissions</a>
 </li>
 <li class="sidebar-item unique">
     <a href="comments">Comments</a>
-
-    <ul>
-            <li><a href="/contest/FIICode/">FIICode</a></li>
-            <li><a href="/contest/Mindcoding/">Mindcoding</a></li>
-            <li><a href="/contest">Show all</a></li>
-            <li><a href="/contest/create">Create new contest</a></li>
-        </ul>
 </li>
 <li class="sidebar-item unique">
     <a href="editorial">Editorial</a>

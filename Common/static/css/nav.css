@@ -95,13 +95,13 @@ body {
     border-bottom: 0;
 }
 
-.dropdown-menu {
+.navbar.dropdown-menu {
     background-color: #1c1f22;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
     width: 200px;
 }
 
-.dropdown-menu>li>a:hover {
+.navbar.dropdown-menu>li>a:hover {
     color: #1784c7 !important; /* TO DO: fix important needed here*/
     background-color: #1c1f22;
 }

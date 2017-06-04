@@ -2,6 +2,7 @@
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import User
@@ -11,7 +12,7 @@ import bcrypt
 class RegisterHandler(BaseHandler):
     """
     Handler that listens for POST requests on '/register' and
-    creates a user if POST request is valid
+    creates a user if the POST request is valid.
     """
 
     def data_received(self, chunk):
@@ -57,8 +58,10 @@ class RegisterHandler(BaseHandler):
                                        bcrypt.gensalt()).decode('utf8')
             )
 
-            self.session.add(new_user)
+            session = self.acquire_sql_session()
+            session.add(new_user)
 
-            self.session.commit()
+            session.commit()
+            session.close()
 
         self.write(register_response)

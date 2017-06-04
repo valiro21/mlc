@@ -24,3 +24,7 @@
     background-color: black;
     color: white;
 }
+
+.inline {
+    display: inline-block;
+}

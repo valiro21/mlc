@@ -31,5 +31,5 @@ jQuery(document).ready(function () {
     });
 
     bodyLayout.sizePane("north", 80);
-    bodyLayout.allowOverflow("north");
+    bodyLayout.sizePane("east", 0);
 });

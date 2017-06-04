@@ -18,14 +18,18 @@ class MainHandler(BaseHandler):
         pass
 
     def get(self):
+        session = self.acquire_sql_session()
+        contests_running = ContestRepository.get_active_contests(session)
+        contests_upcoming = ContestRepository.get_future_contests(session)
+        contests_recent = ContestRepository.get_recent_contests(session)
+        most_rated_users = UserRepository.get_most_rated(session)
+        recent_blog_posts = BlogPostRepository\
+            .get_by_latest_with_username(session)
+        session.close()
+
         self.render("main.html",
-                    contests_running=ContestRepository
-                    .get_active_contests(self.session),
-                    contests_upcoming=ContestRepository
-                    .get_future_contests(self.session),
-                    contests_recent=ContestRepository
-                    .get_recent_contests(self.session),
-                    most_rated_users=UserRepository
-                    .get_most_rated(self.session),
-                    recent_blog_posts=BlogPostRepository
-                    .get_by_latest_with_username(self.session))
+                    contests_running=contests_running,
+                    contests_upcoming=contests_upcoming,
+                    contests_recent=contests_recent,
+                    most_rated_users=most_rated_users,
+                    recent_blog_posts=recent_blog_posts)

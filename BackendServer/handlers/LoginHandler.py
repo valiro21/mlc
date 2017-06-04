@@ -2,6 +2,7 @@
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import User
@@ -24,10 +25,11 @@ class LoginHandler(BaseHandler):
         elif not password:
             login_response = 'Please enter you password.'
 
-        querry = self.session.query(User.password)\
+        session = self.acquire_sql_session()
+        querry = session.query(User.password)\
             .filter(or_(User.username == username, User.email == username))
 
-        result = self.session.execute(querry)
+        result = session.execute(querry)
 
         db_pass = None
 
@@ -38,10 +40,10 @@ class LoginHandler(BaseHandler):
             login_response = 'Invalid credentials.'
 
         if bcrypt.checkpw(password.encode('utf8'), db_pass[0].encode('utf8')):
-            querry = self.session.query(User.username)\
+            querry = session.query(User.username)\
                 .filter(or_(User.username == username, User.email == username))
 
-            result = self.session.execute(querry)
+            result = session.execute(querry)
 
             db_user = None
 
@@ -58,5 +60,7 @@ class LoginHandler(BaseHandler):
 
         else:
             login_response = 'Invalid credentials.'
+
+        session.close()
 
         self.write(login_response)
