@@ -44,6 +44,8 @@ class DatasetHandler(BaseHandler):
 
     def create_complete_dataset(self):
 
+        print(self.request.files)
+
         # Get arguments from request
         try:
             problem_id = self.get_argument('problem-id')
@@ -84,7 +86,6 @@ class DatasetHandler(BaseHandler):
 
     def create_testcases(self, extracted, new_dataset):
         for filename in extracted.keys():
-            print(filename)
             if filename.endswith('.in'):
                 base = os.path.splitext(filename)[0]
                 in_file = extracted[base + '.in']

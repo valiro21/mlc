@@ -13,6 +13,7 @@ from tornado.web import HTTPError
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import Problem
+from DB.Repositories import ProblemRepository
 
 
 class ProblemHandler(BaseHandler):
@@ -42,8 +43,8 @@ class ProblemHandler(BaseHandler):
             return
 
         # Find problem (by name)
-        problem = self.session.query(Problem)\
-            .filter_by(name=problem_name)\
+        problem = self.session.query(Problem) \
+            .filter_by(name=problem_name) \
             .first()
 
         if problem is None:
@@ -69,8 +70,48 @@ class ProblemHandler(BaseHandler):
             raise HTTPError(404)
 
     def edit_problem(self):
-        print('Not implemented!')
-        pass
+
+        print(self.request.files)
+
+        try:
+            old_name = self.get_argument('old-name')
+            new_name = self.get_argument('name')
+            new_description = self.get_argument('description')
+            new_statements = self.request.files.get('statements', [])
+            new_attachments = self.request.files.get('attachments', [])
+        except:
+            raise HTTPError(400)
+
+        problem = ProblemRepository.get_by_name(self.session, old_name)
+
+        problem.name = new_name
+        problem.description = new_description
+
+        self.set_statements_and_attachments(new_attachments,
+                                            new_statements,
+                                            problem)
+
+        self.session.commit()
+        print(problem.statement_names)
+
+    def set_statements_and_attachments(self,
+                                       new_attachments,
+                                       new_statements,
+                                       problem):
+        statement_names = [st['filename'] for st in new_statements]
+        attachment_names = [at['filename'] for at in new_attachments]
+        statement_bodies = [st['body'] for st in new_statements]
+        attachment_bodies = [at['body'] for at in new_attachments]
+
+        st_temp_names = problem.statement_names + statement_names
+        at_temp_names = problem.attachment_names + attachment_names
+        st_temp_bodies = problem.statements + statement_bodies
+        at_temp_bodies = problem.attachments + attachment_bodies
+
+        problem.statement_names = st_temp_names
+        problem.attachment_names = at_temp_names
+        problem.statements = st_temp_bodies
+        problem.attachments = at_temp_bodies
 
     def create_problem(self):
         """Creates a problem with given name and description"""
@@ -90,7 +131,7 @@ class ProblemHandler(BaseHandler):
         except SQLAlchemyError as e:
             print(e)
 
-            msg = repr(e).replace('\\n', '\n')   # to output message properly
+            msg = repr(e).replace('\\n', '\n')  # to output message properly
             self.render('problem_create.html', error_msg=msg)
             return
 

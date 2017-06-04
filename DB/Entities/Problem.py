@@ -1,7 +1,8 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
-from sqlalchemy import Column, Integer, String, ForeignKey, LargeBinary, ARRAY
+from sqlalchemy import Column, Integer, String, ForeignKey, LargeBinary
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import validates, relationship
 
 from DB.Entities import Base
@@ -23,11 +24,11 @@ class Problem(Base):
                                ForeignKey("datasets.id", ondelete='SET NULL'))
     active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
 
-    statement_names = Column(ARRAY(String, zero_indexes=True))
-    statements = Column(ARRAY(LargeBinary, zero_indexes=True))
+    statement_names = Column(ARRAY(String, zero_indexes=True), default=[])
+    statements = Column(ARRAY(LargeBinary, zero_indexes=True), default=[])
 
-    attachment_names = Column(ARRAY(String, zero_indexes=True))
-    attachments = Column(ARRAY(LargeBinary, zero_indexes=True))
+    attachment_names = Column(ARRAY(String, zero_indexes=True), default=[])
+    attachments = Column(ARRAY(LargeBinary, zero_indexes=True), default=[])
 
     difficulty = Column(Integer,
                         default=0,

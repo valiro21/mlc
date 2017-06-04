@@ -6,7 +6,7 @@
 
 {% block Body %}
 <div class="container">
-    <form method="POST" action="problem">
+    <form enctype="multipart/form-data" method="POST" action="" {# POST to same URL #}>
         <div class="row">
             <h2>Edit problem {{ problem.name }}</h2>
             <hr />
@@ -19,11 +19,11 @@
             <div class="col-lg-3 helper-text">
                 <p>Name</p>
             </div>
+
+            <input type="text" class="hidden" value="{{ problem.name }}" name="old-name">
+
             <div class="col-lg-3">
-                <p> {{ problem.name }}</p>
-            </div>
-            <div class="col-lg-3">
-                <input type="text" class="form-control input-sm" id="name">
+                <input type="text" class="form-control input-sm" id="name" name="name" value="{{ problem.name }}">
             </div>
         </div>
 
@@ -32,10 +32,7 @@
                 <p>Description</p>
             </div>
             <div class="col-lg-3">
-                <p> {{ problem.description }}</p>
-            </div>
-            <div class="col-lg-3">
-                <input type="text" class="form-control input-sm" id="description">
+                <input type="text" class="form-control input-sm" id="description" name="description" value="{{ problem.description }}">
             </div>
         </div>
 
@@ -45,7 +42,6 @@
             </div>
             <div class="col-lg-3">
 
-                {% if problem.statements != None %}
                 <ul class="list-group">
                     {% for i in range(len(problem.statements)) %}
                         <li class="list-group-item">
@@ -53,9 +49,8 @@
                         </li>
                     {% end %}
                 </ul>
-                {% end %}
 
-                <input type="file" class="form-control input-sm" id="statement">
+                <input type="file" class="form-control input-sm" id="statements" name="statements" multiple>
             </div>
         </div>
 
@@ -68,13 +63,15 @@
                 {% if problem.attachments != None %}
                 <ul class="list-group">
                     {% for i in range(len(problem.attachments)) %}
-                        <li class="list-group-item"> {{ problem.attachment_names }} </li>
+                        <li class="list-group-item"> {{ problem.attachment_names[i] }} </li>
                     {% end %}
                 </ul>
                 {% end %}
-                <input type="file" class="form-control input-sm" id="attachment">
+                <input type="file" class="form-control input-sm" id="attachments" name="attachments" multiple>
             </div>
         </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
     </form>
 
         <!-- Datasets -->
@@ -177,6 +174,72 @@
 {% end %}
 
 {% block Modals %}
+<!-- Edit dataset modal -->
+<div class="modal fade" id="edit-dataset-modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Modal title -->
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit dataset</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="/dataset/edit" method="post">
+
+                    <input type="number" class="hidden" value="{# TODO #}" name="dataset-id" id="dataset-id"/>
+
+                    <div class="row">
+                        <label for="name" class="col-lg-3 helper-text">Name</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control input-sm" id="edit-name" name="name">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="time-limit" class="col-lg-3 helper-text">Time limit</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control input-sm" name="edit-time-limit" id="time-limit">
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <label for="memory-limit" class="col-lg-3 helper-text">Memory limit</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control input-sm" name="edit-memory-limit" id="memory-limit">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="max-score" class="col-lg-3 helper-text">Max score</label>
+                        <div class="col-lg-3">
+                            <input type="number" class="form-control input-sm" id="max-score" name="edit-max-score">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="testcases" class="col-lg-3 helper-text">Test cases</label>
+                        <input type="file" class="col-lg-3 form-control input-sm" id="testcases" name="edit-testcases">
+                        <div class="helper-text">
+                            Add a zip file, that contains matching *.in and *.ok files.
+                        </div>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- New dataset modal -->
         <div class="modal fade" id="new-dataset-modal" role="dialog">
             <div class="modal-dialog">
@@ -191,54 +254,49 @@
                     <!-- Modal body -->
                     <div class="modal-body">
 
-                        {# Intentional fucked up indenting #}
+                        <form enctype="multipart/form-data" action="/dataset/create" method="post">
 
-<form enctype="multipart/form-data" action="/dataset/create" method="post">
+                            <input type="number" class="hidden" value="{{ problem.id }}" name="problem-id" id="new-dataset-problem-id"/>
 
-    <input type="number" class="hidden" value="{{ problem.id }}" name="problem-id" id="new-dataset-problem-id"/>
+                            <div class="row">
+                                <label for="name" class="col-lg-3 helper-text">Name</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control input-sm" id="name" name="name">
+                                </div>
+                            </div>
 
-    <div class="row">
-        <label for="name" class="col-lg-3 helper-text">Name</label>
-        <div class="col-lg-3">
-            <input type="text" class="form-control input-sm" id="name" name="name">
-        </div>
-    </div>
-
-    <div class="row">
-        <label for="time-limit" class="col-lg-3 helper-text">Time limit</label>
-        <div class="col-lg-3">
-            <input type="text" class="form-control input-sm" name="time-limit" id="time-limit">
-        </div>
-    </div>
+                            <div class="row">
+                                <label for="time-limit" class="col-lg-3 helper-text">Time limit</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control input-sm" name="time-limit" id="time-limit">
+                                </div>
+                            </div>
 
 
-    <div class="row">
-        <label for="memory-limit" class="col-lg-3 helper-text">Memory limit</label>
-        <div class="col-lg-3">
-            <input type="text" class="form-control input-sm" name="memory-limit" id="memory-limit">
-        </div>
-    </div>
+                            <div class="row">
+                                <label for="memory-limit" class="col-lg-3 helper-text">Memory limit</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control input-sm" name="memory-limit" id="memory-limit">
+                                </div>
+                            </div>
 
-    <div class="row">
-        <label for="max-score" class="col-lg-3 helper-text">Max score</label>
-        <div class="col-lg-3">
-            <input type="number" class="form-control input-sm" id="max-score" name="max-score">
-        </div>
-    </div>
+                            <div class="row">
+                                <label for="max-score" class="col-lg-3 helper-text">Max score</label>
+                                <div class="col-lg-3">
+                                    <input type="number" class="form-control input-sm" id="max-score" name="max-score">
+                                </div>
+                            </div>
 
-    <div class="row">
-        <label for="testcases" class="col-lg-3 helper-text">Test cases</label>
-        <input type="file" class="col-lg-3 form-control input-sm" id="testcases" name="testcases">
-        <div class="helper-text">
-            Add a zip file, that contains matching *.in and *.ok files.
-        </div>
-    </div>
+                            <div class="row">
+                                <label for="testcases" class="col-lg-3 helper-text">Test cases</label>
+                                <input type="file" class="col-lg-3 form-control input-sm" id="testcases" name="testcases">
+                                <div class="helper-text">
+                                    Add a zip file, that contains matching *.in and *.ok files.
+                                </div>
+                            </div>
 
-    <input type="submit" class="btn btn-primary" value="Submit" />
-</form>
-
-
-                        {# Intentional fucked up indenting end #}
+                            <input type="submit" class="btn btn-primary" value="Submit" />
+                        </form>
                     </div>
 
                     <!-- Modal footer -->

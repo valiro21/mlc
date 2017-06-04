@@ -1,4 +1,5 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -20,7 +21,7 @@ class ProblemRepository:
     def get_by_name(session, name):
         if isinstance(name, str):
             try:
-                return session.query(Problem).filter(Problem.name == name)\
+                return session.query(Problem).filter_by(name=name)\
                     .one()
             except NoResultFound as err:
                 return None

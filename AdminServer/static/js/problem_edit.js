@@ -31,3 +31,8 @@ deleteDataset = function (datasetId) {
        }
     });
 };
+
+loadEditModal = function (datasetId) {
+    $('#dataset-id').text(datasetId);
+    $('#edit-dataset-modal').modal();
+};
