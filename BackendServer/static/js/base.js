@@ -1,6 +1,7 @@
 /**
  * Created by vrosca on 6/3/17.
  */
+var bodyLayout;
 jQuery(document).ready(function () {
     jQuery.browser = {};
     (function () {
@@ -16,7 +17,7 @@ jQuery(document).ready(function () {
         return jQuery(element).css(prop, val);
     };
 
-    var bodyLayout = $("body").layout({
+    bodyLayout = $("body").layout({
         north: {
             enableCursorHotkey: false,
             resizable: false,

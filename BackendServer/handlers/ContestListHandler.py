@@ -1,6 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
-
+from BackendServer.ui_methods import dateOf, timeOf
 from BackendServer.handlers.BaseHandler import BaseHandler
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
@@ -22,4 +22,6 @@ class ContestListHandler(BaseHandler):
                     contests_upcoming=ContestRepository
                     .get_future_contests(self.session),
                     contests_recent=ContestRepository
-                    .get_recent_contests(self.session))
+                    .get_recent_contests(self.session),
+                    dateOf=dateOf,
+                    timeOf=timeOf)

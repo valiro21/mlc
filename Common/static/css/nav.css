@@ -92,6 +92,7 @@ body {
 
 .navbar {
     height: 100%;
+    border-bottom: 0;
 }
 
 .dropdown-menu {
@@ -111,6 +112,9 @@ body {
   margin-right: 50px;
   background-color: #2c3136;
   min-height: 100vh;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
 }
 .sidebar > ul {
   padding: 0.6em 0;
