@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 import os
 from BackendServer.handlers.BaseHandler import BaseHandler
@@ -30,9 +31,8 @@ class ProblemHandler(BaseHandler):
         path_elements = [x for x in self.request.path.split("/") if x]
         problem_name = path_elements[1]
 
-        session = self.acquire_sql_session()
-        problem = ProblemRepository.get_by_name(session, problem_name)
-        session.close()
+        with self.acquire_sql_session() as session:
+            problem = ProblemRepository.get_by_name(session, problem_name)
 
         if problem is None:
             raise tornado.web.HTTPError(404)

@@ -2,6 +2,7 @@
 
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
@@ -58,10 +59,8 @@ class RegisterHandler(BaseHandler):
                                        bcrypt.gensalt()).decode('utf8')
             )
 
-            session = self.acquire_sql_session()
-            session.add(new_user)
-
-            session.commit()
-            session.close()
+            with self.acquire_sql_session() as session:
+                session.add(new_user)
+                session.commit()
 
         self.write(register_response)
