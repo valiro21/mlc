@@ -71,8 +71,6 @@ class ProblemHandler(BaseHandler):
 
     def edit_problem(self):
 
-        print(self.request.files)
-
         try:
             old_name = self.get_argument('old-name')
             new_name = self.get_argument('name')
@@ -82,17 +80,21 @@ class ProblemHandler(BaseHandler):
         except:
             raise HTTPError(400)
 
-        problem = ProblemRepository.get_by_name(self.session, old_name)
+        try:
+            problem = ProblemRepository.get_by_name(self.session, old_name)
 
-        problem.name = new_name
-        problem.description = new_description
+            problem.name = new_name
+            problem.description = new_description
 
-        self.set_statements_and_attachments(new_attachments,
-                                            new_statements,
-                                            problem)
+            self.set_statements_and_attachments(new_attachments,
+                                                new_statements,
+                                                problem)
 
-        self.session.commit()
-        print(problem.statement_names)
+            self.session.commit()
+        except Exception as e:
+            raise HTTPError(400)
+
+        self.redirect('/problem/' + problem.name)
 
     def set_statements_and_attachments(self,
                                        new_attachments,
