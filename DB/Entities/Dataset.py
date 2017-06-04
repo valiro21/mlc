@@ -3,7 +3,7 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from DB.Entities import Base
 
@@ -14,12 +14,16 @@ class Dataset(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    problem_id = Column(Integer, ForeignKey("problems.id"))
+    problem_id = Column(Integer,
+                        ForeignKey("problems.id", ondelete='SET NULL'))
     problem = relationship('Problem',
-                           backref='datasets',
+                           backref=backref('datasets',
+                                           cascade='all, delete-orphan'),
                            foreign_keys=problem_id)
 
-    testcases = relationship('Testcase')
+    testcases = relationship('Testcase',
+                             backref='dataset',
+                             cascade='all, delete-orphan')
 
     stdin = Column(String, nullable=True)  # default is stdin
     stdout = Column(String, nullable=True)  # default is stdout

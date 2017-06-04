@@ -7,11 +7,9 @@
 import os
 import traceback
 import zipfile
-
-from io import StringIO, BytesIO
+from io import BytesIO
 
 import tornado.web
-from sqlalchemy.exc import SQLAlchemyError
 from tornado.web import HTTPError
 
 from AdminServer.handlers.BaseHandler import BaseHandler
@@ -53,15 +51,15 @@ class DatasetHandler(BaseHandler):
             time_limit = self.get_argument('time-limit')
             memory_limit = self.get_argument('memory-limit')
 
-            max_score = self.get_argument('max-score')
+            # max_score = self.get_argument('max-score')
 
             testcases_info = self.request.files['testcases'][0]
-            testcases_name = testcases_info['filename']
+            # testcases_name = testcases_info['filename']
             testcases_body = testcases_info['body']
 
         except Exception as e:
             traceback.print_exc()
-            raise HTTPError(400) # Bad request
+            raise HTTPError(400)  # Bad request
 
         try:
             # Create a new empty dataset (in order to get an ID)
@@ -105,13 +103,11 @@ class DatasetHandler(BaseHandler):
                               time_limit=time_limit,
                               memory_limit=memory_limit)
         self.session.add(new_dataset)
-        self.session.flush() # Runs the insert, and sets the ID of the dataset
+        self.session.flush()  # Runs the insert, and sets the ID of the dataset
         return new_dataset
 
     def extract_zip(self, input_zip):
-
         zip_ref = zipfile.ZipFile(BytesIO(input_zip), 'r')
-
         return {name: zip_ref.read(name) for name in zip_ref.namelist()}
 
     def edit_dataset(self):
@@ -120,10 +116,8 @@ class DatasetHandler(BaseHandler):
     def delete_dataset(self):
         try:
             id = self.get_argument('datasetId')
-            dataset = self.session.query(Dataset).filter_by(id=id).first()
-            print(dataset)
-            self.session.delete(dataset)
+            self.session.query(Dataset).filter_by(id=id).delete()
             self.session.commit()
         except Exception as e:
+            traceback.print_exc()
             raise HTTPError(400)
-

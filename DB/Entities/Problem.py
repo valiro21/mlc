@@ -4,7 +4,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, LargeBinary, ARRAY
 from sqlalchemy.orm import validates, relationship
 
-from DB.Entities import Base, Dataset
+from DB.Entities import Base
 
 
 class Problem(Base):
@@ -16,9 +16,11 @@ class Problem(Base):
 
     contests = relationship("Problem_Contest", back_populates="problem")
 
-    datasets = None # This is for autocomplete, actual attribute gets overwritten
+    # This is for autocomplete, actual attribute gets overwritten
+    datasets = None
 
-    active_dataset_id = Column(Integer, ForeignKey("datasets.id"))
+    active_dataset_id = Column(Integer,
+                               ForeignKey("datasets.id", ondelete='SET NULL'))
     active_dataset = relationship('Dataset', foreign_keys=[active_dataset_id])
 
     statement_names = Column(ARRAY(String, zero_indexes=True))

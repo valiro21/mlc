@@ -3,29 +3,33 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 import hashlib
 
-import binascii
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy import LargeBinary
 
 from DB.Entities import Base
 
+
 def get_digest(obj):
     digest = hashlib.md5(obj).hexdigest()
     return digest.encode()
+
 
 def get_input_digest(context):
     obj = context.current_parameters['input_file']
     return get_digest(obj)
 
+
 def get_output_digest(context):
     obj = context.current_parameters['output_file']
     return get_digest(obj)
+
 
 class Testcase(Base):
     __tablename__ = 'testcases'
 
     id = Column(Integer, primary_key=True)
-    dataset_id = Column(Integer, ForeignKey("datasets.id"))
+    dataset_id = Column(Integer,
+                        ForeignKey("datasets.id", ondelete='SET NULL'))
 
     public = Column(Boolean,
                     default=False,
@@ -45,4 +49,3 @@ class Testcase(Base):
                                 default=get_output_digest,
                                 onupdate=get_output_digest
                                 )
-
