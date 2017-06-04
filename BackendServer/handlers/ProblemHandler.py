@@ -3,9 +3,10 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 import os
-from BackendServer.handlers.BaseHandler import BaseHandler
-import tornado.web
 
+from tornado.web import HTTPError
+
+from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Repositories import ProblemRepository
 
 
@@ -31,11 +32,18 @@ class ProblemHandler(BaseHandler):
         path_elements = [x for x in self.request.path.split("/") if x]
         problem_name = path_elements[1]
 
-        with self.acquire_sql_session() as session:
+        try:
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Failed to acquire database session.')
+
+        try:
             problem = ProblemRepository.get_by_name(session, problem_name)
+        except:
+            raise HTTPError(500, 'A database error has occured')
 
         if problem is None:
-            raise tornado.web.HTTPError(404)
+            raise HTTPError(404)
 
         if len(path_elements) <= 2:
             self.redirect(os.path.join(self.request.path, "statement"))
@@ -75,6 +83,8 @@ class ProblemHandler(BaseHandler):
                                     "editorial",
                                     "comments"]:
             self.redirect("statement")
+
+        session.close()
 
         self.render("problem_" +
                     path_elements[2] +

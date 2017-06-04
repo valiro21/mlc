@@ -3,6 +3,7 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities import User
@@ -21,46 +22,54 @@ class LoginHandler(BaseHandler):
 
         if not username:
             login_response = 'Please enter your username/email.'
+            self.write(login_response)
+            return
 
-        elif not password:
-            login_response = 'Please enter you password.'
+        if not password:
+            login_response = 'Please enter your password.'
+            self.write(login_response)
+            return
 
-        session = self.acquire_sql_session()
-        querry = session.query(User.password)\
-            .filter(or_(User.username == username, User.email == username))
+        try:
+            session = self.acquire_sql_session()
+        except:
+            login_response = 'Could not acquire db connection'
+            self.write(login_response)
+            return
 
-        result = session.execute(querry)
-
-        db_pass = None
-
-        for pwd in result:
-            db_pass = pwd
-
-        if not db_pass:
-            login_response = 'Invalid credentials.'
-
-        if bcrypt.checkpw(password.encode('utf8'), db_pass[0].encode('utf8')):
-            querry = session.query(User.username)\
+        try:
+            query = session.query(User.password)\
                 .filter(or_(User.username == username, User.email == username))
 
-            result = session.execute(querry)
+            db_pass = session.execute(query).first()
 
-            db_user = None
+            if not db_pass:
+                login_response = 'Invalid credentials.'
+                self.write(login_response)
+                return
 
-            for usr in result:
-                db_user = usr[0]
+            if bcrypt.checkpw(password.encode('utf8'),
+                              db_pass[0].encode('utf8')):
+                query = session.query(User.username)\
+                    .filter(or_(User.username == username,
+                                User.email == username))
 
-            if db_user:
-                self.set_secure_cookie("user", db_user)
-                self.get_current_user()
-                login_response = 'Logged in.'
+                db_user = session.execute(query).first()
+
+                if db_user:
+                    self.set_secure_cookie("user", db_user)
+                    login_response = 'Logged in.'
+
+                else:
+                    login_response = 'Unexpected error.'
 
             else:
-                login_response = 'Unexpected error.'
+                login_response = 'Invalid credentials.'
 
-        else:
-            login_response = 'Invalid credentials.'
-
-        session.close()
+        except:
+            login_response = 'A database error has occured.'
+        finally:
+            session.close()
 
         self.write(login_response)
+        return
