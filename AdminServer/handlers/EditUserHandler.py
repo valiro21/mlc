@@ -50,7 +50,6 @@ class EditUserHandler(BaseHandler):
             session.commit()
         except:
             raise HTTPError(500, 'Database error')
-        finally:
-            session.close()
 
         self.redirect(r"/user_list")
+        session.close()

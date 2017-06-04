@@ -94,7 +94,6 @@ class EditAdminHandler(BaseHandler):
             # TODO: handle error
             traceback.print_exc()
             return
-        finally:
-            session.close()
 
         self.redirect(r"/admin_list")
+        session.close()

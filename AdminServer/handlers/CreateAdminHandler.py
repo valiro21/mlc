@@ -62,8 +62,7 @@ class CreateAdminHandler(BaseHandler):
             session.commit()
         except:
             raise HTTPError(400, 'Database error')
-        finally:
-            session.close()
 
         self.write(register_response)
         self.redirect(r"/admin_list")
+        session.close()

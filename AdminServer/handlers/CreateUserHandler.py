@@ -73,7 +73,6 @@ class CreateUserHandler(BaseHandler):
                 session.commit()
             except:
                 raise HTTPError(500, 'An error has occured')
-            finally:
-                session.close()
 
         self.write(register_response)
+        session.close()

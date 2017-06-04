@@ -54,8 +54,6 @@ class ProblemHandler(BaseHandler):
                 .first()
         except:
             raise HTTPError(500, 'Database error')
-        finally:
-            session.close()
 
         if problem is None:
             # Problem not existing, redirect to creation page
@@ -64,6 +62,7 @@ class ProblemHandler(BaseHandler):
 
         self.render("problem_edit.html",
                     problem=problem)
+        session.close()
 
     def post(self):
         print("POST to ProblemHandler")

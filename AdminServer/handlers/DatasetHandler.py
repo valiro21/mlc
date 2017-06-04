@@ -89,10 +89,9 @@ class DatasetHandler(BaseHandler):
             traceback.print_exc()
             session.rollback()
             raise HTTPError(400)
-        finally:
-            session.close()
 
         self.redirect('/problem/' + new_dataset.problem.name)
+        session.close()
 
     def create_testcases(self, extracted, new_dataset, session):
 

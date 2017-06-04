@@ -42,8 +42,6 @@ class LoginHandler(BaseHandler.BaseHandler):
                 result = session.execute(query)
             except:
                 raise HTTPError(500, 'Database error')
-            finally:
-                session.close()
 
             db_pass = None
 
@@ -60,6 +58,7 @@ class LoginHandler(BaseHandler.BaseHandler):
                 self.redirect(r"/")
 
             self.render("login.html", invalid=True)
+            session.close()
 
         else:
             self.set_secure_cookie("admin", "admin")

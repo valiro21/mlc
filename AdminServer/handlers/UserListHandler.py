@@ -21,7 +21,6 @@ class UserListHandler(BaseHandler):
             user_list = users.fetchall()
         except:
             raise HTTPError(500, 'Database error')
-        finally:
-            session.close()
 
         self.render("user_list.html", users=user_list)
+        session.close()
