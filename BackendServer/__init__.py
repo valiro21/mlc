@@ -45,7 +45,7 @@ define("serve_traceback",
        default=True)
 define('cookie_secret',
        group='application',
-       default="fdsafWDFWREDFADAFWRdFGTEQRGQFGQG")
+       default="02769dfjkthhregot45gbuklae3t4h9ogrs")
 
 
 def make_app():
