@@ -32,7 +32,8 @@ class ContestRepository:
     def get_recent_contests(session, limit=10):
         current_time = time.time()
         return session.query(Contest) \
-            .filter(Contest.start_time < current_time) \
+            .filter(Contest.end_time +
+                    Contest.length_of_contest < current_time) \
             .order_by(Contest.start_time.desc())\
             .limit(limit)\
             .all()
