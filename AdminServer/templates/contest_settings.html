@@ -15,7 +15,7 @@
                 <p>Name</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" name="contest_name">
+                <input type="text" class="form-control input-sm" name="contest_name" value="{{ contest_name }}">
             </div>
         </div>
 
@@ -24,7 +24,7 @@
                 <p>Description</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" name="contest_description">
+                <input type="text" class="form-control input-sm" name="contest_description" value="{{ contest_description }}">
             </div>
         </div>
 
@@ -37,6 +37,7 @@
                     <option value="1">Open</option>
                     <option value="2">Public</option>
                     <option value="3">Private</option>
+                    <option selected="selected">{{ contest_type }}</option>
                 </select>
             </div>
         </div>
@@ -46,7 +47,7 @@
                 <p>Virtual contest</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="off" type="checkbox" name="contest_virtual">
+                <input type="checkbox" name="contest_virtual" {{ virtual_contest }}>
             </div>
         </div>
 
@@ -55,7 +56,7 @@
                 <p>Submission download allowed</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="off" type="checkbox" name="contest_allow_download">
+                <input type="checkbox" name="contest_allow_download" {{ allow_download }}>
             </div>
         </div>
 
@@ -64,7 +65,7 @@
               <p>Allow questions</p>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-              <input default="off" type="checkbox" name="contest_allow_questions">
+              <input type="checkbox" name="contest_allow_questions" {{ allow_questions }}>
           </div>
         </div>
 
@@ -73,7 +74,7 @@
               <p>Allow user tests</p>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-              <input default="off" type="checkbox" name="contest_allow_usertest">
+              <input type="checkbox" name="contest_allow_usertest" {{ allow_usertest }}>
           </div>
         </div>
 
@@ -82,14 +83,14 @@
                 <p>Allowed IP</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input type="text" class="form-control input-sm" name="contest_restricted_ip">
+                <input type="text" class="form-control input-sm" name="contest_restricted_ip" value="{{ restricted_ip }}">
             </div>
         </div>
 
         <label>Start date:</label>
         <div class="form-group">
             <div class='input-group date' id='contest_start_time'>
-                <input type='text' name="contest_start_time" class="form-control datetimepicker" style="overflow:visible;" />
+                <input type='text' name="contest_start_time" class="form-control datetimepicker" style="overflow:visible;" value="{{ start_time }}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -99,7 +100,7 @@
         <label>End date:</label>
         <div class="form-group">
             <div class='input-group date' id='contest_end_time'>
-                <input type='text' name="contest_end_time" class="form-control datetimepicker" style="overflow:visible;" />
+                <input type='text' name="contest_end_time" class="form-control datetimepicker" style="overflow:visible;" value="{{ end_time }}"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -111,7 +112,7 @@
                 <p>Contest Max Submissions</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="100" type="number" class="form-control input-sm" name="contest_max_submissions">
+                <input default="100" type="number" class="form-control input-sm" name="contest_max_submissions" value="{{ max_submissions }}">
             </div>
         </div>
 
@@ -120,7 +121,7 @@
                 <p>Contest Max User Tests</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="100" type="number" class="form-control input-sm" name="contest_max_user_tests">
+                <input default="100" type="number" class="form-control input-sm" name="contest_max_user_tests" value="{{ max_user_tests }}">
             </div>
         </div>
 
@@ -129,7 +130,7 @@
                 <p>Contest Consecutive Submission Delay</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="5" type="number" class="form-control input-sm" name="contest_min_submission_interval">
+                <input default="5" type="number" class="form-control input-sm" name="contest_min_submission_interval" value="{{ submission_delay }}">
             </div>
         </div>
 
@@ -138,7 +139,7 @@
                 <p>Contest Consecutive User Test Delay</p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <input default="5" type="number" class="form-control input-sm" name="contest_min_user_test_interval">
+                <input default="5" type="number" class="form-control input-sm" name="contest_min_user_test_interval" value="{{ user_test_delay }}">
             </div>
         </div>
 
