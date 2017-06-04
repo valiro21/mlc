@@ -1,0 +1,26 @@
+.filter-heading {
+    cursor: pointer;
+}
+
+.filter-heading > span {
+    float: right;
+}
+
+.panel-primary.panel-green > .panel-heading {
+    background-image: none;
+    background-color: green;
+    color: white;
+
+}
+
+.panel-primary.panel-red > .panel-heading {
+    background-image: none;
+    background-color: red;
+    color: white;
+}
+
+.panel-primary.panel-black > .panel-heading {
+    background-image: none;
+    background-color: black;
+    color: white;
+}

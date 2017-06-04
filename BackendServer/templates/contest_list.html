@@ -1,46 +1,96 @@
 {% extends "base.html" %}
-{% block Imports %}
-<link rel="stylesheet" href="{{ static_url('css/contest_list.css') }}"/>
-{% end %}
 
 {% block Body %}
-<div class="container">
-    <h2>Upcomming Contest List</h2>
-    <table class="table table-hover table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Contest ID</th>
-                <th>Authors</th>
-                <th>Start Date</th>
-                <th>Length</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-        </tbody>
-    </table>
-    <h2>Contest Backlog</h2>
-    <table class="table table-responsive table-filter">
-        <thread>
-            <tr>
-                <th>Name</th>
-                <th>Contest ID</th>
-                <th>Authors</th>
-                <th>Start Date</th>
-                <th>Length</th>
-            </tr>
-        </thread>
-        <tbody>
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-            {% include fragments/contestEntry.html %}
-        </tbody>
-    </table>
+<div class="container-fluid main-content">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-2 col-md-offset-1">
+        {% include "fragments/contest_filter.html" %}
+    </div>
+
+    <!-- Running Contests -->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-md-offset-1">
+        <div class="panel panel-primary panel-green">
+            <div class="panel-heading">
+                Contests Running
+            </div>
+            <div class="panel-body">
+                {% if len(contests_running) == 0 %}
+                    <p>The are no running contests</p>
+                {% else %}
+                    <table class="table table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>Name</th>
+                                <th>Length</th>
+                                <th>Privacy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contest in contests_running %}
+                                {% include "fragments/contest_row.html" %}
+                            {%  end %}
+                        </tbody>
+                    </table>
+                {% end %}
+            </div>
+        </div>
+
+        <!-- Upcoming Contests -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Contests Upcoming
+            </div>
+            <div class="panel-body">
+                {% if len(contests_upcoming) == 0 %}
+                    <p>The are no upcoming contests</p>
+                {% else %}
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>Name</th>
+                                <th>Length</th>
+                                <th>Privacy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contest in contests_upcoming %}
+                                {% include "fragments/contest_row.html" %}
+                            {%  end %}
+                        </tbody>
+                    </table>
+                {% end %}
+            </div>
+        </div>
+
+        <!-- Contests Backlog -->
+        <div class="panel panel-primary panel-black">
+            <div class="panel-heading">
+                Contests Recent
+            </div>
+            <div class="panel-body">
+                {% if len(contests_recent) == 0 %}
+                    <p>The are no contests is backlog</p>
+                {% else %}
+                    <table class="table table-hover table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>Name</th>
+                                <th>Length</th>
+                                <th>Privacy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contest in contests_recent %}
+                                {% include "fragments/contest_row.html" %}
+                            {%  end %}
+                        </tbody>
+                    </table>
+                {% end %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% end %}

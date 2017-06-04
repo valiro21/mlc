@@ -1,0 +1,7 @@
+<!-- Contest Entry -->
+<tr>
+    <td>{{ dateOf(contest.start_time) }}</td>
+    <td><a href="/contest/{{ contest.name }}">contest.name</a></td>
+    <td>{{ timeOf(contest.length) if contest.length > 0 else timeOf(contest.end_time - contest.start_time) }}</td>
+    <td>{{ contest.name }}</td>
+</tr>
