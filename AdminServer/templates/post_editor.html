@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block Imports %}
+
+<link rel="stylesheet" href="{{ static_url('css/common/simplemde.min.css') }}">
+<script type="text/javascript" src="{{ static_url('js/common/simplemde.min.js') }}"></script>
+{% end %}
+
+{% block Body %}
+
+<form role="form" action="/post_editor" method="POST" id="post-editor-form">
+    <div class="row">
+        <div class="form-group">
+            <input type="text" class="form-control" id="post_title" name="" placeholder="Post Title">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <textarea id="post_content" name="post_content" class="form-control"></textarea>
+        </div>
+    </div>
+    <input type="submit" value="POST" class="btn btn-info btn-block" id="btn-submit">
+</form>
+<script>
+var simplemde = new SimpleMDE();
+</script>
+
+{% end %}
+

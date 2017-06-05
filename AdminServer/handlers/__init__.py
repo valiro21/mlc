@@ -18,6 +18,7 @@ from AdminServer.handlers.EditAdminHandler import EditAdminHandler
 from AdminServer.handlers.UserListHandler import UserListHandler
 from AdminServer.handlers.CreateUserHandler import CreateUserHandler
 from AdminServer.handlers.EditUserHandler import EditUserHandler
+from AdminServer.handlers.PostEditorHandler import PostEditorHandler
 
 handlers = [
     (r"/", MainHandler),
@@ -35,5 +36,6 @@ handlers = [
     (r"/edit_admin", EditAdminHandler),
     (r"/user_list", UserListHandler),
     (r"/create_user", CreateUserHandler),
-    (r"/edit_user", EditUserHandler)
+    (r"/edit_user", EditUserHandler),
+    (r"/post_editor", PostEditorHandler)
 ]
