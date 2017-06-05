@@ -53,6 +53,8 @@ class DatasetHandler(BaseHandler):
             time_limit = self.get_argument('time-limit')
             memory_limit = self.get_argument('memory-limit')
 
+            stdin = self.get_argument('stdin', '')
+            stdout = self.get_argument('stdout', '')
             # max_score = self.get_argument('max-score')
 
             testcases_info = self.request.files['testcases'][0]
@@ -76,6 +78,8 @@ class DatasetHandler(BaseHandler):
                                                     name,
                                                     problem_id,
                                                     time_limit,
+                                                    stdin,
+                                                    stdout,
                                                     session
                                                     )
             # Extract testcases_body
@@ -112,13 +116,17 @@ class DatasetHandler(BaseHandler):
                              name,
                              problem_id,
                              time_limit,
+                             stdin,
+                             stdout,
                              session):
         # Create a new dataset with no testcases
 
         new_dataset = Dataset(name=name,
                               problem_id=problem_id,
                               time_limit=time_limit,
-                              memory_limit=memory_limit)
+                              memory_limit=memory_limit,
+                              stdin=stdin,
+                              stdout=stdout)
         session.add(new_dataset)
         session.flush()  # Runs the insert, and sets the ID of the dataset
         return new_dataset
