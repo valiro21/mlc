@@ -1,6 +1,7 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 from AdminServer.handlers.AdminListHandler import AdminListHandler
 from AdminServer.handlers.DatasetHandler import DatasetHandler
@@ -10,6 +11,7 @@ from AdminServer.handlers.ProblemHandler import ProblemHandler
 from AdminServer.handlers.SettingsHandler import SettingsHandler
 from AdminServer.handlers.ContestHandler import ContestHandler
 from AdminServer.handlers.SubmissionHandler import SubmissionHandler
+from AdminServer.handlers.TestcaseHandler import TestcaseHandler
 from AdminServer.handlers.UserSettingsHandler import UserSettingsHandler
 from AdminServer.handlers.MonitorHandler import MonitorHandler
 from AdminServer.handlers.LogoutHandler import LogoutHandler
@@ -27,6 +29,7 @@ handlers = [
     (r"/monitor", MonitorHandler),
     (r"/contest.*", ContestHandler),
     (r"/problem.*", ProblemHandler),
+    (r"/testcase.*", TestcaseHandler),
     (r"/dataset.*", DatasetHandler),
     (r"/user/.+/settings", UserSettingsHandler),
     (r"/admin_list", AdminListHandler),

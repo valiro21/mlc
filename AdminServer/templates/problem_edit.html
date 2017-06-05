@@ -102,17 +102,15 @@
                         <tr id="dataset-row-{{ dataset.id }}">
                             <td> {{ dataset.name }} </td>
                             <td>
-                                <button type="button"
-                                        class="btn btn-warning"
-                                        id="edit-dataset-{{ dataset.id }}"
-                                        onclick="loadEditModal({{ dataset.id }})"
-                                        >Edit</button>
+                                <a href="/dataset/edit?id={{ dataset.id }}"
+                                   class="btn btn-info"
+                                   role="button">Edit</a>
                             </td>
                             <td>
                                 <button type="button"
                                         class="btn btn-danger"
                                         id="delete-dataset-{{ dataset.id }}"
-                                        onclick="deleteDataset({{ dataset.id }})"
+                                        onclick="deleteItem('dataset', {{ dataset.id }})"
                                 >Delete</button>
                             </td>
                         </tr>
