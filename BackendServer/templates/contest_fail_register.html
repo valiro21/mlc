@@ -1,0 +1,12 @@
+{% extends "contest.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/contest_fail_register.css") }}"/>
+{% end %}
+
+{% block Body %}
+
+
+<div class="container">
+    you can't register for this contest because {{ reason }}
+</div>
+{% end %}

@@ -2,8 +2,7 @@
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
-from sqlalchemy import Column, Integer, Boolean, ForeignKey, String, null
-
+from sqlalchemy import Column, Integer, Boolean, ForeignKey, String
 from DB.Entities import Base
 
 
@@ -22,4 +21,4 @@ class Participation(Base):
     hidden = Column(Boolean, default=False, nullable=False)
     delay_time = Column(Integer, default=0, nullable=False)
     extra_time = Column(Integer, default=0, nullable=False)
-    special_password = Column(String, default=null)
+    special_password = Column(String, default=None)
