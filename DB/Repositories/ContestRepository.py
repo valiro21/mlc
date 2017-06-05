@@ -1,15 +1,24 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 import time
+
+from pyparsing import basestring
 
 from DB.Entities import Contest
 
 
 class ContestRepository:
     @staticmethod
+    def get_by_name(session, name):
+        if isinstance(name, basestring):
+            return session.query(Contest).filter(Contest.name == name).first()
+        raise ValueError("name must be string")
+
+    @staticmethod
     def get_by_id(session, id):
         if isinstance(id, int):
-            return session.query(Contest).filter(Contest.id == id)
+            return session.query(Contest).filter(Contest.id == id).first()
         raise ValueError("id must be integer")
 
     @staticmethod
@@ -36,4 +45,10 @@ class ContestRepository:
                     Contest.length_of_contest < current_time) \
             .order_by(Contest.start_time.desc())\
             .limit(limit)\
+            .all()
+
+    @staticmethod
+    def get_all_contest_order_by_date(session):
+        return session.query(Contest) \
+            .order_by(Contest.start_time.desc()) \
             .all()

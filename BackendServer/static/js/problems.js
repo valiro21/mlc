@@ -13,4 +13,28 @@ jQuery(document).ready(function () {
         target = $(event.target);
         editor.getSession().setMode("ace/mode/" + $(target).val());
     });
+
+    $('#submit-solution').on('click', function () {
+        event.preventDefault();
+
+        var data = editor.getValue();
+
+        $.ajax({
+            type : 'POST',
+            url  : '',
+            data : {
+                lang: $('#language option:selected').text(),
+                data: data
+            },
+            beforeSend: function() {
+
+            },
+            success :  function(data) {
+                if(data === "OK") {
+                    window.location.href = "../submissions";
+                }
+            }
+        });
+    })
+
 });

@@ -8,9 +8,13 @@ class DatasetRepository:
     @staticmethod
     def get_by_id(session, id):
         if isinstance(id, int):
-            return session.query(Dataset).filter(Dataset.id == id).one()
+            return session.query(Dataset)\
+                .filter(Dataset.id == id).one()
         raise ValueError("id must be integer")
 
     @staticmethod
     def get_by_problem_id(session, id):
-        pass
+        if isinstance(id, int):
+            return session.query(Dataset)\
+                .filter(Dataset.problem_id == id).all()
+        raise ValueError("id must be integer")

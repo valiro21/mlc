@@ -1,0 +1,41 @@
+{% extends "contest.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url("css/contest_register.css") }}"/>
+{% end %}
+
+{% block Body %}
+
+
+<div class="container">
+    <form method="POST" action="/contest/{{ contest_id }}/register">
+        <div class="row">
+            <h2>Contest Registration for {{ contest_id }}</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>I agree to the terms and conditions of the contest</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="checkbox" name="agree">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest type</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <select name="participation_type">
+                    <option value="1" selected>Rated</option>
+                    <option value="2">Unrated</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="submit" class="form-control">
+
+    </form>
+</div>
+{% end %}

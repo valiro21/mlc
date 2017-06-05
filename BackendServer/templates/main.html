@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block Imports %}
 <link rel="stylesheet" href="{{ static_url("css/main.css") }}"/>
-<script type="text/javascript" src="{{ static_url("js/common/marked.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/common/marked.min.js") }}"></script>
 {% end %}
 
 {% include fragments/main_sidebar.html %}
@@ -65,7 +65,7 @@
 
                                 </div>
                                 <script>
-                                    document.getElementById('{{ post.id }}').innerHTML = marked('{{ repr(post.body) }}');
+                                    document.getElementById('{{ post.id }}').innerHTML = marked('{{ post.body }}');
                                 </script>
                             </div>
                         </div>

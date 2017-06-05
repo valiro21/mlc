@@ -31,6 +31,10 @@ class PostEditorHandler(BaseHandler):
         except:
             raise HTTPError(500, 'Database error')
 
+        content = repr(content)
+        content = content[1:]
+        content = content[:-1]
+
         new_post = BlogPost(
             admin_id=admin_id,
             title=title,
