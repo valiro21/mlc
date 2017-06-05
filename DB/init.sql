@@ -29,11 +29,13 @@ DECLARE
       current_timestamp
     );
 
+  NOTIFY mlcdb, 'work!';
+
         RETURN NEW;
     END;
 $jobs_compile_stamp$ LANGUAGE plpgsql;
 
-DROP TRIGGER submission_compile_jobs ON submissions;
+DROP TRIGGER IF EXISTS submission_compile_jobs ON submissions;
 
 CREATE TRIGGER submission_compile_jobs
 AFTER insert on submissions
@@ -84,11 +86,13 @@ DECLARE
       END LOOP;
     END IF;
 
+  NOTIFY mlcdb, 'work!';
+
         RETURN NEW;
     END;
 $jobs_evaluate_stamp$ LANGUAGE plpgsql;
 
-DROP TRIGGER job_evaluate ON jobs;
+DROP TRIGGER IF EXISTS job_evaluate ON jobs;
 
 CREATE TRIGGER job_evaluate
 BEFORE UPDATE on jobs
