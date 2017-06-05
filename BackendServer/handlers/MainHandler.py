@@ -31,7 +31,8 @@ class MainHandler(BaseHandler):
             contests_recent = ContestRepository.get_recent_contests(session)
             most_rated_users = UserRepository.get_most_rated(session)
             recent_blog_posts = BlogPostRepository\
-                .get_by_latest_with_username(session)
+                .get_by_latest_with_username(session)\
+
         except:
             raise HTTPError(500, 'A database error has occured.')
         finally:
