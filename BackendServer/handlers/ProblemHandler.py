@@ -7,6 +7,8 @@ import os
 from tornado.web import HTTPError
 
 from BackendServer.handlers.BaseHandler import BaseHandler
+
+from DB.Entities import Submission
 from DB.Repositories import ProblemRepository
 
 
@@ -14,6 +16,50 @@ class ProblemHandler(BaseHandler):
     """Tornado handler for a problem."""
     def data_received(self, chunk):
         pass
+
+    def get_problem_by_path(self):
+        path_elements = [x for x in self.request.path.split("/") if x]
+        if len(path_elements) < 2:
+            return None
+        return path_elements[1]
+
+    def post(self):
+        submission_code = self.get_body_argument("data", None)
+        language = self.get_argument("lang")
+        problem_name = self.get_problem_by_path()
+
+        if problem_name is None:
+            return
+
+        session = self.acquire_sql_session()
+        try:
+            problem = ProblemRepository.get_by_name(session, problem_name)
+
+            # TODO: check if user can submit to the problem
+            # case: Contest is private (check Participation first)
+            # case: Problem does not belong to archive
+
+            if problem.datasets is None or len(problem.datasets) == 0:
+                self.write("FAILED")
+                return
+
+            for dataset in problem.datasets:
+                submission = Submission(problem_id=problem.id,
+                                        participation_id=None,
+                                        file=submission_code.encode('utf8'),
+                                        language=language
+                                        )
+                session.add(submission)
+            session.commit()
+        except Exception as e:  # Something went wrong
+            session.rollback()
+            print(e)
+            self.write("FAILED")
+            return
+        finally:
+            session.close()
+
+        self.write("OK")
 
     def get(self):
         """
