@@ -43,13 +43,20 @@ class DatasetHandler(BaseHandler):
         try:
             id = int(self.get_argument('id'))
             session = self.acquire_sql_session()
-            dataset = DatasetRepository.get_by_id(session, id)
+
+            try:
+                dataset = DatasetRepository.get_by_id(session, id)
+            except:
+                raise HTTPError(404, 'Specified id doesn\'t exist')
+
         except MissingArgumentError:
             raise HTTPError(404, 'No id specified')
         except SQLAlchemyError:
-            raise HTTPError(500, 'Database error, could not find specified id')
+            raise HTTPError(500, 'Database error occured.')
+        except HTTPError:
+            raise
         except:
-            raise HTTPError(500, 'Shit happened')
+            raise HTTPError(500, 'Unexpected error occured')
 
         self.render('dataset_edit.html', dataset=dataset)
         session.close()
@@ -72,22 +79,24 @@ class DatasetHandler(BaseHandler):
 
     def create_dataset_post(self):
 
-        print(self.request.files)
-
         # Get arguments from request
         try:
             problem_id = self.get_argument('problem-id')
             name = self.get_argument('name')
-            time_limit = self.get_argument('time-limit')
-            memory_limit = self.get_argument('memory-limit')
+            time_limit = self.get_argument('time-limit', 1)
+            memory_limit = self.get_argument('memory-limit', 16)
 
             stdin = self.get_argument('stdin', '')
             stdout = self.get_argument('stdout', '')
-            # max_score = self.get_argument('max-score')
 
-            testcases_info = self.request.files['testcases'][0]
-            # testcases_name = testcases_info['filename']
-            testcases_body = testcases_info['body']
+            files = self.request.files
+            testcases = files.get('testcases', None)
+
+            if testcases is not None:
+                testcases_dict = testcases[0]
+                testcases_body = testcases_dict['body']
+            else:
+                testcases_body = None
 
         except Exception as e:
             traceback.print_exc()
@@ -97,8 +106,7 @@ class DatasetHandler(BaseHandler):
             session = self.acquire_sql_session()
         except:
             traceback.print_exc()
-            # TODO: handle error
-            return
+            raise HTTPError(500, 'Could not acquire database session.')
 
         try:
             # Create a new empty dataset (in order to get an ID)
@@ -115,12 +123,16 @@ class DatasetHandler(BaseHandler):
 
             # Go through files and construct testcases
             self.create_testcases(extracted, new_dataset, session)
+
             # Commit changes (add testcases)
             session.commit()
+        except HTTPError:
+            raise
         except Exception as e:
             traceback.print_exc()
-            session.rollback()
             raise HTTPError(400)
+        finally:
+            session.rollback()
 
         self.redirect('/problem/' + new_dataset.problem.name)
         session.close()
@@ -133,7 +145,11 @@ class DatasetHandler(BaseHandler):
             if filename.endswith('.in'):
                 base = os.path.splitext(filename)[0]
                 in_file = extracted[base + '.in']
-                ok_file = extracted[base + '.ok']
+                ok_file = extracted.get(base + '.ok', None)
+
+                if ok_file is None:
+                    raise HTTPError(400, 'Invalid zip file, corresponding '
+                                         '.ok file does not exist.')
 
                 new_testcase = Testcase(dataset_id=new_dataset.id,
                                         input_file=in_file,
@@ -228,9 +244,8 @@ class DatasetHandler(BaseHandler):
         try:
             session = self.acquire_sql_session()
         except:
-            # TODO: handle error
             traceback.print_exc()
-            return
+            raise HTTPError(500, 'Could not acquire database session.')
 
         try:
             id = self.get_argument('id')
@@ -243,3 +258,5 @@ class DatasetHandler(BaseHandler):
 
         finally:
             session.close()
+
+        self.write('Success!')

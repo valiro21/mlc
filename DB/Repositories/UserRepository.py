@@ -1,4 +1,5 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from pyparsing import basestring
@@ -10,7 +11,7 @@ class UserRepository:
     @staticmethod
     def get_by_id(session, id):
         if isinstance(id, int):
-            return session.query(User).filter(User.id == id)
+            return session.query(User).filter(User.id == id).one()
         raise ValueError("id must be integer")
 
     @staticmethod
@@ -22,5 +23,5 @@ class UserRepository:
     @staticmethod
     def get_by_name(session, name):
         if isinstance(name, basestring):
-            return session.query(User).filter(User.username == name).first()
+            return session.query(User).filter(User.username == name).one()
         raise ValueError("name must be string")
