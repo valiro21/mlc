@@ -74,101 +74,59 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 
-        <!-- Datasets -->
-        <div class="row"><h2 class="subtitle">Datasets</h2></div>
+    <!-- Datasets -->
+    <div class="row"><h2 class="subtitle">Datasets</h2></div>
 
-        <hr/>
+    <hr/>
 
-        <div id="error-container" class="alert-danger hidden">
-            <span id="error-message"></span>
-        </div>
+    <div id="error-container" class="alert-danger hidden">
+        <span id="error-message"></span>
+    </div>
 
-        <div id="success-container" class="alert-success hidden">
-            <span id="success-message"></span>
-        </div>
+    <div id="success-container" class="alert-success hidden">
+        <span id="success-message"></span>
+    </div>
 
-        <div class="row">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Dataset name</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if problem.datasets != None %}
-                    {% for dataset in problem.datasets %}
-                        <tr id="dataset-row-{{ dataset.id }}">
-                            <td> {{ dataset.name }} </td>
-                            <td>
-                                <a href="/dataset/edit?id={{ dataset.id }}"
-                                   class="btn btn-info"
-                                   role="button">Edit</a>
-                            </td>
-                            <td>
-                                <button type="button"
-                                        class="btn btn-danger"
-                                        id="delete-dataset-{{ dataset.id }}"
-                                        onclick="deleteItem('dataset', {{ dataset.id }})"
-                                >Delete</button>
-                            </td>
-                        </tr>
-                    {% end %}
-                    {% end %}
-
-                    <tr>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Dataset name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if problem.datasets != None %}
+                {% for dataset in problem.datasets %}
+                    <tr id="dataset-row-{{ dataset.id }}">
+                        <td> {{ dataset.name }} </td>
                         <td>
-                            <a href="#" data-target="#new-dataset-modal" data-toggle="modal">Add new dataset...</a>
+                            <a href="/dataset/edit?id={{ dataset.id }}"
+                               class="btn btn-info"
+                               role="button">Edit</a>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    id="delete-dataset-{{ dataset.id }}"
+                                    onclick="deleteItem('dataset', {{ dataset.id }})"
+                            >Delete</button>
                         </td>
                     </tr>
+                {% end %}
+                {% end %}
 
-                </tbody>
-            </table>
-        </div>
+                <tr>
+                    <td>
+                        <a href="#" data-target="#new-dataset-modal" data-toggle="modal">Add new dataset...</a>
+                    </td>
+                </tr>
 
-
-
-
-{#            <div class="row"><h4 class="subtitle">Testcases</h4></div>#}
-{##}
-{#            <div class="row">#}
-{#                <div class="col-lg-3">#}
-{#                    <table class="table table-bordered">#}
-{#                        <thead>#}
-{#                            <tr>#}
-{#                                <th>#</th>#}
-{#                                <th>Public</th>#}
-{#                                <th>Input</th>#}
-{#                                <th>Output</th>#}
-{#                            </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                            {% if dataset.testcases != None %}#}
-{#                            {% for testcase in dataset.testcases %}#}
-{#                                <tr>#}
-{#                                    <td>{{ testcase.id }}</td>#}
-{#                                    <td class="text-center">#}
-{#                                        <label><input type="checkbox" value="public_{{ testcase.id }}" {{ "checked" if testcase.public else "" }}></label>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="#">input</a>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <a href="#">output</a>#}
-{#                                    </td>#}
-{#                                </tr>#}
-{#                            {% end %}#}
-{#                            {% end %}#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{#            </div>#}
-
-            <hr />
-
+            </tbody>
+        </table>
+    </div>
 </div>
-
 {% end %}
 
 {% block Modals %}
