@@ -59,8 +59,8 @@ class RegisterHandler(BaseHandler):
                                        bcrypt.gensalt()).decode('utf8')
             )
 
-            with self.acquire_sql_session() as session:
-                session.add(new_user)
-                session.commit()
+            session = self.acquire_sql_session()
+            session.add(new_user)
+            session.commit()
 
         self.write(register_response)
