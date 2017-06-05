@@ -71,8 +71,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
 
     <!-- Datasets -->
     <div class="row"><h2 class="subtitle">Datasets</h2></div>
@@ -92,6 +90,7 @@
             <thead>
                 <tr>
                     <th>Dataset name</th>
+                    <th>Mark as active</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -101,6 +100,13 @@
                 {% for dataset in problem.datasets %}
                     <tr id="dataset-row-{{ dataset.id }}">
                         <td> {{ dataset.name }} </td>
+                        <td>
+                            <input type="radio"
+                                   name="active-dataset-id"
+                                   value="{{ dataset.id }}"
+                                   {{ 'checked="checked"' if problem.active_dataset_id == dataset.id else ''}}
+                            />
+                        </td>
                         <td>
                             <a href="/dataset/edit?id={{ dataset.id }}"
                                class="btn btn-info"
@@ -126,6 +132,8 @@
             </tbody>
         </table>
     </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 </div>
 {% end %}
 

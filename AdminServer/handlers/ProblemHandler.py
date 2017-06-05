@@ -83,6 +83,9 @@ class ProblemHandler(BaseHandler):
         try:
             old_name = self.get_argument('old-name')
             new_name = self.get_argument('name')
+
+            active_ds_id = self.get_argument('active-dataset-id', None)
+
             new_description = self.get_argument('description')
             new_statements = self.request.files.get('statements', [])
             new_attachments = self.request.files.get('attachments', [])
@@ -99,6 +102,7 @@ class ProblemHandler(BaseHandler):
 
             problem.name = new_name
             problem.description = new_description
+            problem.active_dataset_id = active_ds_id
 
             self.set_statements_and_attachments(new_attachments,
                                                 new_statements,
