@@ -35,7 +35,6 @@ class ContestHandler(BaseHandler):
             participation_type = self.get_argument('participation_type')
             contest_name = path_elements[1].replace('%20', ' ')
             user_name = self.get_current_user()
-            user_name = 'andrei'
             session = self.acquire_sql_session()
 
             try:
@@ -83,7 +82,6 @@ class ContestHandler(BaseHandler):
         session = self.acquire_sql_session()
         contest = ContestRepository.get_by_name(session, contest_name)
         user_name = self.get_current_user()
-        user_name = 'andrei'
         user = UserRepository.get_by_name(session, user_name)
 
         if contest.type == 3:
