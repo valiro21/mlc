@@ -28,13 +28,13 @@ class ContestHandler(BaseHandler):
             try:
                 self.get_argument('agree')
             except:
-                self.render('contest_fail_register.html',
-                            reason='you did not accept the terms')
+                self.write('You did not accept the terms!')
                 return
 
             participation_type = self.get_argument('participation_type')
             contest_name = path_elements[1].replace('%20', ' ')
             user_name = self.get_current_user()
+            user_name = 'andrei'
             session = self.acquire_sql_session()
 
             try:
@@ -46,21 +46,17 @@ class ContestHandler(BaseHandler):
                 return
 
             if contest.type == 3:
-                self.render('contest_fail_register.html',
-                            reason='contest is private')
+                self.write('Contest is private')
                 return
             elif contest.type == 2:
-                self.render('contest_fail_register.html',
-                            reason='contest is public but not open')
+                self.write('Contest is public but not open')
                 return
 
             ok = ParticipationRepository. \
                 verif_participation(session, user.id, contest.id)
 
             if ok:
-                self.render('contest_fail_register.html',
-                            reason='you are already ' +
-                                   'registered for this contest')
+                self.write('You are already registered for this contest')
                 return
 
             participation = Participation(user_id=user.id,
@@ -82,6 +78,7 @@ class ContestHandler(BaseHandler):
         session = self.acquire_sql_session()
         contest = ContestRepository.get_by_name(session, contest_name)
         user_name = self.get_current_user()
+        user_name = 'andrei'
         user = UserRepository.get_by_name(session, user_name)
 
         if contest.type == 3:
