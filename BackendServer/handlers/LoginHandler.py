@@ -20,6 +20,9 @@ class LoginHandler(BaseHandler):
         username = self.get_argument('username', '')
         password = self.get_argument('password', '')
 
+        # DANGER! Bug or someone malicious
+
+        # Check for missing username of password params
         if not username:
             login_response = 'Please enter your username/email.'
             self.write(login_response)
@@ -37,6 +40,7 @@ class LoginHandler(BaseHandler):
             self.write(login_response)
             return
 
+        # Fetch user and check if passwords match
         try:
             query = session.query(User.password)\
                 .filter(or_(User.username == username, User.email == username))
@@ -50,14 +54,13 @@ class LoginHandler(BaseHandler):
 
             if bcrypt.checkpw(password.encode('utf8'),
                               db_pass[0].encode('utf8')):
-                query = session.query(User.username)\
+                db_user = session.query(User.username)\
                     .filter(or_(User.username == username,
-                                User.email == username))
+                                User.email == username))\
+                    .one_or_none()
 
-                db_user = session.execute(query).first()
-
-                if db_user:
-                    self.set_secure_cookie("user", db_user)
+                if db_user is not None:
+                    self.set_secure_cookie("user", db_user.username)
                     login_response = 'Logged in.'
 
                 else:
@@ -65,8 +68,8 @@ class LoginHandler(BaseHandler):
 
             else:
                 login_response = 'Invalid credentials.'
-
-        except:
+        except Exception as err:
+            print(err)
             login_response = 'A database error has occured.'
         finally:
             session.close()
