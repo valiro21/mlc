@@ -50,14 +50,14 @@ with open(init_file, 'r') as config_file:
 
     Base.metadata.create_all(engine)
 
-# FIXME: Run sql script from file
-# with open(os.path.join(os.path.dirname(__file__),'init.sql'), 'r') \
-#        as init_file:
-#    sql = init_file.read()
-#    session = session_factory()
-#    session.execute(sql)
-#    session.commit()
-#    session.close()
+# TODO: Test if this works, Vali!
+with open(os.path.join(os.path.dirname(__file__), 'init.sql'), 'r') \
+       as init_file:
+    sql = init_file.read()
+    session = session_factory()
+    session.execute(sql)
+    session.commit()
+    session.close()
 
 __all__ = [
     'Base', 'Contest', 'Problem',
