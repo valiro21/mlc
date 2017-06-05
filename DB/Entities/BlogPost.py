@@ -12,7 +12,7 @@ class BlogPost(Base):
     __tablename__ = 'blog_posts'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'))  # TODO: index
+    admin_id = Column(Integer, ForeignKey('admins.id'))  # TODO: index
     title = Column(String)
     body = Column(String)
     created_at = Column(String)

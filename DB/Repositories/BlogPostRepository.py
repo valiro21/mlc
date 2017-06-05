@@ -1,6 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
-from DB.Entities import BlogPost, User
+from DB.Entities import BlogPost, Admin
 
 
 class BlogPostRepository:
@@ -16,7 +16,7 @@ class BlogPostRepository:
                              BlogPost.title,
                              BlogPost.body,
                              BlogPost.created_at,
-                             User.username)\
-            .join(User, BlogPost.user_id == User.id) \
+                             Admin.username)\
+            .join(Admin, BlogPost.admin_id == Admin.id) \
             .limit(limit) \
             .all()
