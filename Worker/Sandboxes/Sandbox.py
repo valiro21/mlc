@@ -69,7 +69,8 @@ class Sandbox(DBProcess):
         """
         absolute_path = self.get_by_relative_path(path)
         file = os.open(absolute_path, os.O_CREAT | os.O_WRONLY)
-        os.write(file, data)
+        if data is not None:
+            os.write(file, data)
         os.close(file)
 
     def create_executable(self, path, data):
@@ -80,7 +81,8 @@ class Sandbox(DBProcess):
         """
         absolute_path = self.get_by_relative_path(path)
         file = os.open(absolute_path, os.O_CREAT | os.O_WRONLY)
-        os.write(file, data)
+        if data is not None:
+            os.write(file, data)
         os.close(file)
 
     def create_readonly(self, path, data):
@@ -91,7 +93,8 @@ class Sandbox(DBProcess):
         """
         absolute_path = self.get_by_relative_path(path)
         file = os.open(absolute_path, os.O_CREAT | os.O_WRONLY)
-        os.write(file, data)
+        if data is not None:
+            os.write(file, data)
         os.close(file)
         os.chmod(absolute_path, 0o774)
 
@@ -163,7 +166,7 @@ class Sandbox(DBProcess):
         self.lock = Lock()
         try:
             os.mkdir(self.base_path)
-        except Exception as err:
+        except Exception:
             pass
         os.chmod(self.base_path, 0o771)
 

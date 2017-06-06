@@ -47,17 +47,17 @@ class WorkerSandbox(Sandbox):
             self.lock.acquire()
 
             # Recheck for any changes made by other threads
-            if dataset_id not in self.problems_sandboxes:
+            if problem_id not in self.problems_sandboxes:
                 session = self.acquire_sql_session()
                 problem = ProblemRepository.get_by_id(session, problem_id)
                 session.close()
 
                 # Create subtree for the problem
                 sandbox = ProblemSandbox(self.base_path, problem)
-                self.problems_sandboxes[dataset_id] = sandbox
+                self.problems_sandboxes[problem_id] = sandbox
             self.lock.release()
 
-        sandbox = self.problems_sandboxes[dataset_id]
+        sandbox = self.problems_sandboxes[problem_id]
 
         return submission_id, \
             dataset_id, \

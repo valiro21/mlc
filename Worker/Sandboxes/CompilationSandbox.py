@@ -2,7 +2,8 @@
 import os
 import subprocess
 
-from Worker.Sandboxes.JobResult import ValidJobResult, JobResult
+from Worker.Sandboxes.JobResult import ValidJobResult, JobResult,\
+    AbortJobResult
 from Worker.Sandboxes.Sandbox import Sandbox
 
 
@@ -103,8 +104,8 @@ class CompilationSandbox(Sandbox):
                 print("Compilation failed with error: " + decoded_error)
                 results = JobResult(error.returncode, decoded_error)
             except Exception as err:
-                print("Compilation failed with error: " + str(err))
-                results = JobResult(err.args[0][0], err.args[0][1])
+                print("Internal error: " + str(err))
+                return AbortJobResult()
             finally:
                 self.remove_file(problem.name)
                 return results
