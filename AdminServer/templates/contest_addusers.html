@@ -1,0 +1,84 @@
+{% extends "contest.html" %}
+
+{% block Body %}
+<div class="container">
+    <form method="POST" action="/contest/{{ contest_id }}/addusers" name="contest-addusers" id="contest-addusers">
+        <div class="row">
+            <h2>Add users to the contest {{ contest_id }}</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Username</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="text" name="username">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Contest type</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <select name="participation_type">
+                    <option value="1" selected>Rated</option>
+                    <option value="2">Unrated</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Unrestricted Participation</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="checkbox" name="unrestricted">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Hidden</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="checkbox" name="hidden">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Delay Time</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="0" type="number" class="form-control input-sm" name="delay_time" value="0">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Extra Time</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input default="0" type="number" class="form-control input-sm" name="extra_time" value="0">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 helper-text">
+                <p>Special Password</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                <input type="text" name="special_password">
+            </div>
+        </div>
+
+        <input type="submit" class="form-control">
+
+        <div  class="modal-footer" id="contest-addusers-error">
+        </div>
+    </form>
+</div>
+
+{% end %}
