@@ -108,7 +108,8 @@ class ProblemHandler(BaseHandler):
             problem.name = new_name
             problem.description = new_description
 
-            if active_ds_id is None and len(problem.datasets) > 0:
+            if (active_ds_id is None or not active_ds_id) and \
+                    len(problem.datasets) > 0:
                 active_ds_id = problem.datasets[0].id
 
             problem.active_dataset_id = active_ds_id

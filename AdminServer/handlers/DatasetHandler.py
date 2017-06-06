@@ -16,7 +16,7 @@ from tornado.web import HTTPError, MissingArgumentError
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB import Testcase
 from DB.Entities import Dataset
-from DB.Repositories import DatasetRepository
+from DB.Repositories import DatasetRepository, ProblemRepository
 
 
 class DatasetHandler(BaseHandler):
@@ -81,7 +81,7 @@ class DatasetHandler(BaseHandler):
 
         # Get arguments from request
         try:
-            problem_id = self.get_argument('problem-id')
+            problem_id = int(self.get_argument('problem-id'))
             name = self.get_argument('name')
             time_limit = self.get_argument('time-limit')
             memory_limit = self.get_argument('memory-limit')
@@ -146,6 +146,13 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(400)
         finally:
             session.rollback()
+
+        # Update the problem's default dataset
+        try:
+            ProblemRepository.update_default_dataset(session, problem_id)
+            session.commit()
+        except SQLAlchemyError:
+            raise
 
         self.redirect('/problem/edit?name=' + new_dataset.problem.name)
         session.close()
@@ -271,9 +278,20 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(500, 'Could not acquire database session.')
 
         try:
-            id = self.get_argument('id')
-            session.query(Dataset).filter_by(id=id).delete()
+            id = int(self.get_argument('id'))
+
+            dataset = DatasetRepository.get_by_id(session, id)
+            problem_id = dataset.problem_id
+
+            session.delete(dataset)
             session.commit()
+
+            # Update the problem's default dataset
+            try:
+                ProblemRepository.update_default_dataset(session, problem_id)
+                session.commit()
+            except SQLAlchemyError:
+                raise
 
         except Exception as e:
             traceback.print_exc()
