@@ -83,9 +83,20 @@ class DatasetHandler(BaseHandler):
         try:
             problem_id = self.get_argument('problem-id')
             name = self.get_argument('name')
-            time_limit = self.get_argument('time-limit', 1)
-            memory_limit = self.get_argument('memory-limit', 16)
+            time_limit = self.get_argument('time-limit')
+            memory_limit = self.get_argument('memory-limit')
 
+            # If received empty string, use database default
+            try:
+                time_limit = float(time_limit) if time_limit else None
+                memory_limit = float(memory_limit) if memory_limit else None
+
+                if not self.validate_time_memory(time_limit, memory_limit):
+                    raise HTTPError(400, 'Invalid time limit or memory limit')
+
+            except:
+                raise HTTPError(400, 'Invalid time limit '
+                                     'or memory limit format')
             stdin = self.get_argument('stdin', '')
             stdout = self.get_argument('stdout', '')
 
@@ -98,6 +109,8 @@ class DatasetHandler(BaseHandler):
             else:
                 testcases_body = None
 
+        except HTTPError:
+            raise
         except Exception as e:
             traceback.print_exc()
             raise HTTPError(400)  # Bad request
@@ -198,6 +211,14 @@ class DatasetHandler(BaseHandler):
             new_time_limit = self.get_argument('time-limit')
             new_memory_limit = self.get_argument('memory-limit')
 
+            new_time_limit = float(new_time_limit) \
+                if new_time_limit else None
+            new_memory_limit = float(new_memory_limit) \
+                if new_time_limit else None
+
+            if not self.validate_time_memory(new_time_limit, new_memory_limit):
+                raise HTTPError(400, 'Invalid time limit or memory limit')
+
             files = self.request.files
 
             testcases = files.get('testcases', None)
@@ -209,6 +230,8 @@ class DatasetHandler(BaseHandler):
 
             new_in = files.get('input', None)
             new_out = files.get('output', None)
+        except HTTPError:
+            raise
         except:
             raise HTTPError(400, 'Arguments specified incorrectly.')
 
@@ -260,3 +283,7 @@ class DatasetHandler(BaseHandler):
             session.close()
 
         self.write('Success!')
+
+    def validate_time_memory(self, time, memory):
+        return (time is None or 0 <= time <= 60) and \
+               (memory is None or 0 <= memory <= 1024)
