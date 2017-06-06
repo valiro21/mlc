@@ -1,5 +1,4 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
-import smtplib
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.User import User
@@ -7,7 +6,10 @@ from DB.Entities.RecoveryToken import RecoveryToken
 from Common.scripts.Mailer import send_email
 import hashlib
 import os
-import datetime
+from datetime import datetime
+import datetime as datetime2
+
+import bcrypt
 
 
 class RecoveryHandler(BaseHandler):
@@ -47,8 +49,8 @@ class RecoveryHandler(BaseHandler):
                 self.write(response)
                 return
 
-            expiration_date = datetime.datetime.now()
-            expiration_date = expiration_date + datetime.timedelta(minutes=30)
+            expiration_date = datetime.now()
+            expiration_date = expiration_date + datetime2.timedelta(minutes=30)
 
             query = session.query(User)\
                 .filter(User.email == email).one_or_none()
@@ -92,8 +94,13 @@ class RecoveryHandler(BaseHandler):
 
         else:
             token = self.get_argument('token', '')
-            # password = self.get_argument('password', '')
-            # password_confirm = self.get_argument('password_confirm', '')
+            password = self.get_argument('password', '')
+            password_confirm = self.get_argument('password_confirm', '')
+
+            if password != password_confirm:
+                response = 'Password mismatch'
+                self.write(response)
+                return
 
             try:
                 session = self.acquire_sql_session()
@@ -106,5 +113,36 @@ class RecoveryHandler(BaseHandler):
                 .filter(RecoveryToken.recovery_token == token)\
                 .one_or_none()
 
-            # user = session.query(User)\
-            #    .filter(User.id == query.user_id).one_or_none()
+            if query is None:
+                response = 'Invalid reset token'
+                self.write(response)
+                return
+
+            token_expiry_date = datetime.strptime(query.expiration_date,
+                                                  '%Y-%m-%d %H:%M:%S.%f')
+
+            if token_expiry_date < datetime2.datetime.now():
+                response = 'Token expired.'
+                session.delete(query)
+                session.commit()
+                return
+
+            user = session.query(User)\
+                .filter(User.id == query.user_id).one_or_none()
+
+            if query is not None:
+                if user.confirmation_token is None:
+                    user.password = bcrypt\
+                        .hashpw(password.encode('utf8'),
+                                bcrypt.gensalt()).decode('utf8')
+
+                    session.delete(query)
+                    session.commit()
+                    response = 'Password reset done.'
+                    self.write(response)
+                    return
+
+                else:
+                    response = 'Account not confirmed'
+                    self.write(response)
+                    return

@@ -20,10 +20,11 @@ from DB import config
 
 io_loop = tornado.ioloop.IOLoop.instance()
 
-conn = psycopg2.connect('host=' + config['database_host'] + ' '
-                        'dbname=' + config['database_name'] + ' '
-                        'user=' + config['database_user'] + ' '
-                        'password=' + config['database_password'])
+conn = psycopg2.connect(host=config['database_host'],
+                        dbname=config['database_name'],
+                        user=config['database_user'],
+                        password=config['database_password'],
+                        connect_timeout=5)
 conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
 
