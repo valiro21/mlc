@@ -1,6 +1,4 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
-import smtplib
-
 from BackendServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.User import User
 import time
