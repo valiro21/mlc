@@ -72,3 +72,10 @@ class ContestRepository:
             .join(Contest, Contest.id == Problem_Contest.contest_id)\
             .filter(Contest.id == contest_id)\
             .all()
+
+    @staticmethod
+    def add_problem(session, contest, problem):
+        new_relation = Problem_Contest(problem_id=problem.id,
+                                       contest_id=contest.id)
+        session.add(new_relation)
+        session.commit()

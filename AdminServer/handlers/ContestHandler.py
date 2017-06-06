@@ -18,7 +18,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
 from DB import Contest
-from DB.Repositories import ContestRepository
+from DB.Repositories import ContestRepository, ProblemRepository
 
 
 class ContestHandler(BaseHandler.BaseHandler):
@@ -30,8 +30,8 @@ class ContestHandler(BaseHandler.BaseHandler):
     @tornado.web.authenticated
     def post(self):
         path_elements = [x for x in self.request.path.split("/") if x]
-        contest_id = path_elements[1]
-        if len(path_elements) == 2 and contest_id == "create":
+        contest_name = path_elements[1]
+        if len(path_elements) == 2 and contest_name == "create":
             contest_name = self.get_argument('contest_name')
             start_date_string = self.get_argument('start_date')
 
@@ -46,10 +46,9 @@ class ContestHandler(BaseHandler.BaseHandler):
 
             try:
                 session = self.acquire_sql_session()
-            except:
+            except SQLAlchemyError:
                 traceback.print_exc()
-                # TODO: handle error
-                return
+                raise HTTPError(500, 'Could not acquire database session.')
 
             try:
                 new_contest = Contest(name=contest_name,
@@ -167,6 +166,35 @@ class ContestHandler(BaseHandler.BaseHandler):
                 self.redirect_to_settings(self, "settings")
                 return
             self.redirect("problems")
+            session.close()
+
+        elif len(path_elements) == 3 and path_elements[2] == 'add_problem':
+
+            problem_name = self.get_argument('problem', None)
+
+            if problem_name is None:
+                self.redirect('/contest/' + contest_name + '/problems')
+                return
+
+            try:
+                session = self.acquire_sql_session()
+            except SQLAlchemyError:
+                raise HTTPError(500, 'Could not acquire database session')
+
+            try:
+                problem = ProblemRepository.get_by_name(session, problem_name)
+                contest = ContestRepository.get_by_name(session, contest_name)
+            except SQLAlchemyError:
+                session.close()
+                raise HTTPError(500, 'Specified problem does not exist.')
+
+            try:
+                ContestRepository.add_problem(session, contest, problem)
+            except SQLAlchemyError:
+                session.close()
+                raise HTTPError(500, 'Could not add problem.')
+
+            self.write('Success! Refresh page to see changes.')
             session.close()
 
     @tornado.web.authenticated

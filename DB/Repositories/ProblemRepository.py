@@ -3,9 +3,6 @@
 
 import time
 
-from sqlalchemy.orm.exc import NoResultFound
-
-
 from DB.Entities import Problem, Contest, Problem_Contest
 
 
@@ -33,9 +30,6 @@ class ProblemRepository:
     @staticmethod
     def get_by_name(session, name):
         if isinstance(name, str):
-            try:
-                return session.query(Problem).filter_by(name=name)\
-                    .one()
-            except NoResultFound as err:
-                return None
+            return session.query(Problem).filter_by(name=name)\
+                .one()
         raise ValueError("name must be string")
