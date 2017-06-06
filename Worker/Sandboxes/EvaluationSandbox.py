@@ -6,7 +6,7 @@ import subprocess
 from DB.Repositories import SubmissionRepository
 from Worker.Checker import WhitespaceChecker
 from Worker.Sandboxes.Sandbox import Sandbox
-from Worker.Sandboxes.JobResult import JobResult
+from Worker.Sandboxes.JobResult import JobResult, AbortJobResult
 
 
 class EvaluationSandbox(Sandbox):
@@ -35,7 +35,7 @@ class EvaluationSandbox(Sandbox):
         try:
             cpu = float(words[2])
             memory = float(words[6])
-        except Exception as err:
+        except Exception:
             # Another fail safe - may be linker error or others
             return -4, string, 0, 0
 
@@ -149,7 +149,7 @@ class EvaluationSandbox(Sandbox):
                                        message,
                                        cpu=cpu,
                                        memory=memory)
-            except os.subprocess.CalledProcessError as error:
+            except subprocess.CalledProcessError as error:
                 print("Evaluation error: " + error.output.decode('utf8'))
                 code, message, cpu, memory = self.parse_output(error.output)
                 result = JobResult(code,
@@ -157,12 +157,12 @@ class EvaluationSandbox(Sandbox):
                                    cpu=cpu,
                                    memory=memory)
             except Exception as err:
-                print(err)
-                result = JobResult(err.args[0][0], err.args[0][1])
+                print("Internal error: " + str(err))
+
+                result = AbortJobResult()
             finally:
                 self.remove_file(testcase_link)
                 self.remove_file(executable_path)
-
             if result is None:
                 is_valid = checker.check(in_testcase_path,
                                          out_testcase_path,
