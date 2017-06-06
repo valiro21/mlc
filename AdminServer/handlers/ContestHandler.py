@@ -27,11 +27,19 @@ class ContestHandler(BaseHandler.BaseHandler):
     def data_received(self, chunk):
         pass
 
+    def send_custom_error(self, status, message):
+        print('Sending custom error:' + str(status) + ' ' + message)
+        self.clear()
+        self.set_status(status)
+        self.finish(message)
+
     @tornado.web.authenticated
     def post(self):
         path_elements = [x for x in self.request.path.split("/") if x]
         contest_name = path_elements[1]
         if len(path_elements) == 2 and contest_name == "create":
+            """Creating contest"""
+
             contest_name = self.get_argument('contest_name')
             start_date_string = self.get_argument('start_date')
 
@@ -67,6 +75,8 @@ class ContestHandler(BaseHandler.BaseHandler):
             return
 
         elif len(path_elements) == 3 and path_elements[2] == 'settings':
+            """Changing settings"""
+
             contest_name = self.get_argument('contest_name')
             contest_description = self.get_argument('contest_description')
             contest_type = self.get_argument('contest_type')
@@ -169,32 +179,75 @@ class ContestHandler(BaseHandler.BaseHandler):
             session.close()
 
         elif len(path_elements) == 3 and path_elements[2] == 'add_problem':
+            """Adding problem to contest"""
 
-            problem_name = self.get_argument('problem', None)
+            problem_id = self.get_argument('problem', None)
 
-            if problem_name is None:
+            if problem_id is None:
                 self.redirect('/contest/' + contest_name + '/problems')
                 return
 
             try:
                 session = self.acquire_sql_session()
             except SQLAlchemyError:
-                raise HTTPError(500, 'Could not acquire database session')
+                self.send_custom_error(500, 'Could not acquire '
+                                            'database session')
+                return
 
             try:
-                problem = ProblemRepository.get_by_name(session, problem_name)
+                problem = ProblemRepository.get_by_name(session, problem_id)
                 contest = ContestRepository.get_by_name(session, contest_name)
             except SQLAlchemyError:
                 session.close()
-                raise HTTPError(500, 'Specified problem does not exist.')
+                self.send_custom_error(500, 'Could not find problem.')
+                return
 
             try:
                 ContestRepository.add_problem(session, contest, problem)
             except SQLAlchemyError:
                 session.close()
-                raise HTTPError(500, 'Could not add problem.')
+                self.send_custom_error(500, 'Could not add problem. '
+                                            'It already exists in contest.')
+                return
 
             self.write('Success! Refresh page to see changes.')
+            session.close()
+
+        elif len(path_elements) == 3 and path_elements[2] == 'remove_problem':
+            """Removing problem from contest"""
+
+            print('Entered "remove problem from contest"')
+
+            problem_id = int(self.get_argument('id', None))
+
+            if problem_id is None:
+                self.send_custom_error(500, 'Problem name not specified')
+                return
+
+            try:
+                session = self.acquire_sql_session()
+            except SQLAlchemyError:
+                self.send_custom_error(500, 'Could not acquire '
+                                            'database session')
+                return
+
+            try:
+                problem = ProblemRepository.get_by_id(session, problem_id)
+                contest = ContestRepository.get_by_name(session, contest_name)
+            except SQLAlchemyError:
+                session.close()
+                self.send_custom_error(500, 'Could not find '
+                                            'problem or contest.')
+                return
+
+            try:
+                ContestRepository.remove_problem(session, contest, problem)
+            except SQLAlchemyError:
+                session.close()
+                self.send_custom_error(500, 'Could not remove problem...')
+                return
+
+            self.write('Success!')
             session.close()
 
     @tornado.web.authenticated
