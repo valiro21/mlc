@@ -22,6 +22,7 @@ class ProblemHandler(BaseHandler):
 
     @tornado.web.authenticated
     def get(self):
+        """ Handles get requests related to problems """
 
         path_elements = [x for x in self.request.path.split("/") if x]
         action = path_elements[-1]
@@ -71,12 +72,16 @@ class ProblemHandler(BaseHandler):
         action = path_elements[-1]
 
         if action in functions.keys():
+            # Run corresponding action
             functions[action]()
         else:
             raise HTTPError(404, 'Not found')
 
     def edit_problem(self):
+        """ Edits problem using specified
+        parameters in POST request"""
 
+        # Get parameters from request
         try:
             old_name = self.get_argument('old-name')
             new_name = self.get_argument('name')
@@ -89,14 +94,17 @@ class ProblemHandler(BaseHandler):
         except:
             raise HTTPError(400)
 
+        # Get database session
         try:
             session = self.acquire_sql_session()
         except:
             raise HTTPError(500, 'Could not acquire session for database')
 
         try:
+            # Find problem in database
             problem = ProblemRepository.get_by_name(session, old_name)
 
+            # Update it with new information
             problem.name = new_name
             problem.description = new_description
 
@@ -109,9 +117,10 @@ class ProblemHandler(BaseHandler):
                                                 new_statements,
                                                 problem)
             session.commit()
-        except Exception as e:
+        except SQLAlchemyError as e:
             raise HTTPError(500, 'Database error or invalid arguments.')
 
+        # Redirect to problem edit page after finishing
         self.redirect('/problem/edit?name=' + problem.name)
         session.close()
 
@@ -138,21 +147,27 @@ class ProblemHandler(BaseHandler):
         """Creates a problem with given name and description"""
 
         try:
+            # Get request arguments
             name = self.get_argument('name')
             description = self.get_argument('description')
         except Exception as e:
-            print(e)
             self.render('problem_create.html', error_msg=e)
             return
 
         try:
+            # Get database session
             session = self.acquire_sql_session()
         except:
             raise HTTPError(500, 'Could not acquire session for database')
 
         try:
+            # Instantiate new problem
             new_problem = Problem(name=name, description=description)
+
+            # Add it to database
             session.add(new_problem)
+
+            # Commit changes
             session.commit()
         except SQLAlchemyError as e:
             print(e)

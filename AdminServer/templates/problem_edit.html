@@ -92,6 +92,7 @@
                     <th>Dataset name</th>
                     <th>Mark as active</th>
                     <th>Edit</th>
+                    <th>Clone</th>
                     <th>Delete</th>
                 </tr>
             </thead>
@@ -111,6 +112,11 @@
                             <a href="/dataset/edit?id={{ dataset.id }}"
                                class="btn btn-info"
                                role="button">Edit</a>
+                        </td>
+                        <td>
+                            <a href="/dataset/clone?id={{ dataset.id }}"
+                               class="btn btn-info"
+                               role="button">Clone</a>
                         </td>
                         <td>
                             <button type="button"

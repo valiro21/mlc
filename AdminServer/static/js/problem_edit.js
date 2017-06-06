@@ -25,7 +25,7 @@ $('document').ready(function () {
 });
 
 deleteItem = function (itemName, id) {
-    if (confirm('Are you sure you want to delete this dataset?') === false){
+    if (confirm('Are you sure you want to delete this ' + itemName + '?') === false){
         return;
     }
 
