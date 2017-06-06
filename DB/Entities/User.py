@@ -20,6 +20,7 @@ class User(Base):
     rating = Column(Integer, default=1337)
     avatar = Column(LargeBinary)
     email = Column(String, unique=True)
+    confirmation_token = Column(String, unique=True, nullable=True)
 
     @validates("email")
     def __validateEmail__(self, key, email):
