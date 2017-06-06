@@ -13,12 +13,15 @@ from datetime import datetime
 import tornado
 from sqlalchemy import update
 import tornado.web
+from sqlalchemy.sql.elements import and_
 from tornado.web import HTTPError
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
-from DB import Contest
-from DB.Repositories import ContestRepository
+
+from DB import Contest, Participation
+from DB.Repositories import ContestRepository, UserRepository
+from DB.Repositories.ParticipacionRepository import ParticipationRepository
 
 
 class ContestHandler(BaseHandler.BaseHandler):
@@ -169,6 +172,72 @@ class ContestHandler(BaseHandler.BaseHandler):
             self.redirect("problems")
             session.close()
 
+        elif len(path_elements) == 3 and path_elements[2] == 'addusers':
+            session = self.acquire_sql_session()
+            contest_name = path_elements[1]
+            user_name = self.get_argument('username')
+            participation_type = self.get_argument('participation_type')
+            delay_time = self.get_argument('delay_time')
+            extra_time = self.get_argument('extra_time')
+            special_password = self.get_argument('special_password')
+
+            if special_password == '':
+                special_password = None
+            try:
+                self.get_argument('unrestricted')
+                unrestricted = True
+            except:
+                unrestricted = False
+
+            try:
+                self.get_argument('hidden')
+                hidden = True
+            except:
+                hidden = False
+
+            try:
+                contest = ContestRepository.get_by_name(session, contest_name)
+                user = UserRepository.get_by_name(session, user_name)
+            except SQLAlchemyError as e:
+                self.write('User or Contest not found!')
+                print(e)
+                return
+            if contest is None:
+                self.write('Contest is None!')
+            if user is None:
+                self.write('User is None!')
+
+            ok = ParticipationRepository. \
+                verif_participation(session, user.id, contest.id)
+
+            if ok is False:
+                participation = Participation(user_id=user.id,
+                                              contest_id=contest.id,
+                                              type=participation_type,
+                                              unrestricted=unrestricted,
+                                              hidden=hidden,
+                                              delay_time=delay_time,
+                                              extra_time=extra_time,
+                                              special_password=special_password)
+                session.add(participation)
+                session.commit()
+                message = 'registered'
+            else:
+                stmt = update(Participation). \
+                    where(and_(Participation.user_id == user.id,
+                          Participation.contest_id == contest.id)). \
+                    values(type=participation_type,
+                           unrestricted=unrestricted,
+                           hidden=hidden,
+                           delay_time=delay_time,
+                           extra_time=extra_time,
+                           special_password=special_password)
+                session.execute(stmt)
+                session.commit()
+                message = 'registered'
+            self.write(message)
+            return
+
     @tornado.web.authenticated
     def get(self):
         path_elements = [x for x in self.request.path.split("/") if x]
@@ -197,7 +266,8 @@ class ContestHandler(BaseHandler.BaseHandler):
                                     "problems",
                                     "submissions",
                                     "user_tests",
-                                    "users"]:
+                                    "users",
+                                    "addusers"]:
             self.redirect_to_settings(self, "settings")
         render = path_elements[2]
 
