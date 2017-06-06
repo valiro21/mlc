@@ -134,7 +134,7 @@ class DatasetHandler(BaseHandler):
         finally:
             session.rollback()
 
-        self.redirect('/problem/' + new_dataset.problem.name)
+        self.redirect('/problem/edit?name=' + new_dataset.problem.name)
         session.close()
 
     def create_testcases(self, extracted, new_dataset, session):

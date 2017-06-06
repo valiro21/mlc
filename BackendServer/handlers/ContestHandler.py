@@ -1,5 +1,6 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 # coding=utf-8
 """Contest Handler for contest page."""
@@ -79,6 +80,11 @@ class ContestHandler(BaseHandler):
         user_name = self.get_current_user()
         user = UserRepository.get_by_name(session, user_name)
 
+        problems = ContestRepository.get_all_problems(session, contest.id)
+
+        for problem in problems:
+            print(problem)
+
         if contest.type == 3:
             ok = ParticipationRepository. \
                 verif_participation(session, user.id, contest.id)
@@ -101,7 +107,7 @@ class ContestHandler(BaseHandler):
             return
 
         if path_elements[2] == 'submit' or \
-           path_elements[2] == 'mysubmissions':
+                path_elements[2] == 'mysubmissions':
             ok = ParticipationRepository. \
                 verif_participation(session, user.id, contest.id)
 
@@ -117,5 +123,6 @@ class ContestHandler(BaseHandler):
             self.redirect("problems")
 
         self.render("contest_" +
-                    path_elements[2] +
-                    ".html", contest_id=contest_name)
+                    path_elements[2] + ".html",
+                    contest_id=contest_name,
+                    problems=problems)

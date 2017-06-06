@@ -23,6 +23,9 @@ from BackendServer.handlers.SubmissionsHandler import SubmissionsHandler
 from BackendServer.handlers.RegisterHandler import RegisterHandler
 from BackendServer.handlers.LoginHandler import LoginHandler
 from BackendServer.handlers.LogoutHandler import LogoutHandler
+from BackendServer.handlers.UserConfirmationHandler \
+    import UserConfirmationHandler
+from BackendServer.handlers.RecoveryHandler import RecoveryHandler
 
 
 define('template_path',
@@ -64,6 +67,8 @@ def make_app():
         (r"/contest/.+/problem/.+", ProblemHandler),
         (r"/user/.+", UserHandler),
         (r"/login", LoginHandler),
-        (r"/logout", LogoutHandler)
+        (r"/logout", LogoutHandler),
+        (r"/confirm/.+", UserConfirmationHandler),
+        (r"/recovery/.+", RecoveryHandler)
         ],
         **options.group_dict('application'))

@@ -5,8 +5,9 @@
 import time
 
 from pyparsing import basestring
+from sqlalchemy.exc import SQLAlchemyError
 
-from DB.Entities import Contest
+from DB.Entities import Contest, Problem_Contest, Problem
 
 
 class ContestRepository:
@@ -52,4 +53,22 @@ class ContestRepository:
     def get_all_contest_order_by_date(session):
         return session.query(Contest) \
             .order_by(Contest.start_time.desc()) \
+            .all()
+
+    @staticmethod
+    def has_problem(session, contest_id, problem_id):
+        try:
+            session.query(Problem_Contest)\
+                .filter_by(problem_id=problem_id)\
+                .filter_by(contest_id=contest_id).one()
+        except SQLAlchemyError:
+            return False
+        return True
+
+    @staticmethod
+    def get_all_problems(session, contest_id):
+        return session.query(Problem)\
+            .join(Problem_Contest, Problem_Contest.problem_id == Problem.id)\
+            .join(Contest, Contest.id == Problem_Contest.contest_id)\
+            .filter(Contest.id == contest_id)\
             .all()

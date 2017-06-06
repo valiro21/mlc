@@ -6,8 +6,11 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 
 from BackendServer.handlers.BaseHandler import BaseHandler
+from Common.scripts.Mailer import send_email
 from DB.Entities import User
 import bcrypt
+import hashlib
+import os
 
 
 class RegisterHandler(BaseHandler):
@@ -50,17 +53,28 @@ class RegisterHandler(BaseHandler):
 
         else:
             register_response = 'registered'
+
+            """Generate confirmation token to be sent to the email"""
+
+            token = hashlib.sha1(os.urandom(128)).hexdigest()
+
             new_user = User(
                 username=username,
                 firstName=first_name,
                 email=email,
                 lastName=last_name,
                 password=bcrypt.hashpw(password.encode('utf8'),
-                                       bcrypt.gensalt()).decode('utf8')
+                                       bcrypt.gensalt()).decode('utf8'),
+                confirmation_token=token
             )
 
             session = self.acquire_sql_session()
             session.add(new_user)
             session.commit()
+
+            message = self.request.protocol + "://" \
+                + self.request.host + "/confirm/" + token
+
+            send_email(email, "MLC Confirmation Link", message, username)
 
         self.write(register_response)

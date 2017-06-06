@@ -16,6 +16,7 @@ from DB.Entities.Admin_Permission import AdminPermission
 from DB.Entities.Permission import Permission
 from DB.Entities.Problem_Contest import Problem_Contest
 from DB.Entities.BlogPost import BlogPost
+from DB.Entities.RecoveryToken import RecoveryToken
 
 __all__ = [
     'Base', 'Contest', 'Problem',
@@ -23,5 +24,5 @@ __all__ = [
     'Submission', 'User', 'Job',
     'Process', 'Log', 'Admin',
     'AdminPermission', 'Permission',
-    'Problem_Contest', 'BlogPost'
+    'Problem_Contest', 'BlogPost', 'RecoveryToken'
 ]

@@ -13,10 +13,12 @@ from datetime import datetime
 import tornado
 from sqlalchemy import update
 import tornado.web
+from tornado.web import HTTPError
 from sqlalchemy.exc import SQLAlchemyError
 
 from AdminServer.handlers import BaseHandler
 from DB import Contest
+from DB.Repositories import ContestRepository
 
 
 class ContestHandler(BaseHandler.BaseHandler):
@@ -69,6 +71,15 @@ class ContestHandler(BaseHandler.BaseHandler):
             contest_name = self.get_argument('contest_name')
             contest_description = self.get_argument('contest_description')
             contest_type = self.get_argument('contest_type')
+
+            contest_dict = {
+                'Open': 1,
+                'Public': 2,
+                'Private': 3
+            }
+
+            contest_type = contest_dict.get(contest_type, 1)
+
             try:
                 self.get_argument('contest_virtual')
                 contest_virtual = True
@@ -132,7 +143,7 @@ class ContestHandler(BaseHandler.BaseHandler):
 
             try:
                 contest_old_name = path_elements[1]
-                stmt = update(Contest).\
+                stmt = update(Contest). \
                     where(Contest.name == contest_old_name). \
                     values(name=contest_name,
                            description=contest_description,
@@ -164,15 +175,15 @@ class ContestHandler(BaseHandler.BaseHandler):
         if len(path_elements) == 1:
             self.render("contests.html")
             return
-        contest_id = path_elements[1]
+        contest_name = path_elements[1]
 
         if len(path_elements) < 2 or \
-                (len(path_elements) == 2 and contest_id != "create"):
+                (len(path_elements) == 2 and contest_name != "create"):
             self.redirect_to_settings(self,
                                       os.path.join(self.request.path,
                                                    "settings"))
             return
-        elif len(path_elements) == 2 and contest_id == "create":
+        elif len(path_elements) == 2 and contest_name == "create":
             self.render("contest_create.html")
             return
         elif len(path_elements) >= 4:
@@ -208,18 +219,24 @@ class ContestHandler(BaseHandler.BaseHandler):
 
         try:
             session = self.acquire_sql_session()
-        except:
+        except SQLAlchemyError:
             traceback.print_exc()
-            # TODO: handle error
-            return
+            raise HTTPError(500, 'Could not acquire database session.')
+
+        try:
+            contest = ContestRepository.get_by_name(session, contest_name)
+            problems = ContestRepository.get_all_problems(session, contest.id)
+        except SQLAlchemyError:
+            traceback.print_exc()
+            raise HTTPError(500, 'Error getting problems')
 
         if render == "contest_settings":
-            contest = session.query(Contest)\
-                .filter_by(name=contest_id)\
-                .first()
+            contest = session.query(Contest) \
+                .filter_by(name=contest_name) \
+                .one()
             self.render(render + ".html",
                         last_path=path_elements[2],
-                        contest_id=contest_id,
+                        contest_id=contest_name,
                         contest_name=contest.name,
                         contest_description=contest.description,
                         contest_type=self.type_format(contest.type),
@@ -244,7 +261,9 @@ class ContestHandler(BaseHandler.BaseHandler):
         session.close()
         self.render(render + ".html",
                     last_path=path_elements[2],
-                    contest_id=contest_id)
+                    contest=contest,
+                    contest_id=contest_name,
+                    problems=problems)
 
     @staticmethod
     def redirect_to_settings(self, path):

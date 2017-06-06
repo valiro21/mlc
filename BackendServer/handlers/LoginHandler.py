@@ -54,14 +54,17 @@ class LoginHandler(BaseHandler):
 
             if bcrypt.checkpw(password.encode('utf8'),
                               db_pass[0].encode('utf8')):
-                db_user = session.query(User.username)\
+                db_user = session.query(User)\
                     .filter(or_(User.username == username,
                                 User.email == username))\
                     .one_or_none()
 
                 if db_user is not None:
-                    self.set_secure_cookie("user", db_user.username)
-                    login_response = 'Logged in.'
+                    if db_user.confirmation_token is not None:
+                        login_response = 'Account is not confirmed.'
+                    else:
+                        self.set_secure_cookie("user", db_user.username)
+                        login_response = 'Logged in.'
 
                 else:
                     login_response = 'Unexpected error.'
@@ -70,7 +73,7 @@ class LoginHandler(BaseHandler):
                 login_response = 'Invalid credentials.'
         except Exception as err:
             print(err)
-            login_response = 'A database error has occured.'
+            login_response = 'A database error has occurred.'
         finally:
             session.close()
 
