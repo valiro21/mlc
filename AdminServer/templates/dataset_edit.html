@@ -85,7 +85,7 @@
                     </thead>
                     <tbody>
                         {% if dataset.testcases is not None %}
-                        {% for index, testcase in enumerate(dataset.testcases, start=1) %}
+                        {% for index, testcase in enumerate([tc for tc in dataset.testcases if not tc.deleted], start=1) %}
                             <tr id="testcase-row-{{ testcase.id }}">
                                 <td>{{ index }}</td>
                                 <td class="text-center">

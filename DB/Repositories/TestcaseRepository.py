@@ -9,7 +9,8 @@ class TestcaseRepository:
     def get_by_id(session, id):
         if isinstance(id, int):
             return session.query(Testcase)\
-                .filter(Testcase.id == id)\
+                .filter(Testcase.id == id) \
+                .filter(Testcase.deleted.is_(False))\
                 .one()
         raise ValueError("id must be integer")
 
@@ -18,5 +19,15 @@ class TestcaseRepository:
         if isinstance(id, int):
             return session.query(Testcase)\
                 .filter(Testcase.dataset_id == id)\
+                .filter(Testcase.deleted.is_(False))\
                 .all()
         raise ValueError("id must be integer")
+
+    @staticmethod
+    def delete_by_id(session, id):
+        if isinstance(id, int):
+            session.query(Testcase)\
+                .filter_by(id=id)\
+                .update({'deleted': True})
+        else:
+            raise ValueError("id must be integer")
