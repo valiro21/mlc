@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 import time
 
@@ -12,13 +13,13 @@ class ContestRepository:
     @staticmethod
     def get_by_name(session, name):
         if isinstance(name, basestring):
-            return session.query(Contest).filter(Contest.name == name).first()
+            return session.query(Contest).filter(Contest.name == name).one()
         raise ValueError("name must be string")
 
     @staticmethod
     def get_by_id(session, id):
         if isinstance(id, int):
-            return session.query(Contest).filter(Contest.id == id).first()
+            return session.query(Contest).filter(Contest.id == id).one()
         raise ValueError("id must be integer")
 
     @staticmethod

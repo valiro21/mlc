@@ -5,8 +5,6 @@
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
-import os
-
 import tornado.web
 from sqlalchemy.exc import SQLAlchemyError
 from tornado.web import HTTPError
@@ -26,20 +24,11 @@ class ProblemHandler(BaseHandler):
     def get(self):
 
         path_elements = [x for x in self.request.path.split("/") if x]
-        if len(path_elements) == 1:
-            self.render("problem_list.html")
-            return
-        problem_name = path_elements[1]
+        action = path_elements[-1]
 
-        if len(path_elements) < 2 or \
-                (len(path_elements) == 2 and problem_name != "create"):
-            self.redirect(os.path.join(self.request.path, "edit"))
-            return
-        elif len(path_elements) == 2 and problem_name == "create":
+        # Check if create is asked
+        if action == 'create':
             self.render("problem_create.html")
-            return
-        elif len(path_elements) >= 4:
-            self.redirect("..")
             return
 
         try:
@@ -47,22 +36,30 @@ class ProblemHandler(BaseHandler):
         except:
             raise HTTPError(500, 'Could not acquire session for database')
 
-        # Find problem (by name)
-        try:
-            problem = session.query(Problem) \
-                .filter_by(name=problem_name) \
-                .first()
-        except:
-            raise HTTPError(500, 'Database error')
+        # Get problem name
+        name = self.get_argument('name', None)
 
-        if problem is None:
-            # Problem not existing, redirect to creation page
-            self.render("problem_create.html", problem_name=problem_name)
+        if action == 'edit':
+            if name is None:
+                # If no name specified, redirect to create page
+                self.redirect('/problem/create')
+                session.close()
+                return
+
+            # Find problem in database
+            try:
+                problem = ProblemRepository.get_by_name(session, name)
+            except:
+                # If problem does not exist, redirect user to create it
+                self.render('problem_create.html', problem_name=name)
+                session.close()
+                return
+
+            self.render("problem_edit.html", problem=problem)
+            session.close()
             return
 
-        self.render("problem_edit.html",
-                    problem=problem)
-        session.close()
+        raise HTTPError(404, 'Not found')
 
     def post(self):
         print("POST to ProblemHandler")
@@ -76,7 +73,7 @@ class ProblemHandler(BaseHandler):
         if action in functions.keys():
             functions[action]()
         else:
-            raise HTTPError(404)
+            raise HTTPError(404, 'Not found')
 
     def edit_problem(self):
 
@@ -102,17 +99,21 @@ class ProblemHandler(BaseHandler):
 
             problem.name = new_name
             problem.description = new_description
+
+            if active_ds_id is None and len(problem.datasets) > 0:
+                active_ds_id = problem.datasets[0].id
+
             problem.active_dataset_id = active_ds_id
 
             self.set_statements_and_attachments(new_attachments,
                                                 new_statements,
                                                 problem)
-
             session.commit()
         except Exception as e:
-            raise HTTPError(400)
+            raise HTTPError(500, 'Database error or invalid arguments.')
 
-        self.redirect('/problem/' + problem.name)
+        self.redirect('/problem/edit?name=' + problem.name)
+        session.close()
 
     def set_statements_and_attachments(self,
                                        new_attachments,
@@ -159,8 +160,7 @@ class ProblemHandler(BaseHandler):
             msg = repr(e).replace('\\n', '\n')  # to output message properly
             self.render('problem_create.html', error_msg=msg)
             return
-        finally:
-            session.close()
 
         print('Created problem ' + name)
-        self.redirect('/problem/' + name)
+        self.redirect('/problem/edit?name=' + name)
+        session.close()

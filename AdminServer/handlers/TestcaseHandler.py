@@ -49,10 +49,21 @@ class TestcaseHandler(BaseHandler):
             raise HTTPError(404)
 
     def delete_testcase(self):
+
+        try:
+            session = self.acquire_sql_session()
+        except:
+            raise HTTPError(500, 'Could not acquire database session.')
+
         try:
             id = int(self.get_argument('id'))
-            session = self.acquire_sql_session()
-            testcase = TestcaseRepository.get_by_id(session, id)
+
+            try:
+                testcase = TestcaseRepository.get_by_id(session, id)
+            except:
+                raise HTTPError(400, 'Testcase with specified id '
+                                     'does not exist.')
+
             session.delete(testcase)
             session.commit()
         except MissingArgumentError as e:
@@ -63,13 +74,17 @@ class TestcaseHandler(BaseHandler):
         except SQLAlchemyError as e:
             traceback.print_exc()
             self.set_status(500)
-            self.write('Testcase not found, or database error.')
+            self.write('Databse error occured.')
             return
+        except HTTPError:
+            raise
         except:
             traceback.print_exc()
             self.set_status(500)
             self.write('Unexpected error occured.')
             return
+        finally:
+            session.close()
 
         self.write('Success!')
 
@@ -77,11 +92,19 @@ class TestcaseHandler(BaseHandler):
         try:
             id = int(self.get_argument('id'))
             session = self.acquire_sql_session()
-            testcase = TestcaseRepository.get_by_id(session, id)
+            try:
+                testcase = TestcaseRepository.get_by_id(session, id)
+            except:
+                raise HTTPError(400, 'Testcase with specified '
+                                     'id does not exist.')
+
         except MissingArgumentError:
-            raise HTTPError(404, 'No id specified')
+            raise HTTPError(404, 'No id specified.')
+        except HTTPError:
+            raise
         except SQLAlchemyError:
-            raise HTTPError(500, 'Database error, could not find specified id')
+            raise HTTPError(500, 'Database error, could not '
+                                 'find specified id.')
         except:
             raise HTTPError(500, 'Unexpected error')
 

@@ -7,7 +7,7 @@
 
 
 <div class="container">
-    <form method="POST" action="/contest/{{ contest_id }}/register">
+    <form method="POST" action="/contest/{{ contest_id }}/register" name="contest-register" id="contest-register">
         <div class="row">
             <h2>Contest Registration for {{ contest_id }}</h2>
             <hr />
@@ -37,5 +37,7 @@
         <input type="submit" class="form-control">
 
     </form>
+    <div class="modal-footer" id="contest-register-error">
+    </div>
 </div>
 {% end %}
