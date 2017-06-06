@@ -11,10 +11,10 @@
 
     <div class="row">
         <div class="col-md-4">
-            <form>
+            <form action="/contest/{{ contest.name }}/add_problem" method="post">
                 <div class="form-group">
                     <label for="problem">Add problem</label>
-                    <input type="text" class="form-control" id="problem" placeholder="Enter problem name">
+                    <input type="text" class="form-control" id="problem" name="problem" placeholder="Enter problem name">
                 </div>
             </form>
         </div>

@@ -9,7 +9,7 @@ from tornado.web import HTTPError
 from BackendServer.handlers.BaseHandler import BaseHandler
 
 from DB.Entities import Submission
-from DB.Repositories import ProblemRepository
+from DB.Repositories import ProblemRepository, ContestRepository
 
 
 class ProblemHandler(BaseHandler):
@@ -73,6 +73,8 @@ class ProblemHandler(BaseHandler):
         '/editorial' - Editorial for this problem.
         '/pdf?id=<number>' - The statement number to fetch
 
+        '?contest_id=<number> - Tests if problem belongs to contest,
+                                and changes page to reflect it
 
         """
         path_elements = [x for x in self.request.path.split("/") if x]
@@ -130,9 +132,22 @@ class ProblemHandler(BaseHandler):
                                     "comments"]:
             self.redirect("statement")
 
-        session.close()
+        contest_id = self.get_argument('contest_id', None)
+
+        try:
+            contest = ContestRepository.get_by_id(session, contest_id)
+            problem = ProblemRepository.get_by_name(session, problem_name)
+
+            if not ContestRepository.has_problem(session,
+                                                 contest_id=contest_id,
+                                                 problem_id=problem.id):
+                contest = None
+        except:
+            contest = None
 
         self.render("problem_" +
                     path_elements[2] +
                     ".html", problem=problem,
-                    pdf_id=pdf_id)
+                    pdf_id=pdf_id,
+                    contest=contest)
+        session.close()

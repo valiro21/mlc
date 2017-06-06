@@ -2,42 +2,24 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Title</th>
-        <th>Score</th>
-        <th>Statistics</th>
+        <th>Difficulty</th>
+        <th>Task type</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
+
+    {% for problem in problems %}
     <tr>
-        <td>Oua Pascale</td>
-        <td>Oua</td>
-        <td>2100.0</td>
-        <td>21.5%</td>
+        <td>{{ problem.name }}</td>
+        <td>{{ problem.difficulty }}</td>
+        <td>{{ problem.task_type }}</td>
         <td>
             <button class="btn btn-primary">Edit</button>
             <button class="btn btn-danger">Remove</button>
         </td>
     </tr>
-    <tr>
-        <td>Tribonacci Heap</td>
-        <td>Heap</td>
-        <td>4500.0</td>
-        <td>0.5%</td>
-        <td>
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Remove</button>
-        </td>
-    </tr>
-    <tr>
-        <td>Treaps</td>
-        <td>Treaps</td>
-        <td>15.0</td>
-        <td>67.2%</td>
-        <td>
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Remove</button>
-        </td>
-    </tr>
+    {% end %}
+
     </tbody>
 </table>

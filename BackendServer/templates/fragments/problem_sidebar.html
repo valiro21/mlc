@@ -2,28 +2,33 @@
 
 {% include sidebar.html %}
 {% block SidebarItems %}
-<li class="sidebar-label">General</li>
+    <li class="sidebar-label">General</li>
 
-<li class="sidebar-item unique">
-    <a href="statement">Statement</a>
+    <li class="sidebar-item unique">
+        <a href="statement">Statement</a>
 
-    <ul>
-        {% if problem.statements is not None and len(problem.statements) > 0 %}
-        {% set counter=0 %}
-        {% for lang in problem.statement_names %}
-        <li><a href="?pdf_id={{ counter }}">{{ lang }}</a></li>
-        {% set counter=counter+1 %}
-        {% end %}
-        {% end %}
-    </ul>
-</li>
-<li class="sidebar-item unique">
-    <a href="submissions">Submissions</a>
-</li>
-<li class="sidebar-item unique">
-    <a href="comments">Comments</a>
-</li>
-<li class="sidebar-item unique">
-    <a href="editorial">Editorial</a>
-</li>
+        <ul>
+            {% if problem.statements is not None and len(problem.statements) > 0 %}
+                {% set counter = 0 %}
+                {% for lang in problem.statement_names %}
+                    <li><a href="?pdf_id={{ counter }}">{{ lang }}</a></li>
+                    {% set counter = counter + 1 %}
+                {% end %}
+            {% end %}
+        </ul>
+    </li>
+    <li class="sidebar-item unique">
+        <a href="submissions">Submissions</a>
+    </li>
+    <li class="sidebar-item unique">
+        <a href="comments">Comments</a>
+    </li>
+    <li class="sidebar-item unique">
+        <a href="editorial">Editorial</a>
+    </li>
+    {% if 'contest' in globals() and contest is not None %}
+        <li class="sidebar-item-unique">
+            <a href="/contest/{{ contest.name }}">{{ contest.name }}</a>
+        </li>
+    {% end %}
 {% end %}
