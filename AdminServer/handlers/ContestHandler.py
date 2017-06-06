@@ -179,10 +179,10 @@ class ContestHandler(BaseHandler.BaseHandler):
             participation_type = self.get_argument('participation_type')
             delay_time = self.get_argument('delay_time')
             extra_time = self.get_argument('extra_time')
-            special_password = self.get_argument('special_password')
+            s_password = self.get_argument('special_password')
 
-            if special_password == '':
-                special_password = None
+            if s_password == '':
+                s_password = None
             try:
                 self.get_argument('unrestricted')
                 unrestricted = True
@@ -218,7 +218,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                                               hidden=hidden,
                                               delay_time=delay_time,
                                               extra_time=extra_time,
-                                              special_password=special_password)
+                                              special_password=s_password)
                 session.add(participation)
                 session.commit()
                 message = 'registered'
@@ -231,7 +231,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                            hidden=hidden,
                            delay_time=delay_time,
                            extra_time=extra_time,
-                           special_password=special_password)
+                           special_password=s_password)
                 session.execute(stmt)
                 session.commit()
                 message = 'registered'
