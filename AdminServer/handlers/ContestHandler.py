@@ -32,6 +32,11 @@ class ContestHandler(BaseHandler.BaseHandler):
         pass
 
     def send_custom_error(self, status, message):
+        """
+        Sends a custom error with specified
+        status_code and message
+        """
+
         print('Sending custom error:' + str(status) + ' ' + message)
         self.clear()
         self.set_status(status)
@@ -42,6 +47,8 @@ class ContestHandler(BaseHandler.BaseHandler):
         path_elements = [x for x in self.request.path.split("/") if x]
         contest_id = path_elements[1]
         if len(path_elements) == 2 and contest_id == "create":
+            # Create contest from request
+
             contest_name = self.get_argument('contest_name')
             start_date_string = self.get_argument('start_date')
 
