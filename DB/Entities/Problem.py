@@ -9,6 +9,9 @@ from DB.Entities import Base
 
 
 class Problem(Base):
+    """
+    Object model for the problem entities
+    """
     __tablename__ = 'problems'
 
     id = Column(Integer, primary_key=True)

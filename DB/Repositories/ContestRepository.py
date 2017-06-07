@@ -13,18 +13,35 @@ from DB.Entities import Contest, Problem_Contest, Problem
 class ContestRepository:
     @staticmethod
     def get_by_name(session, name):
+        """
+        This is used to get a contest if you know it's name
+        :param session:
+        :param name:
+        :return: contest entity
+        """
         if isinstance(name, basestring):
             return session.query(Contest).filter(Contest.name == name).one()
         raise ValueError("name must be string")
 
     @staticmethod
     def get_by_id(session, id):
+        """
+        This is used to get a contest if you know it's id
+        :param session:
+        :param id:
+        :return: contest entity
+        """
         if isinstance(id, int):
             return session.query(Contest).filter(Contest.id == id).one()
         raise ValueError("id must be integer")
 
     @staticmethod
     def get_active_contests(session):
+        """
+        Gets all the contest that have started but not yet finished
+        :param session:
+        :return: a list of contests
+        """
         current_time = time.time()
         return session.query(Contest)\
             .filter(Contest.start_time <= current_time)\
@@ -35,6 +52,11 @@ class ContestRepository:
 
     @staticmethod
     def get_future_contests(session):
+        """
+        Gets all the contest that have not yet started
+        :param session:
+        :return: a list of contests
+        """
         current_time = time.time()
         return session.query(Contest) \
             .filter(current_time < Contest.start_time)\
@@ -42,6 +64,12 @@ class ContestRepository:
 
     @staticmethod
     def get_recent_contests(session, limit=10):
+        """
+        Gets a list of contests sorted by their start_date
+        :param session:
+        :param limit: The maximum number of contests to be returned
+        :return: a list of contests
+        """
         current_time = time.time()
         return session.query(Contest) \
             .filter(Contest.end_time +
@@ -52,6 +80,11 @@ class ContestRepository:
 
     @staticmethod
     def get_all_contest_order_by_date(session):
+        """
+        Gets a list of contests sorted by their start_date
+        :param session:
+        :return: a list of contests
+        """
         return session.query(Contest) \
             .order_by(Contest.start_time.desc()) \
             .all()

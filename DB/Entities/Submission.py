@@ -11,6 +11,11 @@ from DB.Entities import Base
 
 
 class Submission(Base):
+    """
+    Object model for a submission
+    A submission is sent to a problem with a specific participation id
+    to specify the contest to with the submission has been sent
+    """
     __tablename__ = 'submissions'
 
     id = Column(Integer, primary_key=True)

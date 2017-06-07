@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 import time
 
@@ -9,12 +10,24 @@ from DB.Entities import Problem, Contest, Problem_Contest
 class ProblemRepository:
     @staticmethod
     def get_by_id(session, id):
+        """
+        Gets a problem by id
+        :param session:
+        :param id:
+        :return: a problem entity
+        """
         if isinstance(id, int):
             return session.query(Problem).filter(Problem.id == id).one()
         raise ValueError("id must be integer")
 
     @staticmethod
     def get_problems_of_active_contests(session):
+        """
+        Gets a list of problems that are active in the current
+        contests
+        :param session:
+        :return:a list of problems
+        """
         current_time = time.time()
         return session.query(Problem) \
             .join(Problem_Contest,
@@ -29,6 +42,12 @@ class ProblemRepository:
 
     @staticmethod
     def get_by_name(session, name):
+        """
+        Gets a problem by it's name
+        :param session:
+        :param name:
+        :return: a problem entity
+        """
         if isinstance(name, str):
             return session.query(Problem).filter_by(name=name) \
                 .one()

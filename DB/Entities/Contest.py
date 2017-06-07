@@ -11,6 +11,10 @@ from DB.Utils import nvl
 
 
 class Contest(Base):
+    """
+    Object model for contests
+    Provides all the information related to the contests
+    """
     __tablename__ = 'contests'
 
     id = Column(Integer, primary_key=True)

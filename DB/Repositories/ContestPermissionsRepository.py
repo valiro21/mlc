@@ -9,6 +9,14 @@ from DB.Entities.ContestPermissions import ContestPermissions
 class ContestPermissionsRepository:
     @staticmethod
     def check_permission(session, contest_id, user_id):
+        """
+        Return True if a user had permission to modify
+        the contest with contest_id
+        :param session:
+        :param contest_id:
+        :param user_id:
+        :return: Boolean
+        """
         check = session.query(ContestPermissions). \
             filter(ContestPermissions.user_id == user_id). \
             filter(ContestPermissions.contest_id == contest_id).one()
