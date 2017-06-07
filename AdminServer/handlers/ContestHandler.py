@@ -307,7 +307,7 @@ class ContestHandler(BaseHandler.BaseHandler):
             else:
                 stmt = update(Participation). \
                     where(and_(Participation.user_id == user.id,
-                          Participation.contest_id == contest.id)). \
+                               Participation.contest_id == contest.id)). \
                     values(type=participation_type,
                            unrestricted=unrestricted,
                            hidden=hidden,
@@ -378,8 +378,8 @@ class ContestHandler(BaseHandler.BaseHandler):
         try:
             contest = ContestRepository.get_by_name(session, contest_name)
             problems = ContestRepository.get_all_problems(session, contest.id)
-            users = session.query(User)\
-                .join(Participation)\
+            users = session.query(User) \
+                .join(Participation) \
                 .filter(Participation.contest_id == contest.id)
 
         except SQLAlchemyError:
@@ -409,8 +409,7 @@ class ContestHandler(BaseHandler.BaseHandler):
                         max_submissions=contest.max_submissions,
                         max_user_tests=contest.max_user_test,
                         submission_delay=contest.min_submission_interval,
-                        user_test_delay=contest.min_user_test_interval,
-                        )
+                        user_test_delay=contest.min_user_test_interval)
             session.close()
             return
 

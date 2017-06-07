@@ -49,3 +49,7 @@ class ProblemRepository:
                 problem.active_dataset_id = problem.datasets[0].id
         else:
             raise ValueError("id must be integer")
+
+    @staticmethod
+    def get_all_problems(session):
+        return session.query(Problem).all()

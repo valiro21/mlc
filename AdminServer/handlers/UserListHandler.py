@@ -16,9 +16,7 @@ class UserListHandler(BaseHandler):
             raise HTTPError(500, 'Could not acquire session for database')
 
         try:
-            query = session.query(User)
-            users = session.execute(query)
-            user_list = users.fetchall()
+            user_list = session.query(User).all()
         except:
             raise HTTPError(500, 'Database error')
 

@@ -8,39 +8,41 @@
     <li class="sidebar-item">
         <a href="#" class="icon-trophy">Contests</a>
         <ul>
-            <li><a href="/contest/FIICode/">FIICode</a></li>
-            <li><a href="/contest/Mindcoding/">Mindcoding</a></li>
-            <li><a href="/contest">Show all</a></li>
-            <li><a href="/contest/create">Create new contest</a></li>
+            {% for contest in sidebar_contests %}
+            <li><a href="/contest/{{ contest.name }}/">{{ contest.name }}</a></li>
+            {% end %}
+            <li><a href="/contest/create">Create a new contest</a></li>
         </ul>
     </li>
     <li class="sidebar-item">
         <a href="#">Problems</a>
         <ul>
-            <li><a href="/problem/lgdiv/">LgDiv</a></li>
-            <li><a href="/problem/oua/">Oua Pascale</a></li>
-            <li><a href="/problem">Show all</a></li>
+            {% for problem in sidebar_problems %}
+            <li><a href="/problem/edit?name={{ problem.name }}">{{ problem.name }}</a></li>
+            {% end %}
             <li><a href="/problem/create">Create new problem</a></li>
         </ul>
     </li>
     <li class="sidebar-item">
         <a href="/user_list">Users</a>
         <ul>
-            <li><a href="/user/valiro21/settings">valiro21</a></li>
-            <li><a href="/user/mlc/settings">mlc</a></li>
-            <li><a href="#">Show all</a></li>
-            <li><a href="#">Create new user</a></li>
+            {% for user in sidebar_users %}
+                <li><a href="/user/{{ user.username }}/settings">{{ user.username }}</a></li>
+            {% end %}
+            <li><a href="/user_list">Show all</a></li>
+            <li><a href="/user_list">Create new user</a></li>
         </ul>
     </li>
-    <li class="sidebar-item">
-        <a href="/admin_list">Admins</a>
-        <ul>
-            <li><a href="/user/valiro21/settings">valiro21</a></li>
-            <li><a href="/user/mlc/settings">mlc</a></li>
-            <li><a href="/admin_list">Show all</a></li>
-            <li><a href="#">Create new admin</a></li>
-        </ul>
-    </li>
+{# TODO: implement distinction between user and admin #}
+{#    <li class="sidebar-item">#}
+{#        <a href="/admin_list">Admins</a>#}
+{#        <ul>#}
+{#            <li><a href="/user/valiro21/settings">valiro21</a></li>#}
+{#            <li><a href="/user/mlc/settings">mlc</a></li>#}
+{#            <li><a href="/admin_list">Show all</a></li>#}
+{#            <li><a href="#">Create new admin</a></li>#}
+{#        </ul>#}
+{#    </li>#}
     <li class="sidebar-item">
         <a href="/post_editor">Post Editor</a>
     </li>
@@ -62,11 +64,12 @@
 
     <hr />
 
-    <h3>Logs</h3>
-    <ul>
-        <li>DEBUG (2017-04-14 02:21:22): User <a href="#">valiro21</a> logged in</li>
-        <li>DEBUG (2017-04-14 02:16:52): User <a href="#">TheDesertFoxM</a> submitted in <a href="/contest/Mindcoding">Mindcoding</a> on <a href="#">Easy rift</a></li>
-        <li>WARNING (2017-04-14 02:11:12): Problem <a href="#">Oua Pascale</a> has 10.5s average evaluation time!</li>
-    </ul>
+{#        TODO: logs...#}
+{#    <h3>Logs</h3>#}
+{#    <ul>#}
+{#        <li>DEBUG (2017-04-14 02:21:22): User <a href="#">valiro21</a> logged in</li>#}
+{#        <li>DEBUG (2017-04-14 02:16:52): User <a href="#">TheDesertFoxM</a> submitted in <a href="/contest/Mindcoding">Mindcoding</a> on <a href="#">Easy rift</a></li>#}
+{#        <li>WARNING (2017-04-14 02:11:12): Problem <a href="#">Oua Pascale</a> has 10.5s average evaluation time!</li>#}
+{#    </ul>#}
 
 {% end %}

@@ -25,3 +25,7 @@ class UserRepository:
         if isinstance(name, basestring):
             return session.query(User).filter(User.username == name).one()
         raise ValueError("name must be string")
+
+    @staticmethod
+    def get_all(session):
+        return session.query(User).all()
