@@ -18,7 +18,8 @@ class Dataset(Base):
                         ForeignKey("problems.id", ondelete='SET NULL'))
     problem = relationship('Problem',
                            backref=backref('datasets',
-                                           cascade='all, delete-orphan'),
+                                           cascade='all, delete-orphan',
+                                           lazy='immediate'),
                            foreign_keys=problem_id)
 
     testcases = relationship('Testcase',

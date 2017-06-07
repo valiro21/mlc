@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <select class="form-control" id="username" name="username">
                                 {% for user in users %}
-                                    <option>{{ user[1] }}</option>
+                                    <option>{{ user.username }}</option>
                                 {% end %}
                             </select>
                         </div>

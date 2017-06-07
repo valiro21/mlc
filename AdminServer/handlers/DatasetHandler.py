@@ -40,6 +40,7 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(404)
 
     def edit_dataset(self):
+
         try:
             id = int(self.get_argument('id'))
             session = self.acquire_sql_session()
@@ -58,7 +59,8 @@ class DatasetHandler(BaseHandler):
         except:
             raise HTTPError(500, 'Unexpected error occured')
 
-        self.render('dataset_edit.html', dataset=dataset)
+        self.render('dataset_edit.html',
+                    dataset=dataset)
         session.close()
 
     @tornado.web.authenticated

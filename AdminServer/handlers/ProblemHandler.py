@@ -52,11 +52,14 @@ class ProblemHandler(BaseHandler):
                 problem = ProblemRepository.get_by_name(session, name)
             except:
                 # If problem does not exist, redirect user to create it
-                self.render('problem_create.html', problem_name=name)
+                self.render('problem_create.html',
+                            problem_name=name)
                 session.close()
                 return
 
-            self.render("problem_edit.html", problem=problem)
+            self.render("problem_edit.html",
+                        problem=problem)
+
             session.close()
             return
 
