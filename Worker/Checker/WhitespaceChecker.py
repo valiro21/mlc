@@ -21,5 +21,4 @@ class WhitespaceChecker(Checker):
                                      out_contestant])
         except subprocess.CalledProcessError:
             return False
-        finally:
-            return True
+        return True
