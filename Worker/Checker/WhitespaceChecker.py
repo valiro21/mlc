@@ -1,4 +1,5 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+import subprocess
 
 from Worker.Checker import Checker
 
@@ -13,26 +14,11 @@ class WhitespaceChecker(Checker):
               out_testcase,
               out_contestant):
 
-        with open(out_testcase) as fo, open(out_contestant) as fc:
-            while True:
-                c1 = fo.read(1)
-                whitespace_c1 = False
-                while c1 and WhitespaceChecker.is_whitespace(c1):
-                    whitespace_c1 = True
-                    c1 = fo.read(1)
-
-                c2 = fc.read(1)
-                whitespace_c2 = False
-                while c2 and WhitespaceChecker.is_whitespace(c2):
-                    whitespace_c2 = True
-                    c2 = fc.read(1)
-
-                if not c1 and not c2:
-                    break
-                elif not c1 or not c2:
-                    return False
-                elif whitespace_c1 != whitespace_c2:
-                    return False
-                elif c1 != c2:
-                    return False
+        try:
+            subprocess.check_output(['diff',
+                                     '-b',  # Ignore whitespace
+                                     out_testcase,
+                                     out_contestant])
+        except subprocess.CalledProcessError:
+            return False
         return True

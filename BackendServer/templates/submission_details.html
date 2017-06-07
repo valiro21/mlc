@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url('css/submissions.css') }}" />
+<script type="text/javascript" src="{{ static_url('js/submissions.js') }}"></script>
+{% end %}
+
+{% block Body %}
+<div class="container-fluid" id="submissions-content">
+    <div class="panel panel-primary">
+        <div class="panel-heading filter-heading" data-toggle="collapse" data-target="#compilation-data">
+            Compilation output
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </div>
+        <div class="source-code" id="compilation-data">
+            {% if not isinstance(testcases, list) and testcases.job.job_type == 'Compile' %}
+                <p>{{ testcases.job.status_message }}</p>
+            {% else %}
+                {% if not isinstance(testcases, list) and testcases.job.status != 2 %}
+                    <p>Submission is still compiling</p>
+                {% else %}
+                    <p>Compilation OK!</p>
+                {% end %}
+            {% end %}
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive">
+        <thead>
+                <tr>
+                    <th>Codename</th>
+                    <th>Status</th>
+                    <th>Cpu</th>
+                    <th>Memory</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if isinstance(testcases, list) %}
+                {% for data in testcases %}
+                    <tr class="{% if data.job.status_message is None %}
+                               {% else %}
+                                {% if data.job.status_message == 'ACCEPTED!' %}
+                                    accepted
+                                {% else %}
+                                    rejected
+                                {% end %}
+                               {% end %}">
+                        <td>{{ data.testcase.codename }}</td>
+                        <td>
+                            {% if data.job.status_message is None %}
+                                Evaluating ...
+                            {% else %}
+                                {{ data.job.status_message }}
+                            {% end %}
+                        </td>
+                        <td>
+                            {% if data.job.cpu is not None %}
+                                {{ data.job.cpu }} s
+                            {% end %}
+                        </td>
+                        <td>
+                            {% if data.job.memory is not None %}
+                                {% if data.job.memory <= 0 %}
+                                    Too small to measure
+                                {% else %}
+                                    {{ data.job.memory }} KB
+                                {% end %}
+                            {% end %}
+                        </td>
+                    </tr>
+                {% end %}
+                {% end %}
+            </tbody>
+    </table>
+
+    <div class="panel panel-default">
+        <div class="panel-heading filter-heading" data-toggle="collapse" data-target="#source-code-data">
+            Source code
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </div>
+        <div class="source-code" id="source-code-data">
+            <p>{{ submission.file.decode('utf8') }}</p>
+        </div>
+    </div>
+
+
+
+
+    </div>
+{% end %}

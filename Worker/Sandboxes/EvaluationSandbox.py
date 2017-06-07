@@ -82,9 +82,15 @@ class EvaluationSandbox(Sandbox):
         :return: A JobResult object representing the status.
         """
 
+        # Default to console if empty string
+        if stdin == "":
+            stdin = None
+        if stdout == "":
+            stdout = None
+
         # Grab the submission first
 
-        print("Evaluation submission with id " + str(submission_id))
+        print("Evaluating submission with id " + str(submission_id))
 
         session = self.acquire_sql_session()
         submission = SubmissionRepository.get_by_id(session, submission_id)

@@ -7,14 +7,23 @@ table, th{
 }
 
 .accepted{
-    color: #22BB22;
+    background-color: #BDFF7C;
 }
 
 .rejected{
-    color: #2222BB;
+    background-color: #FF8279;
 }
 
 td a {
     display:block;
     width:100%;
+    text-decoration: underline;
+}
+
+.source-code {
+    white-space: pre-wrap;
+}
+
+.source-code p {
+    margin-left: 5px;
 }

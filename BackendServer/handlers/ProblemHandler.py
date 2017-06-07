@@ -4,12 +4,14 @@
 
 import os
 
+from sqlalchemy.orm.exc import NoResultFound
 from tornado.web import HTTPError
 
 from BackendServer.handlers.BaseHandler import BaseHandler
-
-from DB.Entities import Submission
-from DB.Repositories import ProblemRepository, ContestRepository
+from DB.Entities import Submission, Participation
+from DB.Repositories import ProblemRepository, \
+    ContestRepository, \
+    UserRepository
 
 
 class ProblemHandler(BaseHandler):
@@ -24,16 +26,22 @@ class ProblemHandler(BaseHandler):
         return path_elements[1]
 
     def post(self):
+
+        print('Receiving submission...')
+
         submission_code = self.get_body_argument("data", None)
+        contest_id = int(self.get_argument("contest_id", 1))  # 1 is archive
         language = self.get_argument("lang")
         problem_name = self.get_problem_by_path()
 
         if problem_name is None:
+            print("Problem is None")
             return
 
         session = self.acquire_sql_session()
         try:
             problem = ProblemRepository.get_by_name(session, problem_name)
+            # contest = ContestRepository.get_by_id(session, contest_id)
 
             # TODO: check if user can submit to the problem
             # case: Contest is private (check Participation first)
@@ -41,15 +49,31 @@ class ProblemHandler(BaseHandler):
 
             if problem.datasets is None or len(problem.datasets) == 0:
                 self.write("FAILED")
+                print('No datasets')
                 return
 
-            for dataset in problem.datasets:
-                submission = Submission(problem_id=problem.id,
-                                        participation_id=None,
-                                        file=submission_code.encode('utf8'),
-                                        language=language
-                                        )
-                session.add(submission)
+            if self.get_current_user() is None:
+                self.write("must be logged in")
+                print('Not logged in')
+                return
+
+            username = self.get_current_user()
+            user = UserRepository.get_by_name(session, username)
+
+            participation = session\
+                .query(Participation)\
+                .filter(Participation.user_id == user.id)\
+                .filter(Participation.contest_id == contest_id)\
+                .limit(1)\
+                .one()
+
+            # for dataset in problem.datasets:
+            submission = Submission(problem_id=problem.id,
+                                    participation_id=participation.id,
+                                    file=submission_code.encode('utf8'),
+                                    language=language
+                                    )
+            session.add(submission)
             session.commit()
         except Exception as e:  # Something went wrong
             session.rollback()
@@ -59,6 +83,7 @@ class ProblemHandler(BaseHandler):
         finally:
             session.close()
 
+        print('Addded submission.')
         self.write("OK")
 
     def get(self):
@@ -69,7 +94,7 @@ class ProblemHandler(BaseHandler):
         The page for a required problem is the third part of the url:
         '/statement' - See the statement and editor.
         '/comments' - Comments section.
-        '/submission' - Submissions for this problem.
+        '/submissions' - Submissions for this problem.
         '/editorial' - Editorial for this problem.
         '/pdf?id=<number>' - The statement number to fetch
 
@@ -79,6 +104,7 @@ class ProblemHandler(BaseHandler):
         """
         path_elements = [x for x in self.request.path.split("/") if x]
         problem_name = path_elements[1]
+        contest_id = self.get_argument('contest_id', None)
 
         try:
             session = self.acquire_sql_session()
@@ -87,14 +113,15 @@ class ProblemHandler(BaseHandler):
 
         try:
             problem = ProblemRepository.get_by_name(session, problem_name)
-        except:
-            raise HTTPError(500, 'A database error has occured')
+        except NoResultFound:
+            raise HTTPError(404, 'Problem not found')
 
         if problem is None:
             raise HTTPError(404)
 
         if len(path_elements) <= 2:
-            self.redirect(os.path.join(self.request.path, "statement"))
+            self.redirect(os.path.join(self.request.path, "statement") +
+                          '?contest_id=' + contest_id)
             return
         if len(path_elements) >= 4:
             self.redirect("..")
@@ -130,11 +157,12 @@ class ProblemHandler(BaseHandler):
                                     "submissions",
                                     "editorial",
                                     "comments"]:
-            self.redirect("statement")
+            self.redirect("statement?contest_id=" + contest_id)
 
-        contest_id = self.get_argument('contest_id', None)
+        contest_id = int(self.get_argument('contest_id', None))
 
         try:
+            # Get contest and problem, for rendering
             contest = ContestRepository.get_by_id(session, contest_id)
             problem = ProblemRepository.get_by_name(session, problem_name)
 
@@ -144,6 +172,9 @@ class ProblemHandler(BaseHandler):
                 contest = None
         except:
             contest = None
+
+        if path_elements[2] == 'submissions':
+            self.redirect('/submissions?problem=' + problem_name)
 
         self.render("problem_" +
                     path_elements[2] +

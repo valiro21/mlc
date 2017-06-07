@@ -30,6 +30,7 @@ class ContestRepository:
             .filter(Contest.start_time <= current_time)\
             .filter(current_time <= Contest.end_time +
                     Contest.length_of_contest)\
+            .filter(Contest.id != 1)\
             .all()
 
     @staticmethod

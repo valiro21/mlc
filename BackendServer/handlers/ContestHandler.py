@@ -9,23 +9,24 @@ import os
 import time
 import traceback
 from datetime import datetime
-
-from sqlalchemy import update
+from sqlalchemy import update, desc
 from sqlalchemy.exc import SQLAlchemyError
 from tornado.httpclient import HTTPError
 
 from BackendServer.handlers.BaseHandler import BaseHandler
+from BackendServer.handlers.SubmissionsHandler import PrettyWrap
 
 from DB import Participation, Contest
 from DB.Entities.ContestPermissions import ContestPermissions
-from DB.Repositories import ContestRepository, UserRepository
-from DB.Repositories.ContestPermissionsRepository\
+from DB.Repositories import ContestRepository, UserRepository, \
+    SubmissionRepository
+from DB.Repositories.ContestPermissionsRepository \
     import ContestPermissionsRepository
 from DB.Repositories.ParticipacionRepository import ParticipationRepository
 
 
 class ContestHandler(BaseHandler):
-    """Tornado handler for a contest."""
+    """Tornado handler for a user contest."""
 
     def data_received(self, chunk):
         pass
@@ -241,7 +242,6 @@ class ContestHandler(BaseHandler):
             self.render("contest_" +
                         path_elements[1] + ".html")
             return
-
         session = self.acquire_sql_session()
         contest = ContestRepository.get_by_name(session, contest_name)
 
@@ -315,7 +315,8 @@ class ContestHandler(BaseHandler):
 
         if path_elements[2] == 'register':
             self.render("contest_register.html",
-                        contest_id=contest_name)
+                        contest_name=contest_name,
+                        contest_id=contest.id)
             return
 
         if len(path_elements) >= 4:
@@ -349,9 +350,49 @@ class ContestHandler(BaseHandler):
                                     "settingsv"]:
             self.redirect("problems")
 
+        if path_elements[2] in ['submissions', 'mysubmissions']:
+            query = session.query(Submission, Contest, Problem, User) \
+                .join(Participation,
+                      Submission.participation_id == Participation.id) \
+                .join(User, User.id == Participation.user_id) \
+                .join(Contest, Contest.id == Participation.contest_id) \
+                .join(Problem, Problem.id == Submission.problem_id)
+
+            if path_elements[2] == 'mysubmissions':
+                query = query.filter(User.id == user.id)
+
+            if contest.id is not None:
+                query = query.filter(Contest.id == contest.id)
+
+            query.order_by(desc(Submission.created_timestamp))
+
+            results = query.all()
+            return_list = []
+            for row in results:
+                submission, contest, problem, user = row
+                score = SubmissionRepository.get_status(session, submission.id)
+
+                wrapper = PrettyWrap(submission,
+                                     contest,
+                                     problem,
+                                     user,
+                                     score[0],  # Message to show
+                                     score[1],  # Cpu used
+                                     score[2])  # Memory used
+                return_list.append(wrapper)
+
+            session.close()
+
+            self.render('contest_' + path_elements[2] + '.html',
+                        contest_name=contest.name,
+                        contest_id=contest.id,
+                        submissions=return_list)
+            return
+
         self.render("contest_" +
                     path_elements[2] + ".html",
-                    contest_id=contest_name,
+                    contest_name=contest.name,
+                    contest_id=contest.id,
                     problems=problems)
 
     @staticmethod

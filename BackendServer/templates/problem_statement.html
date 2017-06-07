@@ -6,6 +6,8 @@
 {% end %}
 
 {% block Body %}
+<input id="problem_name" value="{{ problem.name }}" type="hidden" />
+
 {% if problem.statements is not None and len(problem.statements) > 0 %}
 
 <div class="panel panel-default editor full-height" style="width: 100%;">
@@ -39,7 +41,10 @@
 
                 <label>Language</label>
                 {% include "fragments/languages_selector.html" %}
-                <button id="submit-solution" type="submit" class="pull-right btn btn-primary">Submit</button>
+                <div class="row">
+                    <div class="alert-danger hidden" id="error-msg">asdasd</div>
+                    <button id="submit-solution" type="submit" class="pull-right btn btn-primary">Submit</button>
+                </div>
             </form>
 
 

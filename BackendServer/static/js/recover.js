@@ -27,26 +27,26 @@ $('document').ready(function(){
             data : data,
             beforeSend: function()
             {
-                $("#error").fadeIn(100, function(){
-                    $("#error").html('<p>Sending mail...</p>');
+                $("#recovery_error").fadeIn(100, function(){
+                    $("#recovery_error").html('<p>Sending mail...</p>');
                 })
             },
             success :  function(data) {
                 if(data === "Mail sent."){
-                    $("#error").fadeIn(1000, function(){
-                        $("#error").html('<p>Mail sent!</p>');
+                    $("#recovery_error").fadeIn(1000, function(){
+                        $("#recovery_error").html('<p>Mail sent!</p>');
                     });
 
                 }
                 else{
-                    $("#error").fadeIn(1000, function(){
-                        $("#error").html('<p class="alert-danger">Unexpected error!' + data + '</p>');
+                    $("#recovery_error").fadeIn(1000, function(){
+                        $("#recovery_error").html('<p class="alert-danger"> ' + data + ' </p>');
                     });
                 }
             },
             error : function (data) {
-                $("#error").fadeIn(1000, function(){
-                    $("#error").html('<p class="alert-danger">Unexpected error!' + data + '</p>');
+                $("#recovery_error").fadeIn(1000, function(){
+                    $("#recovery_error").html('<p class="alert-danger">Unexpected error: ' + data + '</p>');
                 });
             }
         });

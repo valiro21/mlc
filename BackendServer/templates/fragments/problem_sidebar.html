@@ -20,13 +20,14 @@
     <li class="sidebar-item unique">
         <a href="submissions">Submissions</a>
     </li>
-    <li class="sidebar-item unique">
-        <a href="comments">Comments</a>
-    </li>
-    <li class="sidebar-item unique">
-        <a href="editorial">Editorial</a>
-    </li>
+{#    <li class="sidebar-item unique">#}
+{#        <a href="comments">Comments</a>#}
+{#    </li>#}
+{#    <li class="sidebar-item unique">#}
+{#        <a href="editorial">Editorial</a>#}
+{#    </li>#}
     {% if 'contest' in globals() and contest is not None %}
+        <li class="sidebar-label">Active contest</li>
         <li class="sidebar-item-unique">
             <a href="/contest/{{ contest.name }}">{{ contest.name }}</a>
         </li>
