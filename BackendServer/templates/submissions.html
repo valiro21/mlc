@@ -20,15 +20,21 @@
             </thead>
             <tbody>
                 {% for data in submissions %}
-                    <tr class="{% if data.message == 'ACCEPTED!' %}accepted{% else %}rejected{% end %}">
+                    <tr class="{% if data.message == 'ACCEPTED!' %}
+                                accepted
+                               {% else %}
+                                    {% if not (data.message == 'COMPILING' or data.message == 'EVALUATING') %}
+                                     rejected
+                               {% end %}
+                               {% end %}">
                         <td>{{ data.submission.id }}</td>
                         <td>{{ data.submission.created_timestamp }}</td>
                         <td><a href="/user/{{ data.user.username }}">{{ data.user.username }}</a></td>
                         <td><a href="/problem/{{ data.problem.name }}">{{ data.problem.name }}</a></td>
                         <td>{{ data.submission.language }}</td>
-                        <td><a href="/submission/{{ data.submission.id }}">{{ data.message }}</a></td>
-                        <td>{{ data.cpu }}</td>
-                        <td>{{ data.memory }}</td>
+                        <td><a href="/submission?id={{ data.submission.id }}">{{ data.message }}</a></td>
+                        <td>{{ data.cpu }} {% if data.memory != "" %}s{% end %}</td>
+                        <td> {{ data.memory }} {% if data.memory != "" %}KB{% end %}</td>
                     </tr>
                 {% end %}
             </tbody>

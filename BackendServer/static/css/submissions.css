@@ -19,3 +19,11 @@ td a {
     width:100%;
     text-decoration: underline;
 }
+
+.source-code {
+    white-space: pre-wrap;
+}
+
+.source-code p {
+    margin-left: 5px;
+}

@@ -39,16 +39,16 @@ class SubmissionRepository:
 
         for job in jobs:
             if job.job_type == 'Compile' and job.status != 2:
-                return 'Compiling', "", ""
+                return 'COMPILING', "", ""
             elif job.job_type == 'Compile' and job.status == 2:
                 if job.status_code != 0:
-                    return job.status_message, "", ""
+                    return 'COMPILATION FAILED', "", ""
             elif job.job_type == 'Evaluate' and job.status == 1:
-                return 'Evaluating', "", ""
+                return 'EVALUATING', "", ""
             elif job.job_type == 'Evaluate' and job.status == 2:
                 if job.status_code != 0:
                     message = job.status_message
-                    cpu = max(job.cpu, cpu)
-                    memory = max(job.memory, memory)
+                cpu = max(job.cpu, cpu)
+                memory = max(job.memory, memory)
 
         return message, str(cpu), str(memory)

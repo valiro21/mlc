@@ -18,6 +18,10 @@ class PrettyWrapper:
 
 class SubmissionDetailsHandler(BaseHandler):
     def get(self):
+        """
+        Handler for submission details. Binded at path /submission?id=<id>
+        Throws Tornado 404 error if submission id is invalid in any way.
+        """
         submission_id = self.get_argument("id", None)
         if submission_id is None:
             raise tornado.web.HTTPError(404,
@@ -41,9 +45,20 @@ class SubmissionDetailsHandler(BaseHandler):
         active_dataset_id = problem.active_dataset_id
 
         results = session.query(Job, Testcase) \
+            .filter(Job.submission_id == submission_id) \
+            .filter(Job.dataset_id == active_dataset_id) \
             .join(Testcase, Job.testcase_id == Testcase.id)\
-            .filter(Job.dataset_id == active_dataset_id)\
             .all()
+
+        if len(results) == 0:
+            # Compiling or has already compiled
+            results = session.query(Job) \
+                .filter(Job.submission_id == submission_id)\
+                .one()
+            self.render("submission_details.html",
+                        submission=submission,
+                        testcases=PrettyWrapper(results, None))
+            return
 
         return_list = []
         for row in results:
