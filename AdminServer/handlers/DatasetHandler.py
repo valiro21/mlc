@@ -40,6 +40,9 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(404)
 
     def edit_dataset(self):
+        """
+        Renders the page for editing a dataset.
+        """
 
         try:
             id = int(self.get_argument('id'))
@@ -80,6 +83,10 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(404)
 
     def create_dataset_post(self):
+        """
+        Creates a new dataset, using the arguments from
+        the post request
+        """
 
         # Get arguments from request
         try:
@@ -93,15 +100,18 @@ class DatasetHandler(BaseHandler):
                 time_limit = float(time_limit) if time_limit else None
                 memory_limit = float(memory_limit) if memory_limit else None
 
+                # Validate time and memory limits
                 if not self.validate_time_memory(time_limit, memory_limit):
                     raise HTTPError(400, 'Invalid time limit or memory limit')
 
             except:
                 raise HTTPError(400, 'Invalid time limit '
                                      'or memory limit format')
+
             stdin = self.get_argument('stdin', '')
             stdout = self.get_argument('stdout', '')
 
+            # Get uploaded testcases
             files = self.request.files
             testcases = files.get('testcases', None)
 
@@ -112,7 +122,8 @@ class DatasetHandler(BaseHandler):
                 testcases_body = None
 
         except HTTPError:
-            raise
+            raise  # Re-raise exception
+
         except Exception as e:
             traceback.print_exc()
             raise HTTPError(400)  # Bad request
@@ -142,14 +153,17 @@ class DatasetHandler(BaseHandler):
             # Commit changes (add testcases)
             session.commit()
         except HTTPError:
+            traceback.print_exc()
             raise
+
         except Exception as e:
             traceback.print_exc()
             raise HTTPError(400)
+
         finally:
             session.rollback()
 
-        # Update the problem's default dataset
+        # Update the problem's default dataset, if necessary
         try:
             ProblemRepository.update_default_dataset(session, problem_id)
             session.commit()
@@ -160,6 +174,16 @@ class DatasetHandler(BaseHandler):
         session.close()
 
     def create_testcases(self, extracted, new_dataset, session):
+        """
+        Creates testcases into database
+
+        :param extracted: A dictionary containing <key, value> pairs,
+         where key is the name of the file, and value is the content
+
+        :param new_dataset: The dataset that will contain the testcases
+
+        :param session: The database session
+        """
         if extracted is None:
             return
 
@@ -200,6 +224,12 @@ class DatasetHandler(BaseHandler):
         return new_dataset
 
     def extract_zip(self, input_zip):
+        """
+        Extracts a zip file in-memory
+
+        :param input_zip: The binary content of a zip file
+        :return: A dictionary that maps filenames to their contents
+        """
         if input_zip is None:
             return None
 
@@ -207,12 +237,18 @@ class DatasetHandler(BaseHandler):
         return {name: zip_ref.read(name) for name in zip_ref.namelist()}
 
     def edit_dataset_post(self):
+        """
+        Edits a dataset using the supplied arguments from POST request
+        """
+
         try:
             session = self.acquire_sql_session()
         except:
             raise HTTPError(500, 'Could not acquire session for database')
 
         try:
+            # Get request arguments
+
             id = int(self.get_argument('id'))
             new_name = self.get_argument('name')
             new_stdin = self.get_argument('stdin')
@@ -225,6 +261,7 @@ class DatasetHandler(BaseHandler):
             new_memory_limit = float(new_memory_limit) \
                 if new_time_limit else None
 
+            # Validate time and memory limits
             if not self.validate_time_memory(new_time_limit, new_memory_limit):
                 raise HTTPError(400, 'Invalid time limit or memory limit')
 
@@ -241,11 +278,15 @@ class DatasetHandler(BaseHandler):
             new_out = files.get('output', None)
         except HTTPError:
             raise
+
         except:
             raise HTTPError(400, 'Arguments specified incorrectly.')
 
         try:
+            # Get dataset reference
             dataset = DatasetRepository.get_by_id(session, id)
+
+            # Set the new parameters
             dataset.name = new_name
             dataset.stdin = new_stdin
             dataset.stdout = new_stdout
@@ -253,6 +294,7 @@ class DatasetHandler(BaseHandler):
             dataset.time_limit = new_time_limit
             dataset.memory_limit = new_memory_limit
 
+            # Get and create new single testcase (if it exists)
             if (new_in is not None) or (new_out is not None):
                 if (new_in is None) or (new_out is None):
                     raise HTTPError(400, 'Missing input/output '
@@ -262,6 +304,7 @@ class DatasetHandler(BaseHandler):
                                         output_file=new_out[0]['body'])
                 session.add(new_testcase)
 
+            # Get and create new bulk testcases (if they exist)
             extracted = self.extract_zip(testcases_body)
             self.create_testcases(extracted, dataset, session)
 
@@ -273,6 +316,10 @@ class DatasetHandler(BaseHandler):
         session.close()
 
     def delete_dataset_post(self):
+        """
+        Deletes a dataset specified by the request id
+        """
+
         try:
             session = self.acquire_sql_session()
         except:
@@ -288,7 +335,7 @@ class DatasetHandler(BaseHandler):
             session.delete(dataset)
             session.commit()
 
-            # Update the problem's default dataset
+            # Update the problem's default dataset if necessary
             try:
                 ProblemRepository.update_default_dataset(session, problem_id)
                 session.commit()
@@ -305,5 +352,8 @@ class DatasetHandler(BaseHandler):
         self.write('Success!')
 
     def validate_time_memory(self, time, memory):
+        """
+        Validates that time and memory input is valid
+        """
         return (time is None or 0 <= time <= 60) and \
                (memory is None or 0 <= memory <= 1024)

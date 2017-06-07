@@ -65,8 +65,7 @@ class CreateUserHandler(BaseHandler):
                 session = self.acquire_sql_session()
             except:
                 traceback.print_exc()
-                # TODO: handle error
-                return
+                raise HTTPError(500)
 
             try:
                 session.add(new_user)

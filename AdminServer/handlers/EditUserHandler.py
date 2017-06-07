@@ -9,6 +9,9 @@ from DB.Entities.User import User
 
 
 class EditUserHandler(BaseHandler):
+    """
+    Handler for editing a specific user
+    """
 
     @tornado.web.authenticated
     def get(self):

@@ -25,6 +25,7 @@ class LoginHandler(BaseHandler.BaseHandler):
         self.render("login.html")
 
     def post(self):
+        # Get username and password from request
         username = self.get_argument('username', '')
         password = self.get_argument('password', '')
 

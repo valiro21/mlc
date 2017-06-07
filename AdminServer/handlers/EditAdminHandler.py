@@ -19,6 +19,8 @@ class EditAdminHandler(BaseHandler):
 
     @tornado.web.authenticated
     def post(self):
+
+        # Get request arguments
         username = self.get_argument('username', '')
         new_name = self.get_argument('name', '')
         new_email = self.get_argument('email', '')
@@ -26,15 +28,15 @@ class EditAdminHandler(BaseHandler):
         new_pass_confirmation = self.get_argument('password_confirmation', '')
         new_permissions = []
 
-        """
-            Go through all the permissions in the DB see if they were
-            picked or not then store the IDs of all those permissions
-        """
-
         try:
             session = self.acquire_sql_session()
         except:
             raise HTTPError(500, 'Could not acquire session for database')
+
+        """
+            Go through all the permissions in the DB see if they were
+            picked or not then store the IDs of all those permissions
+        """
 
         try:
             query = session.query(Permission)
@@ -91,9 +93,8 @@ class EditAdminHandler(BaseHandler):
 
             session.commit()
         except:
-            # TODO: handle error
             traceback.print_exc()
-            return
+            raise HTTPError(500, 'Error editing admin.')
 
         self.redirect(r"/admin_list")
         session.close()

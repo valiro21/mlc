@@ -1,4 +1,5 @@
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB.Entities.BlogPost import BlogPost
@@ -8,6 +9,10 @@ from tornado.web import HTTPError
 
 
 class PostEditorHandler(BaseHandler):
+    """
+    Handler for editing blog posts
+    """
+
     def get(self):
         self.render("post_editor.html")
 
@@ -35,6 +40,7 @@ class PostEditorHandler(BaseHandler):
         content = content[1:]
         content = content[:-1]
 
+        # Creates new BlogPost
         new_post = BlogPost(
             admin_id=admin_id,
             title=title,
@@ -43,6 +49,7 @@ class PostEditorHandler(BaseHandler):
         )
 
         try:
+            # Adds new BlogPost to database
             session.add(new_post)
             session.commit()
         except:
