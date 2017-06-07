@@ -53,3 +53,5 @@ sudo cp ./Worker/Environment/timeout/timeout /usr/local/bin/timeout # Execute fr
 sudo chmod +x /usr/local/bin/timeout
 ```
 
+Lastly, use the script ```./runWorker.py``` located at the root of the project to run the worker locally.
+
