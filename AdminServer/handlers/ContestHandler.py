@@ -19,6 +19,7 @@ from tornado.web import HTTPError
 
 from AdminServer.handlers import BaseHandler
 from DB import Contest, Participation
+from DB.Entities import User
 from DB.Repositories import ContestRepository, UserRepository
 from DB.Repositories import ProblemRepository
 from DB.Repositories.ParticipacionRepository import ParticipationRepository
@@ -377,6 +378,10 @@ class ContestHandler(BaseHandler.BaseHandler):
         try:
             contest = ContestRepository.get_by_name(session, contest_name)
             problems = ContestRepository.get_all_problems(session, contest.id)
+            users = session.query(User)\
+                .join(Participation)\
+                .filter(Participation.contest_id == contest.id)
+
         except SQLAlchemyError:
             traceback.print_exc()
             raise HTTPError(500, 'Error getting problems')
@@ -413,6 +418,7 @@ class ContestHandler(BaseHandler.BaseHandler):
         self.render(render + ".html",
                     last_path=path_elements[2],
                     contest=contest,
+                    users=users,
                     contest_id=contest_name,
                     problems=problems)
 

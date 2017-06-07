@@ -41,7 +41,10 @@
 
                 <label>Language</label>
                 {% include "fragments/languages_selector.html" %}
-                <button id="submit-solution" type="submit" class="pull-right btn btn-primary">Submit</button>
+                <div class="row">
+                    <div class="alert-danger hidden" id="error-msg">asdasd</div>
+                    <button id="submit-solution" type="submit" class="pull-right btn btn-primary">Submit</button>
+                </div>
             </form>
 
 
