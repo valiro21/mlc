@@ -1,4 +1,5 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 """Object model for an a blog post in the DB"""
 
@@ -9,6 +10,9 @@ from DB.Entities import Base
 
 
 class BlogPost(Base):
+    """
+    Object model for BlogPosts those are on the FrontPage
+    """
     __tablename__ = 'blog_posts'
 
     id = Column(Integer, primary_key=True)

@@ -27,9 +27,13 @@ jQuery(document).ready(function () {
         },
         west: {
             showOverflowOnHover: true
+        },
+        center: {
+            showOverflowOnHover: true
         }
     });
 
     bodyLayout.sizePane("north", 80);
+    bodyLayout.allowOverflow("north");
     bodyLayout.sizePane("east", 0);
 });

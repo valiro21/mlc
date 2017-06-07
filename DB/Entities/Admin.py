@@ -23,5 +23,10 @@ class Admin(Base):
 
     @validates("email")
     def __validateEmail__(self, key, email):
+        """
+        Validates if a string is an email
+        :param key:
+        :param email:
+        """
         assert '@' in email
         return email

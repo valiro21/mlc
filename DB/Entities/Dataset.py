@@ -9,6 +9,10 @@ from DB.Entities import Base
 
 
 class Dataset(Base):
+    """
+    Object model for the datesets
+    A dataset is a set of testcases for a problem
+    """
     __tablename__ = 'datasets'
 
     id = Column(Integer, primary_key=True)
