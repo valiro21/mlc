@@ -17,6 +17,7 @@ from BackendServer.handlers.BaseHandler import BaseHandler
 from BackendServer.handlers.SubmissionsHandler import PrettyWrap
 
 from DB import Participation, Contest
+from DB.Entities import Submission, Problem, User
 from DB.Entities.ContestPermissions import ContestPermissions
 from DB.Repositories import ContestRepository, UserRepository, \
     SubmissionRepository
