@@ -1,7 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
 
-from sqlalchemy import desc
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 
@@ -66,7 +65,7 @@ class SubmissionsHandler(BaseHandler):
         try:
             session = self.acquire_sql_session()
         except SQLAlchemyError as err:
-            print(str(SQLAlchemyError))
+            print(str(err))
             self.render("submissions.html",
                         submissions=None,
                         error="Database is down!")
@@ -125,13 +124,16 @@ class SubmissionsHandler(BaseHandler):
         if problem_id is not None:
             query = query.filter(Problem.id == problem_id)
 
-        query.order_by(desc(Submission.created_timestamp))\
+        query.order_by(Submission.created_timestamp.desc())\
             .limit(pg_nr * pg_size)\
             .offset((pg_nr - 1) * pg_size)\
             .limit(pg_size)
 
         results = query.all()
         return_list = []
+
+        results.sort(key=lambda a: a[0].created_timestamp, reverse=True)
+
         for row in results:
             submission, contest, problem, user = row
             score = SubmissionRepository.get_status(session, submission.id)
