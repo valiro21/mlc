@@ -59,12 +59,11 @@ class TestcaseHandler(BaseHandler):
             id = int(self.get_argument('id'))
 
             try:
-                testcase = TestcaseRepository.get_by_id(session, id)
-            except:
+                TestcaseRepository.delete_by_id(session, id)
+            except SQLAlchemyError:
+                traceback.print_exc()
                 raise HTTPError(400, 'Testcase with specified id '
                                      'does not exist.')
-
-            session.delete(testcase)
             session.commit()
         except MissingArgumentError as e:
             traceback.print_exc()
@@ -94,7 +93,7 @@ class TestcaseHandler(BaseHandler):
             session = self.acquire_sql_session()
             try:
                 testcase = TestcaseRepository.get_by_id(session, id)
-            except:
+            except SQLAlchemyError:
                 raise HTTPError(400, 'Testcase with specified '
                                      'id does not exist.')
 

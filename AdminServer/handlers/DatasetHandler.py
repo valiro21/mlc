@@ -16,7 +16,7 @@ from tornado.web import HTTPError, MissingArgumentError
 from AdminServer.handlers.BaseHandler import BaseHandler
 from DB import Testcase
 from DB.Entities import Dataset
-from DB.Repositories import DatasetRepository
+from DB.Repositories import DatasetRepository, ProblemRepository
 
 
 class DatasetHandler(BaseHandler):
@@ -81,11 +81,22 @@ class DatasetHandler(BaseHandler):
 
         # Get arguments from request
         try:
-            problem_id = self.get_argument('problem-id')
+            problem_id = int(self.get_argument('problem-id'))
             name = self.get_argument('name')
-            time_limit = self.get_argument('time-limit', 1)
-            memory_limit = self.get_argument('memory-limit', 16)
+            time_limit = self.get_argument('time-limit')
+            memory_limit = self.get_argument('memory-limit')
 
+            # If received empty string, use database default
+            try:
+                time_limit = float(time_limit) if time_limit else None
+                memory_limit = float(memory_limit) if memory_limit else None
+
+                if not self.validate_time_memory(time_limit, memory_limit):
+                    raise HTTPError(400, 'Invalid time limit or memory limit')
+
+            except:
+                raise HTTPError(400, 'Invalid time limit '
+                                     'or memory limit format')
             stdin = self.get_argument('stdin', '')
             stdout = self.get_argument('stdout', '')
 
@@ -98,6 +109,8 @@ class DatasetHandler(BaseHandler):
             else:
                 testcases_body = None
 
+        except HTTPError:
+            raise
         except Exception as e:
             traceback.print_exc()
             raise HTTPError(400)  # Bad request
@@ -133,6 +146,13 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(400)
         finally:
             session.rollback()
+
+        # Update the problem's default dataset
+        try:
+            ProblemRepository.update_default_dataset(session, problem_id)
+            session.commit()
+        except SQLAlchemyError:
+            raise
 
         self.redirect('/problem/edit?name=' + new_dataset.problem.name)
         session.close()
@@ -198,6 +218,14 @@ class DatasetHandler(BaseHandler):
             new_time_limit = self.get_argument('time-limit')
             new_memory_limit = self.get_argument('memory-limit')
 
+            new_time_limit = float(new_time_limit) \
+                if new_time_limit else None
+            new_memory_limit = float(new_memory_limit) \
+                if new_time_limit else None
+
+            if not self.validate_time_memory(new_time_limit, new_memory_limit):
+                raise HTTPError(400, 'Invalid time limit or memory limit')
+
             files = self.request.files
 
             testcases = files.get('testcases', None)
@@ -209,6 +237,8 @@ class DatasetHandler(BaseHandler):
 
             new_in = files.get('input', None)
             new_out = files.get('output', None)
+        except HTTPError:
+            raise
         except:
             raise HTTPError(400, 'Arguments specified incorrectly.')
 
@@ -248,9 +278,20 @@ class DatasetHandler(BaseHandler):
             raise HTTPError(500, 'Could not acquire database session.')
 
         try:
-            id = self.get_argument('id')
-            session.query(Dataset).filter_by(id=id).delete()
+            id = int(self.get_argument('id'))
+
+            dataset = DatasetRepository.get_by_id(session, id)
+            problem_id = dataset.problem_id
+
+            session.delete(dataset)
             session.commit()
+
+            # Update the problem's default dataset
+            try:
+                ProblemRepository.update_default_dataset(session, problem_id)
+                session.commit()
+            except SQLAlchemyError:
+                raise
 
         except Exception as e:
             traceback.print_exc()
@@ -260,3 +301,7 @@ class DatasetHandler(BaseHandler):
             session.close()
 
         self.write('Success!')
+
+    def validate_time_memory(self, time, memory):
+        return (time is None or 0 <= time <= 60) and \
+               (memory is None or 0 <= memory <= 1024)

@@ -12,17 +12,15 @@ import bcrypt
 
 
 class LoginHandler(BaseHandler):
-
+    """Handler that listens for POST requests on /login"""
     def data_received(self, chunk):
         pass
 
     def post(self):
-        username = self.get_argument('username', '')
-        password = self.get_argument('password', '')
+        username = self.get_argument('login_username', '')
+        password = self.get_argument('login_password', '')
 
-        # DANGER! Bug or someone malicious
-
-        # Check for missing username of password params
+        """Check the username and password from the post request"""
         if not username:
             login_response = 'Please enter your username/email.'
             self.write(login_response)
@@ -40,18 +38,21 @@ class LoginHandler(BaseHandler):
             self.write(login_response)
             return
 
-        # Fetch user and check if passwords match
+
         try:
+            """Check if the user exists and grab his hashed password to compare it later"""
             query = session.query(User.password)\
                 .filter(or_(User.username == username, User.email == username))
 
             db_pass = session.execute(query).first()
 
+            """User does not exist"""
             if not db_pass:
                 login_response = 'Invalid credentials.'
                 self.write(login_response)
                 return
 
+            """Hash the password given and compare it with the stored hash"""
             if bcrypt.checkpw(password.encode('utf8'),
                               db_pass[0].encode('utf8')):
                 db_user = session.query(User)\
@@ -59,6 +60,7 @@ class LoginHandler(BaseHandler):
                                 User.email == username))\
                     .one_or_none()
 
+                """Check whether the user needs to confirm his account or not"""
                 if db_user is not None:
                     if db_user.confirmation_token is not None:
                         login_response = 'Account is not confirmed.'

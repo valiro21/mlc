@@ -5,6 +5,7 @@ import hashlib
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy import LargeBinary
+from sqlalchemy.orm import validates
 
 from DB.Entities import Base
 
@@ -12,16 +13,6 @@ from DB.Entities import Base
 def get_digest(obj):
     digest = hashlib.md5(obj).hexdigest()
     return digest.encode()
-
-
-def get_input_digest(context):
-    obj = context.current_parameters['input_file']
-    return get_digest(obj)
-
-
-def get_output_digest(context):
-    obj = context.current_parameters['output_file']
-    return get_digest(obj)
 
 
 class Testcase(Base):
@@ -37,15 +28,22 @@ class Testcase(Base):
     allow_download = Column(Boolean, default=False, nullable=False)
     codename = Column(String)
 
+    deleted = Column(Boolean, default=False, nullable=False)
+
     input_file = Column(LargeBinary, nullable=False)
     input_file_digest = Column(LargeBinary,
-                               nullable=False,
-                               default=get_input_digest,
-                               onupdate=get_input_digest
-                               )
+                               nullable=False)
+
     output_file = Column(LargeBinary, nullable=False)
     output_file_digest = Column(LargeBinary,
-                                nullable=False,
-                                default=get_output_digest,
-                                onupdate=get_output_digest
-                                )
+                                nullable=False)
+
+    @validates('input_file')
+    def update_input_digest(self, key, input_file):
+        self.input_file_digest = get_digest(input_file)
+        return input_file
+
+    @validates('output_file')
+    def update_output_digest(self, key, output_file):
+        self.output_file_digest = get_digest(output_file)
+        return output_file

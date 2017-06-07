@@ -1,5 +1,9 @@
 {% extends "contest.html" %}
 
+{% block Imports %}
+<script type="text/javascript" src="{{ static_url('js/contest_problems.js') }}"></script>
+{% end %}
+
 {% block Body %}
 <div class="container">
     <div class="row">
@@ -11,11 +15,19 @@
 
     <div class="row">
         <div class="col-md-4">
-            <form action="/contest/{{ contest.name }}/add_problem" method="post">
+            <div id="error" class="alert-danger"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form id="add-problem" method="post">
                 <div class="form-group">
                     <label for="problem">Add problem</label>
                     <input type="text" class="form-control" id="problem" name="problem" placeholder="Enter problem name">
+                    <input type="hidden" id="contest-name" value="{{ contest.name }}" name="contest-name"/>
                 </div>
+                <input type="submit" value="Submit" />
             </form>
         </div>
     </div>

@@ -36,6 +36,7 @@ class Problem(Base):
     task_type = Column(Integer,
                        default=0,
                        nullable=False)
+
     # 0 for batch, 1 for interactive, 2 for output only
 
     @staticmethod

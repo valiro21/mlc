@@ -15,7 +15,12 @@ class BaseHandler(tornado.web.RequestHandler):
         pass
 
     def get_current_user(self):
-        return self.get_secure_cookie("user")
+        user = self.get_secure_cookie("user")
+        if isinstance(user, str):
+            return user
+        if isinstance(user, bytearray) or isinstance(user, bytes):
+            return user.decode()
+        return user
 
     def __init__(self, application, request, **kwargs):
         super().__init__(application, request, **kwargs)

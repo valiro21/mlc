@@ -58,6 +58,9 @@ class ContestRepository:
 
     @staticmethod
     def has_problem(session, contest_id, problem_id):
+        """Returns true if problem specified by problem_id
+        belongs to contest specified by contest_id"""
+
         try:
             session.query(Problem_Contest)\
                 .filter_by(problem_id=problem_id)\
@@ -68,8 +71,31 @@ class ContestRepository:
 
     @staticmethod
     def get_all_problems(session, contest_id):
+        """Returns a list of all problems belonging to the
+        contest specified by the contest_id"""
+
         return session.query(Problem)\
             .join(Problem_Contest, Problem_Contest.problem_id == Problem.id)\
             .join(Contest, Contest.id == Problem_Contest.contest_id)\
             .filter(Contest.id == contest_id)\
             .all()
+
+    @staticmethod
+    def add_problem(session, contest, problem):
+        """Adds given problem to contest"""
+        new_relation = Problem_Contest(problem_id=problem.id,
+                                       contest_id=contest.id)
+        session.add(new_relation)
+        session.commit()
+
+    @staticmethod
+    def remove_problem(session, contest, problem):
+        """Removes problem from given contest"""
+
+        relation = session\
+            .query(Problem_Contest)\
+            .filter(Problem_Contest.problem_id == problem.id)\
+            .filter(Problem_Contest.contest_id == contest.id)\
+            .one()
+        session.delete(relation)
+        session.commit()

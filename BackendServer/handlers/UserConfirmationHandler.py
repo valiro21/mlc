@@ -7,11 +7,13 @@ import time
 
 
 class UserConfirmationHandler(BaseHandler):
-
+    """Handler used to confirm a users account"""
     def data_received(self, chunk):
         pass
 
     def get(self):
+
+        # Get the confirmation token from the url and store it in token
         path_elements = [x for x in self.request.path.split("/") if x]
 
         if len(path_elements) < 2:
@@ -26,9 +28,12 @@ class UserConfirmationHandler(BaseHandler):
             self.write(response)
             return
 
+        """Try to find the user with the corresponding confirmation token"""
+
         query = session.query(User)\
             .filter(User.confirmation_token == token).one_or_none()
 
+        """If such an user exists we delete the token and confirm its account"""
         if query is not None:
             query.confirmation_token = None
             self.set_secure_cookie("user", query.username)

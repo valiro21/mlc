@@ -10,13 +10,13 @@
     <tbody>
 
     {% for problem in problems %}
-    <tr>
+    <tr id="problem-row-{{ problem.id }}">
         <td>{{ problem.name }}</td>
         <td>{{ problem.difficulty }}</td>
         <td>{{ problem.task_type }}</td>
         <td>
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Remove</button>
+            <a href="/problem/edit?name={{ problem.name }}" class="btn btn-primary">Edit</a>
+            <button class="btn btn-danger" onclick="removeProblemFromContest({{ problem.id }})">Remove</button>
         </td>
     </tr>
     {% end %}

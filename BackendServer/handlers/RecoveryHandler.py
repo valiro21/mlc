@@ -118,7 +118,8 @@ class RecoveryHandler(BaseHandler):
                 self.write(response)
                 return
 
-            token_expiry_date = datetime.strptime(query.expiration_date, '%Y-%m-%d %H:%M:%S.%f')
+            token_expiry_date = datetime.strptime(query.expiration_date,
+                                                  '%Y-%m-%d %H:%M:%S.%f')
 
             if token_expiry_date < datetime2.datetime.now():
                 response = 'Token expired.'
@@ -131,8 +132,9 @@ class RecoveryHandler(BaseHandler):
 
             if query is not None:
                 if user.confirmation_token is None:
-                    user.password = bcrypt.hashpw(password.encode('utf8'),
-                                                  bcrypt.gensalt()).decode('utf8')
+                    user.password = bcrypt\
+                        .hashpw(password.encode('utf8'),
+                                bcrypt.gensalt()).decode('utf8')
 
                     session.delete(query)
                     session.commit()
