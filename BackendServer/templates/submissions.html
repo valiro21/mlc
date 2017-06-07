@@ -31,7 +31,7 @@
                     <td>{{ data.submission.id }}</td>
                     <td>{{ data.submission.created_timestamp }}</td>
                     <td><a href="/user/{{ data.user.username }}">{{ data.user.username }}</a></td>
-                    <td><a href="/problem/{{ data.problem.name }}">{{ data.problem.name }}</a></td>
+                    <td><a href="/problem/{{ data.problem.name }}/statement?contest_id=1">{{ data.problem.name }}</a></td>
                     <td>{{ data.submission.language }}</td>
                     <td><a href="/submission?id={{ data.submission.id }}">{{ data.message }}</a></td>
                     <td>{{ data.cpu }} {% if data.memory != "" %}s{% end %}</td>
