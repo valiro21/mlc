@@ -35,11 +35,36 @@
             <tbody>
                 {% if isinstance(testcases, list) %}
                 {% for data in testcases %}
-                    <tr class="{% if data.job.status_message == 'ACCEPTED!' %}accepted{% else %}rejected{% end %}">
+                    <tr class="{% if data.job.status_message is None %}
+                               {% else %}
+                                {% if data.job.status_message == 'ACCEPTED!' %}
+                                    accepted
+                                {% else %}
+                                    rejected
+                                {% end %}
+                               {% end %}">
                         <td>{{ data.testcase.codename }}</td>
-                        <td>{{ data.job.status_message }}</td>
-                        <td>{{ data.job.cpu }} s</td>
-                        <td>{% if data.job.memory <= 0 %}Too small to measure{% else %}{{ data.job.memory }} KB {% end %}</td>
+                        <td>
+                            {% if data.job.status_message is None %}
+                                Evaluating ...
+                            {% else %}
+                                {{ data.job.status_message }}
+                            {% end %}
+                        </td>
+                        <td>
+                            {% if data.job.cpu is not None %}
+                                {{ data.job.cpu }} s
+                            {% end %}
+                        </td>
+                        <td>
+                            {% if data.job.memory is not None %}
+                                {% if data.job.memory <= 0 %}
+                                    Too small to measure
+                                {% else %}
+                                    {{ data.job.memory }} KB
+                                {% end %}
+                            {% end %}
+                        </td>
                     </tr>
                 {% end %}
                 {% end %}

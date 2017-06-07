@@ -4,11 +4,12 @@
 
 import os
 
+from sqlalchemy.orm.exc import NoResultFound
 from tornado.web import HTTPError
 
 from BackendServer.handlers.BaseHandler import BaseHandler
 
-from DB.Entities import Submission
+from DB.Entities import Submission, User, Participation
 from DB.Repositories import ProblemRepository, ContestRepository
 
 
@@ -43,9 +44,20 @@ class ProblemHandler(BaseHandler):
                 self.write("FAILED")
                 return
 
+            if self.get_current_user() is None:
+                self.write("must be logged in")
+                return
+
+            user = self.get_current_user()
+            participation = session\
+                .query(Participation)\
+                .filter(User.username == user)\
+                .limit(1)\
+                .one()
+
             for dataset in problem.datasets:
                 submission = Submission(problem_id=problem.id,
-                                        participation_id=1,
+                                        participation_id=participation.id,
                                         file=submission_code.encode('utf8'),
                                         language=language
                                         )
@@ -87,8 +99,8 @@ class ProblemHandler(BaseHandler):
 
         try:
             problem = ProblemRepository.get_by_name(session, problem_name)
-        except:
-            raise HTTPError(500, 'A database error has occured')
+        except NoResultFound:
+            raise HTTPError(404, 'Problem not found')
 
         if problem is None:
             raise HTTPError(404)
