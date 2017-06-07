@@ -23,6 +23,8 @@ class RegisterHandler(BaseHandler):
         pass
 
     def post(self):
+
+        # Get all the arguments from the POST request
         first_name = self.get_argument('first_name', '')
         last_name = self.get_argument('last_name', '')
         username = self.get_argument('username', '')
@@ -30,6 +32,10 @@ class RegisterHandler(BaseHandler):
         password = self.get_argument('password', '')
         password_confirm = self.get_argument('password_confirmation', '')
 
+        """
+        Basic error handling on the given arguments 
+        and sending back a fitting response
+        """
         if not first_name:
             register_response = 'Please enter your first name.'
 
@@ -58,6 +64,7 @@ class RegisterHandler(BaseHandler):
 
             token = hashlib.sha1(os.urandom(128)).hexdigest()
 
+            """Create a new User and store it in the DB"""
             new_user = User(
                 username=username,
                 firstName=first_name,
@@ -72,6 +79,7 @@ class RegisterHandler(BaseHandler):
             session.add(new_user)
             session.commit()
 
+            """Construct the url the user has to access to confirm his account"""
             message = self.request.protocol + "://" \
                 + self.request.host + "/confirm/" + token
 
