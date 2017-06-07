@@ -17,6 +17,9 @@ class LoginHandler(BaseHandler):
         pass
 
     def post(self):
+        """
+        Handle for the login user operation
+        """
         username = self.get_argument('login_username', '')
         password = self.get_argument('login_password', '')
 
@@ -37,10 +40,9 @@ class LoginHandler(BaseHandler):
             login_response = 'Could not acquire db connection'
             self.write(login_response)
             return
-
-
         try:
-            """Check if the user exists and grab his hashed password to compare it later"""
+            """Check if the user exists and grab his
+            hashed password to compare it later"""
             query = session.query(User.password)\
                 .filter(or_(User.username == username, User.email == username))
 
@@ -60,7 +62,8 @@ class LoginHandler(BaseHandler):
                                 User.email == username))\
                     .one_or_none()
 
-                """Check whether the user needs to confirm his account or not"""
+                """Check whether the user needs to
+                confirm his account or not"""
                 if db_user is not None:
                     if db_user.confirmation_token is not None:
                         login_response = 'Account is not confirmed.'

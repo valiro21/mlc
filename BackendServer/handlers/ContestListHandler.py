@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 from tornado.httpclient import HTTPError
 
 from BackendServer.ui_methods import dateOf, timeOf
@@ -18,6 +19,9 @@ class ContestListHandler(BaseHandler):
         pass
 
     def get(self):
+        """
+        Handle to get lists of contests
+        """
 
         try:
             session = self.acquire_sql_session()
