@@ -17,8 +17,8 @@ class LoginHandler(BaseHandler):
         pass
 
     def post(self):
-        username = self.get_argument('username', '')
-        password = self.get_argument('password', '')
+        username = self.get_argument('login_username', '')
+        password = self.get_argument('login_password', '')
 
         # DANGER! Bug or someone malicious
 
