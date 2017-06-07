@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 
 from DB.Entities.Base import Base
 from DB.Entities.Contest import Contest
@@ -18,6 +19,7 @@ from DB.Entities.Permission import Permission
 from DB.Entities.Problem_Contest import Problem_Contest
 from DB.Entities.BlogPost import BlogPost
 from DB.Entities.RecoveryToken import RecoveryToken
+from DB.Entities.ContestPermissions import ContestPermissions
 
 __all__ = [
     'Base', 'Contest', 'Problem',
@@ -25,5 +27,6 @@ __all__ = [
     'Submission', 'User', 'Job',
     'Process', 'Log', 'Admin',
     'AdminPermission', 'Permission',
-    'Problem_Contest', 'BlogPost', 'RecoveryToken'
+    'Problem_Contest', 'BlogPost', 'RecoveryToken',
+    'ContestPermissions'
 ]
