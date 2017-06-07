@@ -10,6 +10,10 @@ from DB.Entities import Base
 
 
 class Permission(Base):
+    """
+    Object model for the permission a user has
+    over the website
+    """
     __tablename__ = 'permissions'
 
     permission_id = Column(Integer, primary_key=True)

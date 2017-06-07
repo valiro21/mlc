@@ -7,6 +7,11 @@ from DB.Entities import Base
 
 
 class Participation(Base):
+    """
+    Object model for the contests participation
+    if a user is registered to a contest it must
+    have a participation for that contest
+    """
     __tablename__ = 'participations'
 
     id = Column(Integer, primary_key=True)
