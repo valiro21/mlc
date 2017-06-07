@@ -15,6 +15,7 @@ from BackendServer.handlers.SubmissionsHandler import PrettyWrap
 from DB.Entities import Submission, Contest, Problem, User, Participation
 from DB.Repositories import SubmissionRepository, UserRepository
 
+
 class UserHandler(BaseHandler):
     """Tornado handler for a user."""
 
@@ -59,7 +60,8 @@ class UserHandler(BaseHandler):
             if username is not None:
                 query = query.filter(User.username == username)
 
-                user = session.query(User).filter(User.username == username).one_or_none()
+                user = session.query(User)\
+                    .filter(User.username == username).one_or_none()
                 if user is None:
                     self.render('profile_not_found.html')
                 try:
