@@ -7,7 +7,9 @@ from BackendServer.handlers.BaseHandler import BaseHandler
 
 
 class LogoutHandler(BaseHandler):
-
+    """
+    Handlers for the logout operations
+    """
     def data_received(self, chunk):
         pass
 

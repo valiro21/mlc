@@ -18,7 +18,9 @@ class MainHandler(BaseHandler):
         pass
 
     def get(self):
-
+        """
+        Get methods for the first page of the website
+        """
         try:
             session = self.acquire_sql_session()
         except:

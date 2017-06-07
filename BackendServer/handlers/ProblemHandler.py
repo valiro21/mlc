@@ -1,5 +1,6 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 
 import os
@@ -26,7 +27,9 @@ class ProblemHandler(BaseHandler):
         return path_elements[1]
 
     def post(self):
-
+        """
+        Post method for the problem handler
+        """
         print('Receiving submission...')
 
         submission_code = self.get_body_argument("data", None)

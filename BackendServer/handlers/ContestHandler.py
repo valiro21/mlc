@@ -33,6 +33,14 @@ class ContestHandler(BaseHandler):
         pass
 
     def post(self):
+        """
+        Handle for the post methods done on /contest/*
+        Accepted operations:
+            1. register: registers the current user to the current contest
+            2. creatv: creates a virtual contest for the current user
+            3. settingsv: provides setting for the contest if the user
+                        has permission
+        """
         path_elements = [x for x in self.request.path.split("/") if x]
         if len(path_elements) == 2:
             operation_type = path_elements[1]
@@ -236,6 +244,12 @@ class ContestHandler(BaseHandler):
         self.redirect("contest_done_register")
 
     def get(self):
+        """
+        Handle for the get methods done on /contest/*
+        Accepted pages:
+            "problems", "submit", "mysubmissions", "submissions",
+            "standings", "createv", "problemsv", "settingsv"
+        """
         path_elements = [x for x in self.request.path.split("/") if x]
         contest_name = path_elements[1].replace('%20', ' ')
 
@@ -398,12 +412,21 @@ class ContestHandler(BaseHandler):
 
     @staticmethod
     def checkbox_format(val):
+        """
+        Formats a 1 or 0 to cheched format required by
+        html form default values
+        :param val:
+        """
         if val:
             return "checked"
         return ""
 
     @staticmethod
     def type_format(val):
+        """
+        Converts stored type from datebase to the format required
+        by the html from default values
+        """
         if val == 1:
             return "Open"
         elif val == 2:
@@ -414,6 +437,10 @@ class ContestHandler(BaseHandler):
 
     @staticmethod
     def time_format(time_utc):
+        """
+        Converts stored data from datebase to the format required
+        by the html from default values
+        """
         calendar_time = \
             time.gmtime(time_utc)
         correct_time = \
