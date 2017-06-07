@@ -105,7 +105,8 @@ class ContestHandler(BaseHandler):
 
         if path_elements[2] == 'register':
             self.render("contest_register.html",
-                        contest_id=contest_name)
+                        contest_name=contest_name,
+                        contest_id=contest.id)
             return
 
         if len(path_elements) >= 4:
@@ -161,12 +162,14 @@ class ContestHandler(BaseHandler):
 
             session.close()
 
-            self.render("contest_submissions.html",
+            self.render('contest_' + path_elements[2] + '.html',
+                        contest_name=contest.name,
                         contest_id=contest.id,
                         submissions=return_list)
             return
 
         self.render("contest_" +
                     path_elements[2] + ".html",
-                    contest_id=contest_name,
+                    contest_name=contest.name,
+                    contest_id=contest.id,
                     problems=problems)

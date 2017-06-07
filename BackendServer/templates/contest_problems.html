@@ -7,66 +7,48 @@
 
 {% block Body %}
     <div class="col-xs-12 col-sm-7 col-sm-offset-1">
-        <h2>Contest {{ contest_id }}</h2>
+        <h2>Contest {{ contest_name }}</h2>
+
+        <h3>Problems:</h3>
         <table class="table table-filter table-responsive">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Your Status</th>
-                    <th>Total Submissions</th>
+                    <th>Description</th>
+                    <th>Difficulty</th>
                 </tr>
             </thead>
             <tbody>
+                {% set letter = 'A' %}
+                {% for problem in problems %}
                 <tr>
-                    <td>A</td>
+                    <td>{{ letter }}</td>
                     <td>
-                        <a href="/problem/a+b">A+B</a>
+                        <a href="/problem/{{ problem.name }}?contest_id={{ contest_id }}">{{ problem.name }}</a>
                     </td>
-                    <td>TLE</td>
-                    <td>14871</td>
+                    <td>{{ problem.description }}</td>
+                    <td>{{ problem.difficulty }}</td>
                 </tr>
-                <tr>
-                    <td>B</td>
-                    <td>
-                        <a href="/problem/gcd">GCD</a>
-                    </td>
-                    <td>Wrong Answer on test 1</td>
-                    <td>124</td>
-                </tr>
-                <tr>
-                    <td>C</td>
-                    <td>
-                        <a href="/problem/lee-labirinth">Lee's Labirinth of Doom</a>
-                    </td>
-                    <td>Accepted</td>
-                    <td>51</td>
-                </tr>
-                <tr>
-                    <td>D</td>
-                    <td>
-                        <a href="/problem/vali-tractor">Vali's Tractor</a>
-                    </td>
-                    <td>0 / Tractor</td>
-                    <td>-1337</td>
-                </tr>
+                    {% set letter = chr(ord(letter) + 1) %}
+                {% end %}
             </tbody>
         </table>
     </div>
 
  
-    <div class="col-xs-12 col-sm-4">
-        <div class="container-fluid">
-            <div class="side-box" id="countdown">
-                <h3>Time Remaining:</h3>
-                <h4>01:31:45</h4>
-            </div>
-            <div class="side-box" id="rank">
-                <h3>Your current rank:</h3>
-                    <h4>23 / 5378</h4>
-            </div>
-        </div>
-    </div>
+{#    <div class="col-xs-12 col-sm-4">#}
+{#        <div class="container-fluid">#}
+{#            <div class="side-box" id="countdown">#}
+{#                <h3>Time Remaining:</h3>#}
+{#                <h4>01:31:45</h4>#}
+{#            </div>#}
+{#            <div class="side-box" id="rank">#}
+{#                <h3>Your current rank:</h3>#}
+{#                    <h4>23 / 5378</h4>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
 {% end %}

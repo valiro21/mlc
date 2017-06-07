@@ -4,151 +4,45 @@
 {% end %}
 
 {% block Body %}
-    <div class="container-fluid" id="submissions-content">
-        <h2>My Submissions</h2>
-        <table class="table table-filter table-responsive">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Problem</th>
-                    <th>Language</th>
-                    <th>Status</th>
-                    <th>Time</th>
-                    <th>Memory</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-						<a data-toggle="modal" href="#submission-modal">15234</a>
-					</td>
-                    <td>2017-04-24 01:20:12</td>
-                    <td>
-                        <a href="/problem/a+b">a+b</a>
-                    </td>
-                    <td>GNU C++11</td>
-                    <td>
-                        <span class="accepted">Accepted</span>
-                    </td>
-                    <td>100 ms</td>
-                    <td>100 KB</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-						<a data-toggle="modal" href="#submission-modal">15234</a>
-					</td>
-                    <td>2017-04-24 01:15:01</td>
-                    <td>
-                        <a href="/problem/a+b">a+b</a>
-                    </td>
-                    <td>GNU C++11</td>
-                    <td>
-                        <span class="rejected">Wrong answer on test 15</span>
-                    </td>
-                    <td>100 ms</td>
-                    <td>100 KB</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-						<a data-toggle="modal" href="#submission-modal">15234</a>
-					</td>
-                    <td>2017-04-24 01:05:57</td>
-                    <td>
-                        <a href="/problem/a+b">a+b</a>
-                    </td>
-                    <td>GNU C++11</td>
-                    <td>
-                        <span class="rejected">Wrong answer on test 9</span>
-                    </td>
-                    <td>100 ms</td>
-                    <td>100 KB</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-						<a data-toggle="modal" href="#submission-modal">15234</a>
-					</td>
-                    <td>2017-04-24 01:00:31</td>
-                    <td>
-                        <a href="/problem/a+b">a+b</a>
-                    </td>
-                    <td>GNU C++11</td>
-                    <td>
-                        <span class="rejected">Time limit exceeded on test 1</span>
-                    </td>
-                    <td>100 ms</td>
-                    <td>100 KB</td>
-                </tr>
-            </tbody>
 
+<h2>My submissions</h2>
 
-        </table>
-    </div>
-
-<!-- Modal -->
-<div id="submission-modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Submission #1123</h4>
-      </div>
-      <div class="modal-body">
-          <!-- Source code -->
-          <pre class="pre-scrollable">
-              <code>
-                  include, text
-                  code here
-                  haha
-                  text
-              </code>
-          </pre>
-
-          <!-- Tests -->
-          <table class="table table-bordered">
-              <thead>
-                <tr>
-                    <th>Test</th>
-                    <th>Result</th>
-                    <th>Time taken</th>
-                    <th>Memory used</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Success</td>
-                    <td>0.1s</td>
-                    <td>10 MB</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Success</td>
-                    <td>0.1s</td>
-                    <td>10 MB</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>FAILURE</td>
-                    <td>1.001s</td>
-                    <td>100 MB</td>
-                </tr>
-            </tbody>
-          </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
+<div class="container-fluid" id="submissions-content">
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>User</th>
+            <th>Problem</th>
+            <th>Language</th>
+            <th>Status</th>
+            <th>Cpu</th>
+            <th>Memory</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in submissions %}
+        <tr class="{% if data.message == 'ACCEPTED!' %}
+                            accepted
+                           {% else %}
+                                {% if not (data.message == 'COMPILING' or data.message == 'EVALUATING') %}
+                                 rejected
+                           {% end %}
+                           {% end %}">
+            <td>{{ data.submission.id }}</td>
+            <td>{{ data.submission.created_timestamp }}</td>
+            <td><a href="/user/{{ data.user.username }}">{{ data.user.username }}</a></td>
+            <td><a href="/problem/{{ data.problem.name }}">{{ data.problem.name }}</a></td>
+            <td>{{ data.submission.language }}</td>
+            <td><a href="/submission?id={{ data.submission.id }}">{{ data.message }}</a></td>
+            <td>{{ data.cpu }} {% if data.memory != "" %}s{% end %}</td>
+            <td> {{ data.memory }} {% if data.memory != "" %}KB{% end %}</td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
 </div>
+
 {% end %}
+

@@ -104,6 +104,7 @@ class ProblemHandler(BaseHandler):
         """
         path_elements = [x for x in self.request.path.split("/") if x]
         problem_name = path_elements[1]
+        contest_id = self.get_argument('contest_id', None)
 
         try:
             session = self.acquire_sql_session()
@@ -119,7 +120,8 @@ class ProblemHandler(BaseHandler):
             raise HTTPError(404)
 
         if len(path_elements) <= 2:
-            self.redirect(os.path.join(self.request.path, "statement"))
+            self.redirect(os.path.join(self.request.path, "statement") +
+                          '?contest_id=' + contest_id)
             return
         if len(path_elements) >= 4:
             self.redirect("..")
@@ -155,11 +157,12 @@ class ProblemHandler(BaseHandler):
                                     "submissions",
                                     "editorial",
                                     "comments"]:
-            self.redirect("statement")
+            self.redirect("statement?contest_id=" + contest_id)
 
-        contest_id = self.get_argument('contest_id', None)
+        contest_id = int(self.get_argument('contest_id', None))
 
         try:
+            # Get contest and problem, for rendering
             contest = ContestRepository.get_by_id(session, contest_id)
             problem = ProblemRepository.get_by_name(session, problem_name)
 
