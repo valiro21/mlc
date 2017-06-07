@@ -7,21 +7,16 @@
 {% block Body %}
 
 <div class = "container-fluid profile user_table">
-    <h1 class = "username user_title">{{ user_id }}<span class="badge badge-default badge-rank">Grand Master</span></h1>
+    <h1 class = "username user_title">{{ user_id }}</h1>
     <div class = "personal-information">
         <div>
-            <span>Real Name:</span>
-            <span>{{ user_id }}</span>
+            <span>Real Name: {{ user.firstName }}  {{ user.lastName }}</span>
         </div>
         <div>
-            <span>Location:</span>
-            <span>Romania, Iasi</span>
-        </div>
-        <div>
-            <span>Email:</span>
-            <span>Hidden</span>
+            <span>Email: {{ user.email }}</span>
         </div>
     </div>
+    <!--
     <div class = "onsite-information">
         <div>
             <span>User type:</span>
@@ -44,7 +39,7 @@
             <span>2018</span>
         </div>
     </div>
-
+    -->
 </div>
 
 {% end %}
