@@ -1,3 +1,8 @@
+# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
+# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
+# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
+# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
+
 # coding=utf-8
 """UserHandler for contestants."""
 
@@ -5,13 +10,7 @@ import os
 
 from sqlalchemy import desc
 from tornado.web import HTTPError
-
 from BackendServer.handlers.BaseHandler import BaseHandler
-
-# Copyright © 2017 Alexandru Miron <mironalex96@gmail.com>
-# Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
-# Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
-# Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
 from BackendServer.handlers.SubmissionsHandler import PrettyWrap
 from DB.Entities import Submission, Contest, Problem, User, Participation
 from DB.Repositories import SubmissionRepository, UserRepository
@@ -60,6 +59,11 @@ class UserHandler(BaseHandler):
 
             if username is not None:
                 query = query.filter(User.username == username)
+
+                user = session.query(User)\
+                    .filter(User.username == username).one_or_none()
+                if user is None:
+                    self.render('profile_not_found.html')
                 try:
                     db_user = UserRepository.get_by_name(session, username)
                 except:
@@ -92,4 +96,13 @@ class UserHandler(BaseHandler):
                         submissions=return_list)
             return
 
-        self.render(path_elements[2] + ".html", user_id=username)
+        session = self.acquire_sql_session()
+        user = session.query(User)\
+            .filter(User.username == username).one_or_none()
+
+        if user is None:
+            self.render("profile_not_found.html")
+
+        else:
+            self.render(path_elements[2] + ".html",
+                        user=user, user_id=user.username)

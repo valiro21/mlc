@@ -25,13 +25,6 @@
     </li>
     <li class="sidebar-item">
         <a href="/user_list">Users</a>
-        <ul>
-            {% for user in sidebar_users %}
-                <li><a href="/user/{{ user.username }}/settings">{{ user.username }}</a></li>
-            {% end %}
-            <li><a href="/user_list">Show all</a></li>
-            <li><a href="/user_list">Create new user</a></li>
-        </ul>
     </li>
 {# TODO: implement distinction between user and admin #}
 {#    <li class="sidebar-item">#}

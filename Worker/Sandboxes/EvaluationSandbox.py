@@ -28,13 +28,21 @@ class EvaluationSandbox(Sandbox):
         words = string.split(sep=' ')
 
         # Fail safe - linker error or others
-        if len(words) < 7:
+        if len(words) < 10:
             return -4, string, 0, 0
 
         cpu, memory = 0, 0
         try:
-            cpu = float(words[2])
-            memory = float(words[6])
+            cpu = float(words[2].strip())
+
+            # Split after new line to get memory
+            strings = words[10].split('\n')
+
+            memory = float(strings[0].strip())
+            if memory < 0:
+                memory = 0
+            if cpu < 0:
+                cpu = 0
         except Exception:
             # Another fail safe - may be linker error or others
             return -4, string, 0, 0

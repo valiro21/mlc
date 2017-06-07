@@ -17,7 +17,8 @@
 {#            TODO <li><a href="/ranking">Rankings</a></li>#}
 
             <li><a href="/contestlist">Contests</a></li>
-            <li><a href="/submissions">Submissions</a></li>
+
+         <li><a href="/submissions">Submissions</a></li>
             <li><a href="/contest/createv">Create Virtual Contest</a></li>
             {% if current_user is not None %}
                 <li><a href="/user/{{ current_user }}">{{ current_user }}</a></li>
@@ -61,7 +62,7 @@
                             <!-- Trigger for the register modal -->
                             <div class="bottom text-center">
                                 <p>New here?</p>
-                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registerModal">
+                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#registerModal">
                                     Register here!
                                 </button>
                             </div>
