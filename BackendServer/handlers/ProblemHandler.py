@@ -35,6 +35,7 @@ class ProblemHandler(BaseHandler):
         problem_name = self.get_problem_by_path()
 
         if problem_name is None:
+            print("Problem is None")
             return
 
         session = self.acquire_sql_session()
@@ -48,10 +49,12 @@ class ProblemHandler(BaseHandler):
 
             if problem.datasets is None or len(problem.datasets) == 0:
                 self.write("FAILED")
+                print('No datasets')
                 return
 
             if self.get_current_user() is None:
                 self.write("must be logged in")
+                print('Not logged in')
                 return
 
             username = self.get_current_user()
@@ -80,6 +83,7 @@ class ProblemHandler(BaseHandler):
         finally:
             session.close()
 
+        print('Addded submission.')
         self.write("OK")
 
     def get(self):
