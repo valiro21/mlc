@@ -29,6 +29,7 @@ class CreateUserHandler(BaseHandler):
         password = self.get_argument('password', '')
         password_confirm = self.get_argument('password_confirmation', '')
 
+        # Check for possible user errors
         if not first_name:
             register_response = 'Please enter your first name.'
 
@@ -72,6 +73,7 @@ class CreateUserHandler(BaseHandler):
                 session.commit()
             except:
                 raise HTTPError(500, 'An error has occured')
+            finally:
+                session.close()
 
         self.write(register_response)
-        session.close()

@@ -49,6 +49,9 @@ class TestcaseHandler(BaseHandler):
             raise HTTPError(404)
 
     def delete_testcase(self):
+        """
+        Deletes testcase specified by id from POST request
+        """
 
         try:
             session = self.acquire_sql_session()
@@ -56,38 +59,50 @@ class TestcaseHandler(BaseHandler):
             raise HTTPError(500, 'Could not acquire database session.')
 
         try:
+            # Get argument from request
             id = int(self.get_argument('id'))
 
             try:
+                # Try to delete the testcase
                 TestcaseRepository.delete_by_id(session, id)
             except SQLAlchemyError:
                 traceback.print_exc()
                 raise HTTPError(400, 'Testcase with specified id '
                                      'does not exist.')
             session.commit()
+
         except MissingArgumentError as e:
             traceback.print_exc()
             self.set_status(400)
             self.write('Id not specified in request.')
             return
+
         except SQLAlchemyError as e:
             traceback.print_exc()
             self.set_status(500)
             self.write('Databse error occured.')
             return
+
         except HTTPError:
             raise
+
         except:
             traceback.print_exc()
             self.set_status(500)
             self.write('Unexpected error occured.')
             return
+
         finally:
             session.close()
 
         self.write('Success!')
 
     def view_input(self):
+        """
+        Returns the input_file of testcase
+        specified in GET request
+        """
+
         try:
             id = int(self.get_argument('id'))
             session = self.acquire_sql_session()
@@ -107,20 +122,30 @@ class TestcaseHandler(BaseHandler):
         except:
             raise HTTPError(500, 'Unexpected error')
 
+        # Sends the actual file data
         self.write(testcase.input_file)
         session.close()
 
     def view_output(self):
+        """
+        Returns the output_file of testcase
+        specified in GET request
+        """
+
         try:
             id = int(self.get_argument('id'))
             session = self.acquire_sql_session()
             testcase = TestcaseRepository.get_by_id(session, id)
+
         except MissingArgumentError:
             raise HTTPError(404, 'No id specified')
+
         except SQLAlchemyError:
             raise HTTPError(500, 'Database error, could not find specified id')
+
         except:
             raise HTTPError(500, 'Shit happened')
 
+        # Sends the actual file data
         self.write(testcase.output_file)
         session.close()

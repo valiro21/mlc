@@ -8,6 +8,10 @@ from AdminServer.handlers import BaseHandler
 
 
 class MainHandler(BaseHandler.BaseHandler):
+    """
+    Handler for rendering the main page
+    """
+
     def data_received(self, chunk):
         pass
 

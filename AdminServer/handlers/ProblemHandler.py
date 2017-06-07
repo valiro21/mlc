@@ -132,6 +132,10 @@ class ProblemHandler(BaseHandler):
                                        new_attachments,
                                        new_statements,
                                        problem):
+        """
+        Adds the given statements and attachments to specified problem
+        """
+
         statement_names = [st['filename'] for st in new_statements]
         attachment_names = [at['filename'] for at in new_attachments]
         statement_bodies = [st['body'] for st in new_statements]

@@ -13,6 +13,10 @@ from DB.Entities.Admin_Permission import AdminPermission
 
 
 class EditAdminHandler(BaseHandler):
+    """
+    Handler for editing an admin.
+    """
+
     @tornado.web.authenticated
     def get(self):
         self.redirect("r/")
