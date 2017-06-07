@@ -30,7 +30,8 @@ class Job(Base):
     testcase_id.__doc__ = 'ID of the testcase'
 
     job_type = Column(String)
-    job_type.__doc__ = 'The type of the task.'
+    job_type.__doc__ = 'The type of the task.' \
+                       ' Can be either Compile or Evaluate'
 
     status_code = Column(Integer, nullable=True)
     status_code.__doc__ = 'Compilation or evaluation return code.'
@@ -42,7 +43,7 @@ class Job(Base):
     time_limit.__doc__ = 'Time limit in seconds.'
 
     memory_limit = Column(Float, nullable=False, default=64)
-    memory_limit.__doc__ = 'Memory limit in MB'
+    memory_limit.__doc__ = 'Memory limit in MB.'
 
     created_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     created_timestamp.__doc__ = 'The timestamp when the task was created.'
@@ -51,11 +52,10 @@ class Job(Base):
     estimated_finish_timestamp.__doc__ = 'The expected timestamp when ' \
                                          'the job should be finished.'
 
-    worker_id = Column(Integer, nullable=True)
-    worker_id.__doc__ = 'The id of the worker that executes the job.'
-
     status = Column(Integer, nullable=False, default=1)
-    status.__doc__ = 'Status of the job.'
+    status.__doc__ = 'Status of the job. ' \
+                     '1 for pending or running' \
+                     '2 for done'
 
     score = Column(Integer, nullable=True)
     score.__doc__ = 'Score given by a scoring heuristic to determine ' \
@@ -66,3 +66,6 @@ class Job(Base):
 
     memory = Column(Float, nullable=True, default=None)
     memory.__doc__ = 'Memory used.'
+
+    actual_score = Column(Integer, nullable=True, default=0)
+    actual_score.__doc__ = 'Actual score obtained'

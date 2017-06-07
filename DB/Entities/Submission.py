@@ -1,7 +1,9 @@
 # Copyright © 2017 Valentin Rosca <rosca.valentin2012@gmail.com>
 # Copyright © 2017 Cosmin Pascaru <cosmin.pascaru2@gmail.com>
 # Copyright © 2017 Andrei Netedu <andrei.netedu2009@gmail.com>
-from sqlalchemy import Column, Integer, ForeignKey
+import datetime
+
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, Boolean
 from sqlalchemy import LargeBinary
 from sqlalchemy import String
 
@@ -20,7 +22,8 @@ class Submission(Base):
     file = Column(LargeBinary, nullable=False)
     executable_file = Column(LargeBinary, nullable=True, default=None)
     language = Column(String, nullable=False)
-    compilation_code = Column(Integer, nullable=True, default=None)
-    compilation_message = Column(String, nullable=True, default=None)
-    evaluation_code = Column(Integer, nullable=True, default=None)
-    evaluation_message = Column(String, nullable=True, default=None)
+
+    created_timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+    in_compilation_queue = Column(Boolean, nullable=False, default=True)
+    in_evaluation_queue = Column(Boolean, nullable=False, default=False)

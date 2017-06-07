@@ -31,7 +31,8 @@ jQuery(document).ready(function () {
             },
             success :  function(data) {
                 if(data === "OK") {
-                    window.location.href = "../submissions";
+                    problem_name = $('#problem_name').val();
+                    window.location.href = "/submissions?problem=" + problem_name;
                 }
             }
         });

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block Imports %}
+<link rel="stylesheet" href="{{ static_url('css/submissions.css') }}" />
+{% end %}
+
+{% block Body %}
+<div class="container-fluid" id="submissions-content">
+    <table class="table table-bordered table-responsive">
+        <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Codename</th>
+                    <th>Status</th>
+                    <th>Cpu</th>
+                    <th>Memory</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in testcases %}
+                    <tr>
+                        <td>{{ data.testcase.codename }}</td>
+                        <td>{{ data.job.status_message }}</td>
+                        <td>{{ data.job.cpu }}</td>
+                        <td>{{ data.job.memory }}</td>
+                    </tr>
+                {% end %}
+            </tbody>
+        </table>
+    </div>
+{% end %}

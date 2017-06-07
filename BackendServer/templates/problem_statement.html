@@ -6,6 +6,8 @@
 {% end %}
 
 {% block Body %}
+<input id="problem_name" value="{{ problem.name }}" type="hidden" />
+
 {% if problem.statements is not None and len(problem.statements) > 0 %}
 
 <div class="panel panel-default editor full-height" style="width: 100%;">

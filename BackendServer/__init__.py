@@ -25,6 +25,8 @@ from BackendServer.handlers.LoginHandler import LoginHandler
 from BackendServer.handlers.LogoutHandler import LogoutHandler
 from BackendServer.handlers.UserConfirmationHandler \
     import UserConfirmationHandler
+from BackendServer.handlers.SubmissionDetailsHandler \
+    import SubmissionDetailsHandler
 from BackendServer.handlers.RecoveryHandler import RecoveryHandler
 
 
@@ -62,6 +64,7 @@ def make_app():
         (r"/problem/.+", ProblemHandler),
         (r"/contestlist", ContestListHandler),
         (r"/submissions", SubmissionsHandler),
+        (r"/submission", SubmissionDetailsHandler),
         (r"/register", RegisterHandler),
         (r"/contest/.+", ContestHandler),
         (r"/contest/.+/problem/.+", ProblemHandler),

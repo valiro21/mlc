@@ -45,7 +45,7 @@ class ProblemHandler(BaseHandler):
 
             for dataset in problem.datasets:
                 submission = Submission(problem_id=problem.id,
-                                        participation_id=None,
+                                        participation_id=1,
                                         file=submission_code.encode('utf8'),
                                         language=language
                                         )
